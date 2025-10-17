@@ -27,26 +27,26 @@ function Header() {
           </Button>
         </Link>
       </div>
-      <ul className="mt-2 hidden cursor-pointer justify-center gap-5 text-lg font-semibold text-white sm:flex">
-        <li>
+      <ul className="mt-2 hidden justify-center gap-5 text-lg font-semibold text-white sm:flex">
+        <li className="cursor-pointer">
           <Link href="" /> Home
         </li>
-        <li>
+        <li className="cursor-pointer">
           <Link href="" /> About Us
         </li>
-        <li>
+        <li className="cursor-pointer">
           <Link href="" /> Services
         </li>
-        <li>
+        <li className="cursor-pointer">
           <Link href="" /> Events
         </li>
-        <li>
+        <li className="cursor-pointer">
           <Link href="" /> Crew
         </li>
-        <li>
+        <li className="cursor-pointer">
           <Link href="" /> Acrticles
         </li>
-        <li>
+        <li className="cursor-pointer">
           <Link href="" /> Contact us
         </li>
       </ul>
@@ -70,25 +70,25 @@ function Header() {
         </div>
 
         <ul className="flex flex-col gap-5 pt-10">
-          <li onClick={handleNav} className="">
+          <li onClick={handleNav} className="cursor-pointer">
             <Link href="" /> Home
           </li>
-          <li onClick={handleNav}>
+          <li onClick={handleNav} className="cursor-pointer">
             <Link href="" /> About Us
           </li>
-          <li onClick={handleNav}>
+          <li onClick={handleNav} className="cursor-pointer">
             <Link href="" /> Services
           </li>
-          <li onClick={handleNav}>
+          <li onClick={handleNav} className="cursor-pointer">
             <Link href="" /> Events
           </li>
-          <li onClick={handleNav}>
+          <li onClick={handleNav} className="cursor-pointer">
             <Link href="" /> Crew
           </li>
-          <li onClick={handleNav}>
+          <li onClick={handleNav} className="cursor-pointer">
             <Link href="" /> Acrticles
           </li>
-          <li onClick={handleNav}>
+          <li onClick={handleNav} className="cursor-pointer">
             <Link href="" /> Contact us
           </li>
         </ul>
