@@ -180,3 +180,18 @@
     @apply bg-background text-foreground;
   }
 }
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes border-rotate {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+.animate-rotate-border {
+  animation: border-rotate 3s linear infinite;
+}

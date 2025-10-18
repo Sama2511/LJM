@@ -22,17 +22,24 @@ function Header() {
             alt=""
             height={300}
             width={300}
-            className="w-[190px] @[600]:w-[300px] @[1100]:w-[350px]"
+            className="w-[280px] @[600]:w-[300px] @[1100]:w-[350px]"
           />
         </Link>
         <div className="flex items-center gap-5">
-          <Button asChild>
+          {/* <Button asChild>
             <Link href="/donate" className="border-[1px] border-white">
-              <span className="flex items-center justify-center bg-[#5e936c] text-[14px]">
+              <span className="flex items-center justify-center bg-[#5e936c] text-[14px] @[600]:px-4 @[600]:text-[18px]">
                 Donate
               </span>
             </Link>
-          </Button>
+          </Button> */}
+
+          <div className="animate-rotate-border w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-[#5e936c] from-80% via-white via-90% to-[#5e936c] to-100% p-px">
+            <Button className="rounded-lg border border-[#5e936c] bg-[#5e936c] px-4 text-center font-mono text-[14px] font-bold @[600]:px-10 @[600]:text-[22px]">
+              Donate
+            </Button>
+          </div>
+
           <div
             onClick={handleNav}
             className="flex cursor-pointer items-center justify-end @[600]:hidden"
