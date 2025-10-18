@@ -15,14 +15,14 @@ function Header() {
 
   return (
     <nav className="@container flex flex-col bg-[#3e5f44] p-4 text-white">
-      <div className="flex items-center justify-between gap-5 @[600]:flex-row @[1000]:mx-auto @[1000]:w-full @[1000]:max-w-[80%]">
+      <div className="flex items-center justify-between gap-5 @[600]:flex-row @[1000]:mx-auto @[1000]:w-full @[1000]:max-w-[90%] @[1200]:max-w-[80%]">
         <Link href="/">
           <Image
             src="/logo.png"
             alt=""
             height={300}
             width={300}
-            className="w-[190px] @[600]:w-[300px] @[1100]:w-[400px]"
+            className="w-[190px] @[600]:w-[300px] @[1100]:w-[350px]"
           />
         </Link>
         <div className="flex items-center gap-5">
@@ -41,7 +41,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <ul className="hidden justify-center gap-2 pt-2 font-semibold text-[#f8f5f0] @[600]:flex @[600]:text-[14px] @[800]:gap-3 @[800]:text-[16px] @[1100]:gap-4 @[1100]:text-[18px]">
+      <ul className="hidden justify-center gap-2 pt-2 font-semibold text-[#f8f5f0] @[600]:flex @[600]:text-[14px] @[800]:gap-3 @[800]:text-[14px] @[1100]:gap-4 @[1100]:text-[16px]">
         <li className="cursor-pointer">
           <Link href="" /> Home
         </li>
