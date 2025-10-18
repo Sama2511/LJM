@@ -33,7 +33,7 @@ function Header() {
           </Button>
         </Link>
       </div>
-      <ul className="hidden justify-center gap-2 pt-5 pb-2 text-[19px] font-semibold text-[#f8f5f0] @[600]:flex @[800]:gap-4 @[800]:text-[20px] @[1100]:gap-4 @[1100]:text-[22px]">
+      <ul className="hidden justify-center gap-2 pt-5 pb-2 text-[18px] font-semibold text-[#f8f5f0] @[600]:flex @[800]:gap-4 @[800]:text-[20px] @[1100]:gap-4 @[1100]:text-[22px]">
         <li className="cursor-pointer">
           <Link href="" /> Home
         </li>
@@ -71,8 +71,8 @@ function Header() {
       <div
         className={
           isOpen
-            ? "fixed top-0 left-0 h-screen w-[65%] bg-black p-10 duration-500 ease-in sm:hidden"
-            : "fixed top-0 left-[-100%] h-screen w-full p-10 duration-500 ease-in"
+            ? "fixed top-0 left-0 z-10 h-screen w-[65%] bg-black p-10 duration-500 ease-in sm:hidden"
+            : "fixed top-0 left-[-100%] z-10 h-screen w-full p-10 duration-500 ease-in"
         }
       >
         <div className="flex w-full items-center justify-end">
