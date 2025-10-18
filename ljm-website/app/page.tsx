@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { Heart } from "lucide-react";
-
 export default function Home() {
   return (
     <>
@@ -48,6 +46,29 @@ export default function Home() {
           className="@[800]:w-[370px]@ mt-10 hidden @[630]:block @[800]:h-[370px] @[890]:h-[400px] @[890]:w-[400px] @[1000]:h-[450] @[1000]:w-[450] @[1200]:h-[500] @[1200]:w-[500] @[1400]:h-[600] @[1400]:w-[600] @[1600]:h-[700] @[1600]:w-[700] @[1800]:h-[700] @[1800]:w-[700]"
         />
       </section>
+
+      <div
+        className="bg-gradient-to-b from-[#F8F5F0] via-[#F8F5F0] to-[#E6DFD3]"
+        aria-hidden="true"
+      >
+        <div className="container mx-auto py-16"></div>
+      </div>
+
+      <section id="services" className="bg-[#E6DFD3]">
+        <div className="container mx-auto flex justify-center">
+          <div className="flex flex-col gap-20">
+            <h1 className="font-serif text-7xl font-bold text-[#157A4E]">
+              Our Services
+            </h1>
+          </div>
+        </div>
+      </section>
+      <div
+        className="bg-gradient-to-t from-[#F8F5F0] via-[#F8F5F0] to-[#E6DFD3]"
+        aria-hidden="true"
+      >
+        <div className="container mx-auto py-16"></div>
+      </div>
     </>
   );
 }

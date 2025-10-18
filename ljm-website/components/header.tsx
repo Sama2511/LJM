@@ -33,9 +33,8 @@ function Header() {
               </span>
             </Link>
           </Button> */}
-
           <div className="animate-rotate-border w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-[#5e936c] from-80% via-white via-90% to-[#5e936c] to-100% p-px">
-            <Button className="rounded-lg border border-[#5e936c] bg-[#5e936c] px-4 text-center font-mono text-[14px] font-bold @[600]:px-10 @[600]:text-[22px]">
+            <Button className="rounded-lg border border-[#5e936c] bg-[#5e936c] px-4 text-center font-mono text-[16px] font-bold @[600]:px-10 @[600]:text-[22px]">
               Donate
             </Button>
           </div>
