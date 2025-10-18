@@ -14,26 +14,34 @@ function Header() {
   };
 
   return (
-    <nav className="@container bg-[#3e5f44] p-4 text-white">
-      <div className="flex flex-col items-center gap-5 @[600]:flex-row @[600]:justify-between">
+    <nav className="@container flex flex-col bg-[#3e5f44] p-4 text-white">
+      <div className="flex items-center justify-between gap-5 @[600]:flex-row @[1000]:mx-auto @[1000]:w-full @[1000]:max-w-[80%]">
         <Link href="/">
           <Image
             src="/logo.png"
             alt=""
             height={300}
             width={300}
-            className="w-[350px] @[600]:w-[400px] @[1100]:w-[500px]"
+            className="w-[190px] @[600]:w-[300px] @[1100]:w-[400px]"
           />
         </Link>
-        <Link href="/donate">
-          <Button className="flex h-11 w-35 cursor-pointer items-center justify-center rounded-[6px] bg-gradient-to-r from-gray-300 via-gray-400 to-gray-600 px-[1px] py-[1px] hover:bg-gradient-to-l @[600]:h-13 @[600]:w-40">
-            <div className="flex h-full w-full items-center justify-center rounded-[5px] bg-[#5e936c] text-[20px] font-medium @[600]:text-[25px]">
-              Donate
-            </div>
+        <div className="flex items-center gap-5">
+          <Button asChild>
+            <Link href="/donate" className="border-[1px] border-white">
+              <span className="flex items-center justify-center bg-[#5e936c] py-0 text-[14px]">
+                Donate
+              </span>
+            </Link>
           </Button>
-        </Link>
+          <div
+            onClick={handleNav}
+            className="flex cursor-pointer items-center justify-end @[600]:hidden"
+          >
+            <Menu width={30} height={30} className="text-gray-400" />
+          </div>
+        </div>
       </div>
-      <ul className="hidden justify-center gap-2 pt-5 pb-2 text-[18px] font-semibold text-[#f8f5f0] @[600]:flex @[800]:gap-4 @[800]:text-[20px] @[1100]:gap-4 @[1100]:text-[22px]">
+      <ul className="hidden justify-center gap-2 pt-2 font-semibold text-[#f8f5f0] @[600]:flex @[600]:text-[14px] @[800]:gap-3 @[800]:text-[16px] @[1100]:gap-4 @[1100]:text-[18px]">
         <li className="cursor-pointer">
           <Link href="" /> Home
         </li>
@@ -62,12 +70,7 @@ function Header() {
           <Link href="" /> Contact us
         </li>
       </ul>
-      <div
-        onClick={handleNav}
-        className="flex cursor-pointer items-center justify-end @[600]:hidden"
-      >
-        <Menu width={30} height={30} className="fixed top-23 text-gray-400" />
-      </div>
+
       <div
         className={
           isOpen
