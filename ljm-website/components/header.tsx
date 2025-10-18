@@ -28,7 +28,7 @@ function Header() {
         <div className="flex items-center gap-5">
           <Button asChild>
             <Link href="/donate" className="border-[1px] border-white">
-              <span className="flex items-center justify-center bg-[#5e936c] py-0 text-[14px]">
+              <span className="flex items-center justify-center bg-[#5e936c] text-[14px]">
                 Donate
               </span>
             </Link>
