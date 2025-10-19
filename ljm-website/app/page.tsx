@@ -1,17 +1,9 @@
-import ServiceCard from "@/components/serviceCard";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { RockingChair, Coffee, Users } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+
 import MyCarousel from "@/components/myCarousel";
+import EventCard from "@/components/EventCard";
 export default function Home() {
   return (
     <>
@@ -59,27 +51,39 @@ export default function Home() {
       </section>
 
       <div
-        className="bg-gradient-to-b from-[#F8F5F0] via-[#F8F5F0] to-[#E6DFD3]"
+        className="bg-gradient-to-b from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>
       </div>
 
-      <section id="services" className="bg-[#E6DFD3]">
+      <section id="services" className="bg-[#ebe0cd]">
         <div className="flex flex-col items-center gap-20">
-          <h1 className="font-serif text-5xl font-bold text-[#157A4E]">
+          <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
             Our Services
           </h1>
           <MyCarousel />
         </div>
       </section>
       <div
-        className="bg-gradient-to-t from-[#F8F5F0] via-[#F8F5F0] to-[#E6DFD3]"
+        className="bg-gradient-to-t from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>
       </div>
-      <div></div>
+      <section className="flex flex-col items-center">
+        <h1 className="text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
+          Upcoming Events
+        </h1>
+        <EventCard
+          title="Event Title"
+          description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
+          date="September 9, 2025 "
+          time="9:00 AM - 1:00 PM"
+          location="122 Mount street, coogee"
+          imageUrl="/hospic.jpg"
+        />
+      </section>
     </>
   );
 }
