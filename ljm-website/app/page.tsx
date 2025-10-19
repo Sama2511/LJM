@@ -1,6 +1,17 @@
+import ServiceCard from "@/components/serviceCard";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { RockingChair, Coffee, Users } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import MyCarousel from "@/components/myCarousel";
 export default function Home() {
   return (
     <>
@@ -56,10 +67,28 @@ export default function Home() {
 
       <section id="services" className="bg-[#E6DFD3]">
         <div className="container mx-auto flex justify-center">
-          <div className="flex flex-col gap-20">
-            <h1 className="font-serif text-7xl font-bold text-[#157A4E]">
+          <div className="flex flex-col items-center gap-20">
+            <h1 className="font-serif text-5xl font-bold text-[#157A4E]">
               Our Services
             </h1>
+            <div className="grid gap-10">
+              {/* <ServiceCard
+                icon={RockingChair}
+                title="Advance Care Planning"
+                description="Practical support to record your end-of-life wishes, medical care, comfort, and decision-making."
+              />
+              <ServiceCard
+                icon={Users}
+                title="Compassionate Communities"
+                description="Supportive community to share experiences, feelings, and find comfort together."
+              />
+              <ServiceCard
+                icon={Coffee}
+                title="Death Cafes"
+                description="A safe, informal meet-up to talk about death, grief, and care, open to anyone and everyone."
+              /> */}
+              <MyCarousel />
+            </div>
           </div>
         </div>
       </section>
@@ -69,6 +98,7 @@ export default function Home() {
       >
         <div className="container mx-auto py-16"></div>
       </div>
+      <div></div>
     </>
   );
 }
