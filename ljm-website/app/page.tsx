@@ -66,30 +66,11 @@ export default function Home() {
       </div>
 
       <section id="services" className="bg-[#E6DFD3]">
-        <div className="container mx-auto flex justify-center">
-          <div className="flex flex-col items-center gap-20">
-            <h1 className="font-serif text-5xl font-bold text-[#157A4E]">
-              Our Services
-            </h1>
-            <div className="grid gap-10">
-              {/* <ServiceCard
-                icon={RockingChair}
-                title="Advance Care Planning"
-                description="Practical support to record your end-of-life wishes, medical care, comfort, and decision-making."
-              />
-              <ServiceCard
-                icon={Users}
-                title="Compassionate Communities"
-                description="Supportive community to share experiences, feelings, and find comfort together."
-              />
-              <ServiceCard
-                icon={Coffee}
-                title="Death Cafes"
-                description="A safe, informal meet-up to talk about death, grief, and care, open to anyone and everyone."
-              /> */}
-              <MyCarousel />
-            </div>
-          </div>
+        <div className="flex flex-col items-center gap-20">
+          <h1 className="font-serif text-5xl font-bold text-[#157A4E]">
+            Our Services
+          </h1>
+          <MyCarousel />
         </div>
       </section>
       <div

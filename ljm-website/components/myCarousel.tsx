@@ -11,23 +11,28 @@ import { RockingChair, Coffee, Users } from "lucide-react";
 
 function MyCarousel() {
   return (
-    <Carousel className="w-[250px]">
-      <CarouselContent>
-        <CarouselItem>
+    <Carousel
+      className="m-auto w-[250px] sm:w-[550px] lg:w-[850px]"
+      opts={{
+        align: "start",
+      }}
+    >
+      <CarouselContent className="-ml-4">
+        <CarouselItem className="pl-4 sm:basis-1/2 lg:basis-1/3">
           <ServiceCard
             icon={RockingChair}
             title="Advance Care Planning"
             description="Practical support to record your end-of-life wishes, medical care, comfort, and decision-making."
           />
         </CarouselItem>
-        <CarouselItem>
+        <CarouselItem className="pl-4 sm:basis-1/2 lg:basis-1/3">
           <ServiceCard
             icon={Users}
             title="Compassionate Communities"
             description="Supportive community to share experiences, feelings, and find comfort together."
           />
         </CarouselItem>
-        <CarouselItem>
+        <CarouselItem className="pl-4 sm:basis-1/2 lg:basis-1/3">
           <ServiceCard
             icon={Coffee}
             title="Death Cafes"
@@ -35,10 +40,9 @@ function MyCarousel() {
           />
         </CarouselItem>
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      <CarouselPrevious className="lg:hidden" />
+      <CarouselNext className="lg:hidden" />
     </Carousel>
   );
 }
-
 export default MyCarousel;
