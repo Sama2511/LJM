@@ -9,7 +9,7 @@ import {
 import ServiceCard from "./serviceCard";
 import { RockingChair, Coffee, Users } from "lucide-react";
 
-function MyCarousel() {
+function MyCarouselServices() {
   return (
     <Carousel
       className="m-auto w-[250px] sm:w-[550px] lg:w-[850px]"
@@ -45,4 +45,4 @@ function MyCarousel() {
     </Carousel>
   );
 }
-export default MyCarousel;
+export default MyCarouselServices;

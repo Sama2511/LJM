@@ -191,12 +191,6 @@
     --border-angle: 360deg;
   }
 }
-
 .animate-rotate-border {
   animation: border-rotate 3s linear infinite;
-}
-@layer components {
-  .landing-text {
-    @apply absolute top-6 left-6 max-w-[70%] text-left text-2xl font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[470]:text-[30px] @[500]:max-w-[70%] @[550]:max-w-[80%] @[550]:text-[40px] @[630]:static @[630]:max-w-[100%] @[630]:text-[26px] @[630]:text-[#3E5F44] @[630]:drop-shadow-[0px] @[800]:pt-[10px] @[800]:text-[30px] @[1000]:pt-[30px] @[1000]:text-[38px] @[1200]:pt-[50px] @[1200]:text-[42px] @[1400]:pt-[2rem] @[1400]:text-[48px] @[1700]:text-[55px];
-  }
 }

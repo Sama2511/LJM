@@ -31,7 +31,7 @@ export default function EventCard({
 }: Props) {
   return (
     <>
-      <Card className="flex w-[350px] gap-2 border-1 border-black bg-[#E2DFDA]">
+      <Card className="flex w-[280px] gap-2 border-1 border-black bg-[#E2DFDA]">
         <CardHeader className="relative">
           <div className="">
             {imageUrl ? (
@@ -51,7 +51,7 @@ export default function EventCard({
               />
             )}
           </div>
-          <div className="rounded-b-0 absolute top-0 right-6 space-y-1 rounded-se-2xl bg-black/25 px-3 py-2 text-white shadow-[0_0_6px_rgba(0,0,0,0.5)] backdrop-blur-[2px]">
+          <div className="rounded-b-0 absolute top-0 right-7 space-y-1 rounded-se-2xl bg-black/25 px-3 py-2 text-white shadow-[0_0_6px_rgba(0,0,0,0.5)] backdrop-blur-[2px]">
             <div className="flex items-center gap-2">
               <Calendar className="size-5 text-green-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
               <span className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
@@ -83,7 +83,9 @@ export default function EventCard({
             <Link href="/volunteer"> Volunteer</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/event">Details</Link>
+            <Link href="/event" className="px-6">
+              Details
+            </Link>
           </Button>
         </CardFooter>
       </Card>

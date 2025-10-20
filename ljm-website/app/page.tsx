@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-import MyCarousel from "@/components/myCarousel";
+import MyCarouselServices from "@/components/myCarousel";
 import EventCard from "@/components/EventCard";
 export default function Home() {
   return (
@@ -51,7 +51,7 @@ export default function Home() {
       </section>
 
       <div
-        className="bg-gradient-to-b from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
+        className="h-50 bg-gradient-to-b from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>
@@ -62,27 +62,58 @@ export default function Home() {
           <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
             Our Services
           </h1>
-          <MyCarousel />
+          <MyCarouselServices />
         </div>
       </section>
       <div
-        className="bg-gradient-to-t from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
+        className="h-50 bg-gradient-to-t from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>
       </div>
-      <section className="flex flex-col items-center">
+      <section className="flex w-full flex-col items-center gap-20">
         <h1 className="text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
           Upcoming Events
         </h1>
-        <EventCard
-          title="Event Title"
-          description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
-          date="September 9, 2025 "
-          time="9:00 AM - 1:00 PM"
-          location="122 Mount street, coogee"
-          imageUrl="/hospic.jpg"
-        />
+        {/* <div> */}
+        <div className="grid max-w-[80%] grid-flow-col gap-4 overflow-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
+          <EventCard
+            title="Event Title"
+            description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
+            date="September 9, 2025 "
+            time="9:00 AM - 1:00 PM"
+            location="Location"
+            imageUrl=""
+          />
+          <EventCard
+            title="Event Title"
+            description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
+            date="September 9, 2025 "
+            time="9:00 AM - 1:00 PM"
+            location="Location"
+            imageUrl=""
+          />
+          <EventCard
+            title="Event Title"
+            description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
+            date="September 9, 2025 "
+            time="9:00 AM - 1:00 PM"
+            location="Location"
+            imageUrl=""
+          />
+          <EventCard
+            title="Event Title"
+            description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
+            date="September 9, 2025 "
+            time="9:00 AM - 1:00 PM"
+            location="Location"
+            imageUrl=""
+          />
+        </div>
+        {/* </div> */}
+      </section>
+      <section>
+        <h1 className="mt-40 text-4xl">Other Sections</h1>
       </section>
     </>
   );
