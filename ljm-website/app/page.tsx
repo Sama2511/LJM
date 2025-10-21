@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
+import { X } from "lucide-react";
 
-import MyCarouselServices from "@/components/myCarousel";
+import MyCarouselServices from "@/components/MyCarousel";
 import EventCard from "@/components/EventCard";
 export default function Home() {
   return (
@@ -17,7 +19,7 @@ export default function Home() {
               height={450}
               className="w-full object-cover @[630]:hidden"
             />
-            <h1 className="absolute top-6 left-6 max-w-[70%] text-left text-2xl font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[470]:text-[30px] @[500]:max-w-[70%] @[550]:max-w-[80%] @[550]:text-[40px] @[630]:static @[630]:max-w-[100%] @[630]:text-[26px] @[630]:text-[#3E5F44] @[630]:drop-shadow-[0px] @[800]:pt-[10px] @[800]:text-[30px] @[1000]:pt-[30px] @[1000]:text-[38px] @[1200]:pt-[50px] @[1200]:text-[42px] @[1400]:pt-[2rem] @[1400]:text-[48px] @[1700]:text-[55px]">
+            <h1 className="absolute top-6 left-6 max-w-[70%] text-left text-2xl text-[22px] font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[470]:text-[30px] @[500]:max-w-[70%] @[550]:max-w-[80%] @[550]:text-[40px] @[630]:static @[630]:max-w-[100%] @[630]:text-[26px] @[630]:text-[#3E5F44] @[630]:drop-shadow-[0px] @[800]:pt-[10px] @[800]:text-[30px] @[1000]:pt-[30px] @[1000]:text-[38px] @[1200]:pt-[50px] @[1200]:text-[42px] @[1400]:pt-[2rem] @[1400]:text-[48px] @[1700]:text-[55px]">
               Supporting Community With Compassion at Life's Most Sacred Moments
             </h1>
           </div>
@@ -112,8 +114,22 @@ export default function Home() {
         </div>
         {/* </div> */}
       </section>
-      <section>
-        <h1 className="mt-40 text-4xl">Other Sections</h1>
+      <section className="mt-40 bg-[#e6dac7] p-10">
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <h1 className="text-center font-serif text-3xl font-bold text-[#3E5F44]">
+            Subscribe to Our Newsletter
+          </h1>
+          <div className="flex w-full max-w-sm flex-col items-center gap-2 md:flex-row">
+            <Input
+              type="email"
+              placeholder="Email"
+              className="w-70 bg-[#f8f5f0]"
+            />
+            <Button type="submit" variant="outline" className="w-70 md:w-30">
+              Subscribe
+            </Button>
+          </div>
+        </div>
       </section>
     </>
   );
