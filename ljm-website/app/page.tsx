@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 
 import MyCarouselServices from "@/components/MyCarousel";
 import EventCard from "@/components/EventCard";
+import Footer from "@/components/Footer";
 export default function Home() {
   return (
     <>
@@ -131,6 +132,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }
