@@ -20,7 +20,10 @@ export default function Home() {
               height={450}
               className="w-full object-cover @[630]:hidden"
             />
-            <h1 className="absolute top-6 left-6 max-w-[70%] text-left text-2xl text-[22px] font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[470]:text-[30px] @[500]:max-w-[70%] @[550]:max-w-[80%] @[550]:text-[40px] @[630]:static @[630]:max-w-[100%] @[630]:text-[26px] @[630]:text-[#3E5F44] @[630]:drop-shadow-[0px] @[800]:pt-[10px] @[800]:text-[30px] @[1000]:pt-[30px] @[1000]:text-[38px] @[1200]:pt-[50px] @[1200]:text-[42px] @[1400]:pt-[2rem] @[1400]:text-[48px] @[1700]:text-[55px]">
+            <h1
+              className="absolute top-6 left-6 max-w-[70%] text-left font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] sm:text-[#3E5F44] @[550]:max-w-[80%] @[630]:static @[630]:max-w-[100%] @[630]:drop-shadow-[0px] @[800]:pt-[10px] @[1000]:pt-[30px] @[1200]:pt-[50px] @[1400]:pt-[2rem]"
+              style={{ fontSize: "clamp(1.375rem, 0.5rem + 3vw, 3.438rem)" }}
+            >
               Supporting Community With Compassion at Life's Most Sacred Moments
             </h1>
           </div>

@@ -48,31 +48,31 @@ function Header() {
         </div>
       </div>
       <ul className="hidden justify-center gap-2 pt-2 font-semibold text-[#f8f5f0] @[600]:flex @[600]:text-[14px] @[800]:gap-3 @[800]:text-[14px] @[1100]:gap-4 @[1100]:text-[16px]">
-        <li className="cursor-pointer">
-          <Link href="" /> Home
+        <li className="cursor-pointer hover:text-green-200">
+          <Link href="/"> Home</Link>
         </li>
         |
-        <li className="cursor-pointer">
-          <Link href="" /> About Us
+        <li className="cursor-pointer hover:text-green-200">
+          <Link href="/about"> About Us</Link>
         </li>
         |
-        <li className="cursor-pointer">
-          <Link href="" /> Services
+        <li className="cursor-pointer hover:text-green-200">
+          <Link href=""> Services</Link>
         </li>
         |
-        <li className="cursor-pointer">
-          <Link href="" /> Events
+        <li className="cursor-pointer hover:text-green-200">
+          <Link href=""> Events </Link>
         </li>
         |
-        <li className="cursor-pointer">
-          <Link href="" /> Crew
+        <li className="cursor-pointer hover:text-green-200">
+          <Link href=""> Crew </Link>
         </li>
         |
-        <li className="cursor-pointer">
-          <Link href="" /> Acrticles
+        <li className="cursor-pointer hover:text-green-200">
+          <Link href=""> Acrticles</Link>
         </li>
         |
-        <li className="cursor-pointer">
+        <li className="cursor-pointer hover:text-green-200">
           <Link href="" /> Contact us
         </li>
       </ul>
@@ -91,25 +91,46 @@ function Header() {
         </div>
 
         <ul className="flex flex-col gap-5 pt-10">
-          <li onClick={handleNav} className="cursor-pointer">
+          <li
+            onClick={handleNav}
+            className="cursor-pointer hover:text-green-200"
+          >
             <Link href="" /> Home
           </li>
-          <li onClick={handleNav} className="cursor-pointer">
+          <li
+            onClick={handleNav}
+            className="cursor-pointer hover:text-green-200"
+          >
             <Link href="" /> About Us
           </li>
-          <li onClick={handleNav} className="cursor-pointer">
+          <li
+            onClick={handleNav}
+            className="cursor-pointer hover:text-green-200"
+          >
             <Link href="" /> Services
           </li>
-          <li onClick={handleNav} className="cursor-pointer">
+          <li
+            onClick={handleNav}
+            className="cursor-pointer hover:text-green-200"
+          >
             <Link href="" /> Events
           </li>
-          <li onClick={handleNav} className="cursor-pointer">
+          <li
+            onClick={handleNav}
+            className="cursor-pointer hover:text-green-200"
+          >
             <Link href="" /> Crew
           </li>
-          <li onClick={handleNav} className="cursor-pointer">
+          <li
+            onClick={handleNav}
+            className="cursor-pointer hover:text-green-200"
+          >
             <Link href="" /> Acrticles
           </li>
-          <li onClick={handleNav} className="cursor-pointer">
+          <li
+            onClick={handleNav}
+            className="cursor-pointer hover:text-green-200"
+          >
             <Link href="" /> Contact us
           </li>
         </ul>

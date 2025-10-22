@@ -31,7 +31,6 @@ function Footer() {
               </p>
             </div>
 
-            {/* Social Media */}
             <div className="mb-6">
               <h4 className="mb-3 text-sm font-semibold tracking-wide uppercase">
                 Follow Us
@@ -108,10 +107,7 @@ function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/about"
-                    className="transition-colors hover:text-green-200"
-                  >
+                  <Link href="/about" className="hover:text-green-200">
                     About Us
                   </Link>
                 </li>
