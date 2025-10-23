@@ -65,7 +65,7 @@ export default function Home() {
 
       <section className="bg-[#ebe0cd]">
         <div className="flex flex-col items-center gap-20">
-          <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
+          <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-6xl lg:text-7xl">
             Our Services
           </h1>
           <MyCarouselServices />
@@ -82,7 +82,7 @@ export default function Home() {
           Upcoming Events
         </h1>
         {/* <div> */}
-        <div className="grid max-w-[80%] grid-flow-col gap-4 overflow-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
+        <div className="grid max-w-[95%] grid-flow-col gap-4 overflow-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
           <EventCard
             title="Event Title"
             description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
@@ -135,7 +135,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 }

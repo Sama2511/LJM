@@ -183,16 +183,36 @@ export default function AboutUspage() {
       >
         <div className="container mx-auto py-16"></div>
       </div>
-      <section className="container mx-auto px-6 py-12">
+      <section className="@container mx-auto px-4 py-12">
         <h1 className="mb-12 text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
           Meet Our Team
         </h1>
-        <div className="grid">
-          <ProfileCard member="Oussama Hassoune" role="CEO" imageUrl="" />
-          <ProfileCard member="Oussama Hassoune" role="CEO" imageUrl="" />
-          <ProfileCard member="Oussama Hassoune" role="CEO" imageUrl="" />
-          <ProfileCard member="Oussama Hassoune" role="CEO" imageUrl="" />
-          <ProfileCard member="Oussama Hassoune" role="CEO" imageUrl="" />
+        <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-5">
+          <ProfileCard
+            member="Member's name"
+            role="member's role"
+            imageUrl=""
+          />
+          <ProfileCard
+            member="Member's name"
+            role="member's role"
+            imageUrl=""
+          />
+          <ProfileCard
+            member="Member's name"
+            role="member's role"
+            imageUrl=""
+          />
+          <ProfileCard
+            member="Member's name"
+            role="member's role"
+            imageUrl=""
+          />
+          <ProfileCard
+            member="Member's name"
+            role="member's role"
+            imageUrl=""
+          />
         </div>
       </section>
     </div>
