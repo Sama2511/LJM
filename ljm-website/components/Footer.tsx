@@ -12,7 +12,8 @@ function Footer() {
   return (
     <footer className="bg-[#3e5f44] text-white">
       <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-col gap-5 sm:flex-row sm:justify-between">
+          {/* leftSide */}
           <div className="flex flex-col items-start">
             <div className="mb-6 flex flex-col items-start">
               <div className="mb-2 flex items-center gap-3">
@@ -77,7 +78,7 @@ function Footer() {
               <ArrowUp className="h-4 w-4" />
             </Button>
           </div>
-
+          {/* 
           <div className="hidden lg:block">
             <h3 className="mb-4 text-xl font-bold">Get Involved</h3>
             <p className="mb-4 text-gray-200">
@@ -92,12 +93,11 @@ function Footer() {
                 Volunteer Now
               </Button>
             </Link>
-          </div>
-
-          <div className="md:text-right">
+          </div> */}
+          <div className="w-fit">
             <h3 className="mb-4 text-xl font-bold">Site Map</h3>
             <nav aria-label="Footer navigation">
-              <ul className="space-y-2">
+              <ul className="flex-col space-y-2">
                 <li>
                   <Link
                     href="/"
