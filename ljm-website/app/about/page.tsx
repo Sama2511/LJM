@@ -215,6 +215,11 @@ export default function AboutUspage() {
           />
         </div>
       </section>
+      <section className="py-10">
+        <h1 className="text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-2xl lg:text-4xl">
+          Annual Report & Financial Statements
+        </h1>
+      </section>
     </div>
   );
 }
