@@ -61,7 +61,7 @@ function Header() {
         </li>
         |
         <li className="cursor-pointer hover:text-green-200">
-          <Link href=""> Events </Link>
+          <Link href="/events"> Events </Link>
         </li>
         |
         <li className="cursor-pointer hover:text-green-200">
@@ -73,7 +73,7 @@ function Header() {
         </li>
         |
         <li className="cursor-pointer hover:text-green-200">
-          <Link href="" /> Contact us
+          <Link href=""> Contact us</Link>
         </li>
       </ul>
 
@@ -95,43 +95,43 @@ function Header() {
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="" /> Home
+            <Link href="/">Home</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="" /> About Us
+            <Link href="/about"> About Us</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="" /> Services
+            <Link href="/services"> Services</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="" /> Events
+            <Link href="/events"> Events </Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="" /> Crew
+            <Link href=""> Crew </Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="" /> Acrticles
+            <Link href=""> Articles</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="" /> Contact us
+            <Link href=""> Contact Us</Link>
           </li>
         </ul>
       </div>

@@ -5,8 +5,7 @@ import Link from "next/link";
 import { X } from "lucide-react";
 
 import MyCarouselServices from "@/components/MyCarousel";
-import EventCard from "@/components/EventCard";
-import Footer from "@/components/Footer";
+import { EventCard } from "@/components/EventCard";
 export default function Home() {
   return (
     <>
@@ -116,7 +115,6 @@ export default function Home() {
             imageUrl=""
           />
         </div>
-        {/* </div> */}
       </section>
       <section className="mt-40 bg-[#e6dac7] p-10">
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

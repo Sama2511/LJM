@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="font-s">
+      <body className="font-sans">
         <Header />
         {children}
         <Footer />

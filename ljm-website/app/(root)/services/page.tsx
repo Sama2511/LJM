@@ -15,7 +15,7 @@ export default function page() {
             Advanced Care Planning
           </h3>
 
-          <p className="relative z-10 mx-auto flex items-center justify-center p-10 px-7 text-center leading-loose text-white transition-all duration-700 ease-in-out lg:absolute lg:inset-0 lg:mt-5 lg:max-w-[75%] lg:translate-y-full lg:pt-20 lg:text-lg lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
+          <p className="relative z-10 mx-auto flex items-center justify-center p-10 px-7 text-center leading-loose text-white drop-shadow-[3px_3px_4.4px_#000000] transition-all duration-700 ease-in-out lg:absolute lg:inset-0 lg:mt-5 lg:max-w-[75%] lg:translate-y-full lg:pt-20 lg:text-lg lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
             We believe that every individual deserves to have their end-of-life
             wishes respected and honoured. Our Advanced Care Planning services
             are designed to help patients and their families make informed
@@ -38,7 +38,7 @@ export default function page() {
             Conpassionate Communities
           </h3>
 
-          <p className="relative z-10 mx-auto flex items-center justify-center p-10 px-7 text-center leading-loose text-white transition-all duration-700 ease-in-out lg:absolute lg:inset-0 lg:mt-5 lg:max-w-[75%] lg:translate-y-full lg:pt-20 lg:text-lg lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
+          <p className="relative z-10 mx-auto flex items-center justify-center p-10 px-7 text-center leading-loose text-white drop-shadow-[3px_3px_4.4px_#000000] transition-all duration-700 ease-in-out lg:absolute lg:inset-0 lg:mt-5 lg:max-w-[75%] lg:translate-y-full lg:pt-20 lg:text-lg lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
             Compassionate Communities aim to empower and engage individuals,
             groups, and organizations to work together to support those who are
             facing advanced illness, dying, or grief. Through shared compassion,
@@ -57,7 +57,7 @@ export default function page() {
             Death cafes
           </h3>
 
-          <p className="relative z-10 mx-auto flex items-center justify-center p-10 px-7 text-center leading-loose text-white transition-all duration-700 ease-in-out lg:absolute lg:inset-0 lg:mt-5 lg:max-w-[75%] lg:translate-y-full lg:pt-20 lg:text-lg lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
+          <p className="relative z-10 mx-auto flex items-center justify-center p-10 px-7 text-center leading-loose text-white drop-shadow-[3px_3px_4.4px_#000000] transition-all duration-700 ease-in-out lg:absolute lg:inset-0 lg:mt-5 lg:max-w-[75%] lg:translate-y-full lg:pt-20 lg:text-lg lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
             Death Cafes provide a safe and informal space for open discussions
             about death, dying, and the meaning of life. By talking freely and
             without judgment, participants can reduce fear and anxiety

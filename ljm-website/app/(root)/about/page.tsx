@@ -117,7 +117,7 @@ export default function AboutUspage() {
       </div>
       {/* gradient background */}
       <section className="flex flex-col items-center gap-4 bg-[#ebe0cd]">
-        <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
+        <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-7xl">
           Our Values
         </h1>
         <h2 className="text-center text-xl">
@@ -216,7 +216,7 @@ export default function AboutUspage() {
         </div>
       </section>
       <section className="py-10">
-        <h1 className="text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-2xl lg:text-4xl">
+        <h1 className="text-center font-sans text-xl font-bold text-[#157A4E] sm:text-2xl lg:text-4xl">
           Annual Report & Financial Statements
         </h1>
       </section>

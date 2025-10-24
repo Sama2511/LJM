@@ -194,3 +194,7 @@
 .animate-rotate-border {
   animation: border-rotate 3s linear infinite;
 }
+
+.text-stroke {
+  -webkit-text-stroke: 1px black;
+}
