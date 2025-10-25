@@ -73,7 +73,7 @@ function Header() {
         </li>
         |
         <li className="cursor-pointer hover:text-green-200">
-          <Link href=""> Contact us</Link>
+          <Link href="/contact"> Contact us</Link>
         </li>
       </ul>
 
@@ -131,7 +131,7 @@ function Header() {
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href=""> Contact Us</Link>
+            <Link href="/contact"> Contact Us</Link>
           </li>
         </ul>
       </div>
