@@ -120,7 +120,7 @@ export default function AboutUspage() {
         <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-7xl">
           Our Values
         </h1>
-        <h2 className="text-center text-xl">
+        <h2 className="max-w-[90%] text-center text-xl">
           These four values guide every decision we make
         </h2>
         <section className="container mx-auto px-6 py-12">
@@ -183,7 +183,7 @@ export default function AboutUspage() {
       >
         <div className="container mx-auto py-16"></div>
       </div>
-      <section className="@container mx-auto px-4 py-12">
+      <section className="@container mx-auto max-w-[95%] px-4 py-12">
         <h1 className="mb-12 text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
           Meet Our Team
         </h1>
