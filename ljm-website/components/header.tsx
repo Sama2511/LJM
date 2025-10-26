@@ -65,7 +65,7 @@ function Header() {
         </li>
         |
         <li className="cursor-pointer hover:text-green-200">
-          <Link href=""> Crew </Link>
+          <Link href="/crew"> Crew </Link>
         </li>
         |
         <li className="cursor-pointer hover:text-green-200">
