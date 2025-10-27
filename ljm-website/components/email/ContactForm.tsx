@@ -66,15 +66,12 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel
-                    className="font-semibold"
-                    htmlFor="form-firstname"
-                  >
+                  <FieldLabel className="font-semibold" htmlFor={field.name}>
                     First Name
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-firstname"
+                    id="firstname"
                     aria-invalid={fieldState.invalid}
                     placeholder="First Name"
                     autoComplete="given-name"
@@ -90,12 +87,12 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold" htmlFor="form-lastname">
+                  <FieldLabel className="font-semibold" htmlFor="lastname">
                     Last Name
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-lastname"
+                    id="lastname"
                     aria-invalid={fieldState.invalid}
                     placeholder="Last Name"
                     autoComplete="family-name"
@@ -111,12 +108,12 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold" htmlFor="form-email">
+                  <FieldLabel className="font-semibold" htmlFor="email">
                     Email
                   </FieldLabel>
                   <Input
                     {...field}
-                    id="form-email"
+                    id="email"
                     type="email"
                     aria-invalid={fieldState.invalid}
                     placeholder="example@email.com"
@@ -133,13 +130,13 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold" htmlFor="form-message">
+                  <FieldLabel className="font-semibold" htmlFor="message">
                     Message
                   </FieldLabel>
                   <InputGroup>
                     <InputGroupTextarea
                       {...field}
-                      id="form-message"
+                      id="message"
                       placeholder="Leave us a message..."
                       rows={6}
                       className="min-h-24 resize-none"
@@ -162,9 +159,6 @@ export default function ContactForm() {
       </CardContent>
       <CardFooter>
         <Field orientation="horizontal">
-          {/* <Button type="button" variant="outline" onClick={() => form.reset()}>
-            Reset
-          </Button> */}
           <Button
             type="submit"
             form="contact-form"
@@ -172,7 +166,7 @@ export default function ContactForm() {
           >
             {form.formState.isSubmitting ? (
               <>
-                <Loader2 /> <p>Sending</p>
+                <Loader2 className="animate-spin" /> <p>Sending</p>
               </>
             ) : (
               "Send Message"

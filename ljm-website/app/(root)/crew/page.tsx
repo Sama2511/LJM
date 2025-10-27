@@ -31,11 +31,12 @@ export default function page() {
             </CardDescription>
           </CardHeader>
           <CardContent className="">
-            <Button> Sign in to the Crew Portal</Button>
-            <CardAction className="m-auto mt-2 text-sm">
-              New Member?
+            <Button>
+              <Link href="/login">Sign in to the Crew Portal</Link>{" "}
+            </Button>
+            <CardAction className="m-auto mt-2 flex gap-2 text-sm text-[12px]">
+              <p>New Member ?</p>
               <Link href="/sign-up" className="text-[#157A4E]">
-                {" "}
                 Create an account
               </Link>
             </CardAction>
