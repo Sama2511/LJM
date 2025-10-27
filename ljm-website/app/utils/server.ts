@@ -27,9 +27,14 @@ export async function createClient() {
     },
   );
 }
-export async function getSupportedBrowsers() {
+export async function getUser() {
   const { auth } = await createClient();
-  const user = (await auth.getUser()).data.user;
+  const user = await auth.getUser();
 
-  return user;
+  if (user.error) {
+    console.log(user.error);
+    return null;
+  }
+
+  return user.data.user;
 }
