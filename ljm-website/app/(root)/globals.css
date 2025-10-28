@@ -4,6 +4,10 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  --test-color: #3e5f44;
+  --steps: 3;
+  --progress-width: calc((var(--steps) - 1) / var(--steps) * 100%);
+  --step-size: 32px;
   --background: oklch(0.9711 0.0074 80.7211);
   --foreground: oklch(0.3 0.0358 30.2042);
   --card: oklch(0.9711 0.0074 80.7211);
