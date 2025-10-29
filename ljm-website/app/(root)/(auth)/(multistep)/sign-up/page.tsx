@@ -1,5 +1,6 @@
 "use client";
 
+import { signup } from "@/actions/users";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import {
@@ -29,13 +30,11 @@ export default function page() {
       repeatPassword: "",
     },
   });
-  async function submit(data: z.infer<typeof signUpSchema>) {
-    console.log(data);
-  }
+
   return (
     <Card className="mx-auto w-[400px] px-10">
       <CardContent>
-        <form id="signupForm" onSubmit={signupForm.handleSubmit(submit)}>
+        <form id="signupForm" onSubmit={signupForm.handleSubmit(signup)}>
           <FieldGroup>
             <Controller
               name="firstname"
