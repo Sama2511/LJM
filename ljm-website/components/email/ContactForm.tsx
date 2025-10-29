@@ -158,7 +158,7 @@ export default function ContactForm() {
         </form>
       </CardContent>
       <CardFooter>
-        <Field orientation="horizontal">
+        <Field orientation="responsive">
           <Button
             type="submit"
             form="contact-form"

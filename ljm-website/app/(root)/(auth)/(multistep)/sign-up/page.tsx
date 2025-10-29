@@ -1,0 +1,187 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { signUpSchema } from "@/lib/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2 } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+
+export default function page() {
+  const signupForm = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      repeatPassword: "",
+    },
+  });
+  async function submit(data: z.infer<typeof signUpSchema>) {
+    console.log(data);
+  }
+  return (
+    <Card className="mx-auto w-[400px] px-10">
+      <CardContent>
+        <form id="signupForm" onSubmit={signupForm.handleSubmit(submit)}>
+          <FieldGroup>
+            <Controller
+              name="firstname"
+              control={signupForm.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel className="font-semibold" htmlFor={field.name}>
+                    First Name
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="firstname"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="First Name"
+                    autoComplete="given-name"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="lastname"
+              control={signupForm.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel className="font-semibold" htmlFor={field.name}>
+                    Last Name
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="lastname"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Last Name"
+                    autoComplete="additional-name"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+
+            <Controller
+              name="phoneNumber"
+              control={signupForm.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel className="font-semibold" htmlFor={field.name}>
+                    Phone Number
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="phoneNumber"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="phone number"
+                    autoComplete="mobile tel"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="email"
+              control={signupForm.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel className="font-semibold" htmlFor={field.name}>
+                    Email
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="email"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="email"
+                    autoComplete="email"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="password"
+              control={signupForm.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel className="font-semibold" htmlFor={field.name}>
+                    Password
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="password"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Enter Password"
+                    type="password"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+            <Controller
+              name="repeatPassword"
+              control={signupForm.control}
+              render={({ field, fieldState }) => (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel className="font-semibold" htmlFor={field.name}>
+                    Confirme Password
+                  </FieldLabel>
+                  <Input
+                    {...field}
+                    id="repeatPassword"
+                    type="password"
+                    aria-invalid={fieldState.invalid}
+                    placeholder="Repeat Password"
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )}
+            />
+          </FieldGroup>
+        </form>
+      </CardContent>
+      <CardFooter>
+        <Field orientation="horizontal" className="flex justify-between">
+          {}
+          <Button type="submit" form="signupForm">
+            {signupForm.formState.isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Sign Up"
+            )}
+          </Button>
+          <Link href="/login" className="underline">
+            login
+          </Link>
+        </Field>
+      </CardFooter>
+    </Card>
+  );
+}
