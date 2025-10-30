@@ -1,3 +1,4 @@
+import { getUser } from "@/app/utils/server";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,9 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React from "react";
 
-export default function page() {
+export default async function page() {
+  // const user = await getUser();
+
+  // user && redirect("/logged");
+
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2">

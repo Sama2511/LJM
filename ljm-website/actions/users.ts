@@ -5,6 +5,7 @@ import { signUpSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+
 export async function login(formData: FormData) {
   const supabase = await createClient();
 
