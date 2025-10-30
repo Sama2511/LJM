@@ -1,4 +1,4 @@
-import ContactForm from "@/components/email/ContactForm";
+import ContactForm from "@/components/ContactForm";
 import React from "react";
 import { Phone, Mail, Map, Clock } from "lucide-react";
 import {

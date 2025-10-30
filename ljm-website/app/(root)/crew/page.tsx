@@ -23,7 +23,7 @@ export default function page() {
             in end-of-life care.
           </p>
         </div>
-        <Card className="mt-10 flex w-[90%] max-w-3xl text-center drop-shadow-xl">
+        <Card className="mt-10 flex w-[90%] max-w-3xl bg-[#e2dfda] text-center drop-shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl">Sign in to continue</CardTitle>
             <CardDescription>
