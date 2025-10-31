@@ -35,3 +35,23 @@ export const signUpSchema = z
     message: "Passwords don't match",
     path: ["repeatPassword"],
   });
+
+const volunteerForm = z.object({
+  activitites: z.array(
+    z.enum([
+      "events",
+      "gardening",
+      "companionship",
+      "transport",
+      "kitchen help",
+      "administration",
+    ]),
+  ),
+
+  intrests: z.string().max(100).optional(),
+  skills: z.string().max(200).optional(),
+  story: z.string().max(400).optional(),
+  inspiration: z.string().max(200),
+  availability: z.string().max(50),
+  certificate: z.array(z.enum(["clearance", "childrenCheck"])),
+});
