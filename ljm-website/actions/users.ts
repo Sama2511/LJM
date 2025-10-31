@@ -4,7 +4,7 @@ import { createClient } from "@/app/utils/server";
 import { signUpSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { z } from "zod";
+import { email, z } from "zod";
 
 export async function login(formData: FormData) {
   const supabase = await createClient();
@@ -27,21 +27,36 @@ export async function login(formData: FormData) {
 export async function signup(formData: z.infer<typeof signUpSchema>) {
   const supabase = await createClient();
 
-  const data = {
+  const userInfo = {
     email: formData.email as string,
     password: formData.password as string,
   };
 
-  const { error } = await supabase.auth.signUp(data);
+  const { data, error } = await supabase.auth.signUp(userInfo);
 
   if (error) {
     redirect("/error");
   }
+  if (!error) {
+    console.log("user auth created");
+  }
 
-  //add user to database
-
+  const { error: dberror } = await supabase.from("users").insert({
+    id: data?.user?.id,
+    firstname: formData.firstname,
+    lastname: formData.lastname,
+    phonenumber: formData.phoneNumber,
+    formcompleted: false,
+  });
+  if (!dberror) {
+    console.log("user added to table");
+  }
+  if (dberror) {
+    console.log(dberror);
+    redirect("/error");
+  }
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/check-email");
 }
 
 export async function logout() {
