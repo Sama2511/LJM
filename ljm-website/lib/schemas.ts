@@ -36,17 +36,19 @@ export const signUpSchema = z
     path: ["repeatPassword"],
   });
 
-const volunteerForm = z.object({
-  activitites: z.array(
-    z.enum([
-      "events",
-      "gardening",
-      "companionship",
-      "transport",
-      "kitchen help",
-      "administration",
-    ]),
-  ),
+export const volunteerForm = z.object({
+  activitites: z
+    .array(
+      z.enum([
+        "events",
+        "gardening",
+        "companionship",
+        "transport",
+        "kitchen-help",
+        "administration",
+      ]),
+    )
+    .min(1, "Choose at least 1 option"),
 
   intrests: z.string().max(100).optional(),
   skills: z.string().max(200).optional(),
