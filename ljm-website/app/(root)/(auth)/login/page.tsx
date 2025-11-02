@@ -48,15 +48,33 @@ export default function page({
         .eq("id", user)
         .single();
 
+      if (formError) {
+        router.push("/error");
+        return;
+      }
+      if (!formProgress?.formcompleted) {
+        router.replace("/volunteerForm");
+        return;
+      }
+
       const { data: status, error: statusError } = await supabase
         .from("volunteer_form")
         .select("status")
         .eq("id", user)
         .single();
-
-      status?.status === "pending" && router.push("/confirmation");
-      status?.status === "approved" && router.push("/logged");
-      status?.status === "rejected" && router.push("/rejected");
+      if (statusError) {
+        router.push("/error");
+        return;
+      }
+      if (status?.status === "pending") {
+        router.replace("/confirmation");
+      } else if (status?.status === "approved") {
+        router.replace("/logged");
+      } else if (status?.status === "rejected") {
+        router.replace("/confirmation");
+      } else {
+        router.replace("/dashboard");
+      }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
