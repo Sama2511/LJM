@@ -37,7 +37,7 @@ export const signUpSchema = z
   });
 
 export const volunteerForm = z.object({
-  activitites: z
+  activities: z
     .array(
       z.enum([
         "events",
@@ -50,10 +50,16 @@ export const volunteerForm = z.object({
     )
     .min(1, "Choose at least 1 option"),
 
-  intrests: z.string().max(100).optional(),
+  interests: z.string().max(100).optional(),
   skills: z.string().max(200).optional(),
   story: z.string().max(400).optional(),
-  inspiration: z.string().max(200),
-  availability: z.string().max(50),
+  inspiration: z
+    .string()
+    .min(3, { message: "this field is mondatory" })
+    .max(200),
+  availability: z
+    .string()
+    .min(3, { message: "this field is mondatory" })
+    .max(100),
   certificate: z.array(z.enum(["clearance", "childrenCheck"])),
 });

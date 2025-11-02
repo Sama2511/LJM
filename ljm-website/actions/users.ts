@@ -1,7 +1,7 @@
 "use server";
 
-import { createClient } from "@/app/utils/server";
-import { signUpSchema } from "@/lib/schemas";
+import { createClient, getUser } from "@/app/utils/server";
+import { signUpSchema, volunteerForm } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { email, z } from "zod";
@@ -69,4 +69,25 @@ export async function logout() {
   }
   revalidatePath("/", "layout");
   redirect("/");
+}
+
+export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
+  const supabase = await createClient();
+  const user = await getUser();
+  const { error } = await supabase.from("volunteer_form").insert({
+    id: user?.id,
+    activities: formData.activities,
+    inspiration: formData.inspiration,
+    skills: formData.skills,
+    interests: formData.interests,
+    story: formData.story,
+    certificate: formData.certificate,
+    availability: formData.availability,
+  });
+  if (!error) {
+    console.log("volunteer form was submitted");
+  }
+  if (error) {
+    console.log(error.message);
+  }
 }

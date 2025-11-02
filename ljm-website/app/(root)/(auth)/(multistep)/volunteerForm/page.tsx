@@ -19,6 +19,8 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { volunteerSubmit } from "@/actions/users";
+import { Loader2 } from "lucide-react";
 
 export default function page() {
   // const user = getUser()
@@ -33,11 +35,11 @@ export default function page() {
   const Form = useForm<z.infer<typeof volunteerForm>>({
     resolver: zodResolver(volunteerForm),
     defaultValues: {
-      activitites: [],
+      activities: [],
       availability: "",
       inspiration: "",
       certificate: [],
-      intrests: "",
+      interests: "",
       skills: "",
       story: "",
     },
@@ -48,10 +50,13 @@ export default function page() {
       <div className="mb-10 w-full max-w-xl">
         <Card className="">
           <CardContent>
-            <form id="volunteer-form">
+            <form
+              id="volunteer-form"
+              onSubmit={Form.handleSubmit(volunteerSubmit)}
+            >
               <FieldGroup>
                 <Controller
-                  name="activitites"
+                  name="activities"
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <FieldSet className="flex gap-3">
@@ -59,13 +64,9 @@ export default function page() {
                         What kinds of activities would you like to help with?*
                       </FieldLegend>
                       {activityOptions.map((activity) => (
-                        <Field
-                          data-invalid={fieldState.invalid}
-                          orientation="horizontal"
-                        >
+                        <Field key={activity} orientation="horizontal">
                           <Checkbox
                             id={activity}
-                            {...field.value}
                             checked={field.value.includes(activity)}
                             onCheckedChange={(checked) => {
                               if (checked) {
@@ -80,17 +81,16 @@ export default function page() {
                           <FieldLabel htmlFor={activity} className="capitalize">
                             {activity}
                           </FieldLabel>
-
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
                         </Field>
                       ))}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </FieldSet>
                   )}
                 />
                 <Controller
-                  name="intrests"
+                  name="interests"
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
@@ -98,11 +98,11 @@ export default function page() {
                         className="font-semibold"
                         htmlFor={field.name}
                       >
-                        Other Volunteer interest?
+                        Other Volunteer interests?
                       </FieldLabel>
                       <Textarea
                         {...field}
-                        id="intrests"
+                        id="interests"
                         aria-invalid={fieldState.invalid}
                         placeholder="Leave us a message..."
                       />
@@ -221,7 +221,6 @@ export default function page() {
                       >
                         <Checkbox
                           id="childrenCheck"
-                          {...field.value}
                           checked={field.value.includes("childrenCheck")}
                           onCheckedChange={(checked) => {
                             if (checked) {
@@ -249,7 +248,6 @@ export default function page() {
                       >
                         <Checkbox
                           id="clearance"
-                          {...field.value}
                           checked={field.value.includes("clearance")}
                           onCheckedChange={(checked) => {
                             if (checked) {
@@ -275,7 +273,13 @@ export default function page() {
             </form>
           </CardContent>
           <CardFooter className="flex justify-end">
-            <Button type="submit">Submit</Button>
+            <Button type="submit" form="volunteer-form">
+              {Form.formState.isSubmitting ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                "submit"
+              )}
+            </Button>
           </CardFooter>
         </Card>
       </div>
