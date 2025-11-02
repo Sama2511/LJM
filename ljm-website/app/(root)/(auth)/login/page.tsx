@@ -13,8 +13,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
+import { getUser } from "@/app/utils/server";
 
 export default function page({
   className,
@@ -38,8 +39,24 @@ export default function page({
         password,
       });
       if (error) throw error;
-      // Update this route to redirect to an authenticated route. The user already has an active session.
-      router.push("/");
+
+      const user = (await supabase.auth.getUser()).data.user?.id;
+
+      const { data: formProgress, error: formError } = await supabase
+        .from("users")
+        .select("formcompleted")
+        .eq("id", user)
+        .single();
+
+      const { data: status, error: statusError } = await supabase
+        .from("volunteer_form")
+        .select("status")
+        .eq("id", user)
+        .single();
+
+      status?.status === "pending" && router.push("/confirmation");
+      status?.status === "approved" && router.push("/logged");
+      status?.status === "rejected" && router.push("/rejected");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");
     } finally {
