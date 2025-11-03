@@ -91,3 +91,18 @@ export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
     console.log(error.message);
   }
 }
+// export default async function userStatus() {
+//   const supabase = await createClient();
+//   const user = await getUser();
+
+//   const { data, error } = await supabase
+//     .from("users")
+//     .select("status")
+//     .eq("id", user?.id);
+
+//   console.log(data);
+//   if (error) {
+//     console.log(error);
+//   }
+//   return user?.id;
+// }
