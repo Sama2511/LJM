@@ -40,7 +40,7 @@ export default function page({
       if (error) throw error;
 
       const user = (await supabase.auth.getUser()).data.user?.id;
-
+      console.log(user);
       const { data: formProgress, error: formError } = await supabase
         .from("users")
         .select("formcompleted")
@@ -68,9 +68,9 @@ export default function page({
       if (status?.status === "pending") {
         router.replace("/confirmation");
       } else if (status?.status === "approved") {
-        router.replace("/logged");
+        router.replace("/contact");
       } else if (status?.status === "rejected") {
-        router.replace("/confirmation");
+        router.replace("/rejected");
       } else {
         router.replace("/dashboard");
       }

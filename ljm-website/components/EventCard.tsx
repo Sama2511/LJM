@@ -31,7 +31,7 @@ export function EventCard({
 }: Props) {
   return (
     <>
-      <Card className="flex w-[280px] gap-2 border-1 border-black bg-[#E2DFDA] drop-shadow-xl">
+      <Card className="bg-muted flex w-[280px] gap-2 border-1 border-black drop-shadow-xl">
         <CardHeader className="relative">
           <div className="">
             {imageUrl ? (
@@ -67,7 +67,9 @@ export function EventCard({
           </div>
         </CardHeader>
         <CardContent>
-          <CardTitle className="mb-1 text-xl text-[#3E5F44]">{title}</CardTitle>
+          <CardTitle className="text-foreground mb-1 text-xl">
+            {title}
+          </CardTitle>
           <div className="mb-3 flex items-center gap-1 text-sm">
             <MapPin className="size-4" />
             {location}

@@ -14,7 +14,7 @@ function Header() {
   };
 
   return (
-    <nav className="@container flex flex-col bg-[#3e5f44] p-4 text-white">
+    <nav className="@container sticky top-0 z-50 bg-[#3e5f44] p-4 text-white">
       <div className="flex items-center justify-between gap-5 @[600]:flex-row @[1000]:mx-auto @[1000]:w-full @[1000]:max-w-[90%] @[1200]:max-w-[80%]">
         <Link href="/">
           <Image
@@ -26,15 +26,8 @@ function Header() {
           />
         </Link>
         <div className="flex items-center gap-5">
-          {/* <Button asChild>
-            <Link href="/donate" className="border-[1px] border-white">
-              <span className="flex items-center justify-center bg-[#5e936c] text-[14px] @[600]:px-4 @[600]:text-[18px]">
-                Donate
-              </span>
-            </Link>
-          </Button> */}
-          <div className="animate-rotate-border w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-[#5e936c] from-80% via-white via-90% to-[#5e936c] to-100% p-px">
-            <Button className="rounded-lg border border-[#5e936c] bg-[#5e936c] px-4 text-center font-mono text-[16px] font-bold @[600]:px-10 @[600]:text-[22px]">
+          <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-px">
+            <Button className="border-primary bg-primary rounded-lg border px-4 text-center font-mono text-[16px] font-bold @[600]:px-10 @[600]:text-[22px]">
               Donate
             </Button>
           </div>

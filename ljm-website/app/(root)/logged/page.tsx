@@ -15,14 +15,9 @@ export default async function page() {
   console.log(data);
   return (
     <div>
-      {user ? (
-        <>
-          <p>user is logged in with id: {user.id}</p>
-          <Button onClick={logout}>log Out</Button>
-        </>
-      ) : (
-        <p>the user isnt logged in </p>
-      )}
+      <p>user is logged in with id: {user?.id}</p>
+      <Button onClick={logout}>log Out</Button>
+
       <div>{data?.status}</div>
       <div>{error?.message}</div>
     </div>

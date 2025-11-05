@@ -20,7 +20,7 @@ export default function Home() {
               className="w-full object-cover @[630]:hidden"
             />
             <h1
-              className="absolute top-6 left-6 max-w-[70%] text-left leading-tight font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] sm:text-[#3E5F44] @[550]:max-w-[80%] @[630]:static @[630]:max-w-[100%] @[630]:drop-shadow-[0px] @[800]:pt-[10px] @[1000]:pt-[30px] @[1200]:pt-[50px] @[1400]:pt-[2rem]"
+              className="sm:text-secondary-foreground absolute top-6 left-6 max-w-[70%] text-left leading-tight font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[550]:max-w-[80%] @[630]:static @[630]:max-w-[100%] @[630]:drop-shadow-[0px] @[800]:pt-[10px] @[1000]:pt-[30px] @[1200]:pt-[50px] @[1400]:pt-[2rem]"
               style={{ fontSize: "clamp(1.375rem, 0.5rem + 3vw, 3.438rem)" }}
             >
               Supporting Community With Compassion at Life's Most Sacred Moments
@@ -64,7 +64,7 @@ export default function Home() {
 
       <section className="bg-[#ebe0cd]">
         <div className="flex flex-col items-center gap-20">
-          <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-6xl lg:text-7xl">
+          <h1 className="text-foreground font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
             Our Services
           </h1>
           <MyCarouselServices />
@@ -77,7 +77,7 @@ export default function Home() {
         <div className="container mx-auto py-16"></div>
       </div>
       <section className="flex w-full flex-col items-center gap-20">
-        <h1 className="text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
+        <h1 className="text-secondary-foreground text-center font-serif text-5xl font-bold sm:text-7xl lg:text-8xl">
           Upcoming Events
         </h1>
         {/* <div> */}

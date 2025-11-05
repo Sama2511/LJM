@@ -38,7 +38,7 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const protectedPaths = ["/volunteerForm", "/confirmation", "/logged"];
+  const protectedPaths = ["/logged"];
 
   if (
     !user &&
