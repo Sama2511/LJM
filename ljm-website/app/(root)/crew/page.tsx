@@ -1,4 +1,4 @@
-import { getUser } from "@/app/utils/server";
+import { createClient, getUser } from "@/app/utils/server";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,10 +13,36 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function page() {
-  // const user = await getUser();
+  const user = await getUser();
 
-  // user && redirect("/logged");
+  if (user) {
+    const supabase = await createClient();
 
+    // 2. Check formcompleted
+    const { data: userData } = await supabase
+      .from("users")
+      .select("formcompleted")
+      .eq("id", user.id)
+      .single();
+
+    if (!userData?.formcompleted) {
+      redirect("/volunteerForm");
+    }
+
+    const { data: volunteerData } = await supabase
+      .from("volunteer_form")
+      .select("status")
+      .eq("id", user.id)
+      .single();
+
+    if (volunteerData?.status === "pending") {
+      redirect("/confirmation");
+    } else if (volunteerData?.status === "approved") {
+      redirect("/logged");
+    } else if (volunteerData?.status === "rejected") {
+      redirect("/rejected");
+    }
+  }
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2">
