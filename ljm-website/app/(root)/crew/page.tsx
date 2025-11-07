@@ -1,3 +1,4 @@
+import userStatus from "@/actions/users";
 import { createClient, getUser } from "@/app/utils/server";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,17 +29,13 @@ export default async function page() {
       redirect("/volunteerForm");
     }
 
-    const { data: volunteerData } = await supabase
-      .from("volunteer_form")
-      .select("status")
-      .eq("id", user.id)
-      .single();
+    const { status, error } = await userStatus();
 
-    if (volunteerData?.status === "pending") {
+    if (status === "pending") {
       redirect("/confirmation");
-    } else if (volunteerData?.status === "approved") {
+    } else if (status === "approved") {
       redirect("/dashboard/logged");
-    } else if (volunteerData?.status === "rejected") {
+    } else if (status === "rejected") {
       redirect("/rejected");
     }
   }
