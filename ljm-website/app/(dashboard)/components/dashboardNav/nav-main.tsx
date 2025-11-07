@@ -8,9 +8,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { usePathname, useRouter } from "next/navigation";
 export function NavMain({
@@ -24,20 +21,24 @@ export function NavMain({
 }) {
   const route = useRouter();
   const pathname = usePathname();
+  console.log(pathname);
   return (
     <SidebarGroup className="mt-10">
       <SidebarMenu>
         <SidebarGroupLabel>Menu</SidebarGroupLabel>
-        {items.map((item) => {
-          const isActive =
-            pathname === item.url ||
-            (pathname.startsWith(item.url) && item.url !== "/");
+        {items.map((item, index) => {
+          const isActive = pathname === item.url;
           return (
             <SidebarMenuItem
-              className={isActive ? "bg-chart-2 rounded-lg text-white" : ""}
+              key={index}
+              className={`rounded-lg transition duration-300 ease-in-out ${
+                isActive
+                  ? "bg-chart-2 pointer-events-none text-white"
+                  : "hover:bg-accent hover:scale-[1.05]"
+              }`}
             >
               <SidebarMenuButton
-                className="h-[50px] cursor-pointer"
+                className="flex h-[50px] cursor-pointer"
                 tooltip={item.title}
                 onClick={() => route.push(item.url)}
               >
