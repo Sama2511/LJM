@@ -18,7 +18,6 @@ export default async function page() {
   if (user) {
     const supabase = await createClient();
 
-    // 2. Check formcompleted
     const { data: userData } = await supabase
       .from("users")
       .select("formcompleted")
@@ -38,14 +37,14 @@ export default async function page() {
     if (volunteerData?.status === "pending") {
       redirect("/confirmation");
     } else if (volunteerData?.status === "approved") {
-      redirect("/logged");
+      redirect("/dashboard/logged");
     } else if (volunteerData?.status === "rejected") {
       redirect("/rejected");
     }
   }
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex h-screen flex-col items-center gap-2">
         <div className="w-[90%]">
           <h1 className="mt-15 text-center font-serif text-3xl font-bold text-[#157A4E] lg:text-4xl">
             Welcome to the volunteer Portal
@@ -55,7 +54,7 @@ export default async function page() {
             in end-of-life care.
           </p>
         </div>
-        <Card className="mt-10 flex w-[90%] max-w-3xl bg-[#e2dfda] text-center drop-shadow-xl">
+        <Card className="bg-muted mt-10 flex w-[90%] max-w-3xl text-center drop-shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl">Sign in to continue</CardTitle>
             <CardDescription>

@@ -14,7 +14,7 @@ export default async function page() {
     .single();
   console.log(data);
   return (
-    <div>
+    <div className="min-h-[90svh]">
       <p>user is logged in with id: {user?.id}</p>
       <Button onClick={logout}>log Out</Button>
 

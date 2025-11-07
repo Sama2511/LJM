@@ -23,7 +23,6 @@ import { volunteerSubmit } from "@/actions/users";
 import { Loader2 } from "lucide-react";
 
 export default function page() {
-  // const user = getUser()
   const activityOptions = [
     "events",
     "gardening",

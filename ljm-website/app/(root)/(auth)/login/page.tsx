@@ -82,7 +82,7 @@ export default function page({
   };
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <div className="mt-20 flex min-h-svh w-full justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
         <div className={cn("flex flex-col gap-6", className)} {...props}>
           <Card className="mx-w-[300px] bg-[#e2dfda]">

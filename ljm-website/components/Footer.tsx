@@ -153,7 +153,7 @@ function Footer() {
 
         <div className="mt-8 border-t border-white/20 pt-6 text-center text-sm text-gray-300">
           <p>
-            &copy; {new Date().getFullYear()} Organization Name. All rights
+            &copy; {new Date().getFullYear()} Liam James McLaughlin. All rights
             reserved.
           </p>
         </div>

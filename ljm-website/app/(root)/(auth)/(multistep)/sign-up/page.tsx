@@ -34,7 +34,7 @@ export default function page() {
   return (
     <div className="mt-5 flex min-h-svh w-full justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
-        <Card className="mx-w-[300px] bg-[#e2dfda]">
+        <Card className="mx-w-[300px] bg-card">
           <CardContent>
             <form id="signupForm" onSubmit={signupForm.handleSubmit(signup)}>
               <FieldGroup>
