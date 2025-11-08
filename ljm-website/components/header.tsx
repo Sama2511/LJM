@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { X } from "lucide-react";
+import { Card } from "./ui/card";
+import SearchBar from "./SearchBar";
 
 function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -25,6 +27,8 @@ function Header() {
             className="w-[280px] @[600]:w-[300px] @[1100]:w-[350px]"
           />
         </Link>
+        <SearchBar />
+
         <div className="flex items-center gap-5">
           <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-px">
             <Button className="border-primary bg-primary rounded-lg border px-4 text-center font-mono text-[16px] font-bold @[600]:px-10 @[600]:text-[22px]">

@@ -32,7 +32,7 @@ function ServiceCard({ icon: Icon, title, description }: ServiceCardProps) {
 
       <CardFooter className="mt-auto flex justify-center pt-1">
         <Button asChild variant="outline">
-          <Link href="/service" className="text-black">
+          <Link href="/services" className="text-black">
             More Details
           </Link>
         </Button>
