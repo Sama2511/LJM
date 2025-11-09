@@ -16,7 +16,7 @@ function Header() {
   };
 
   return (
-    <nav className="@container sticky top-0 z-50 bg-[#3e5f44] p-4 text-white">
+    <nav className="@container sticky top-0 z-50 bg-[#4d7555] p-4 text-white">
       <div className="flex items-center justify-between gap-5 @[600]:flex-row @[1000]:mx-auto @[1000]:w-full @[1000]:max-w-[90%] @[1200]:max-w-[80%]">
         <Link href="/">
           <Image

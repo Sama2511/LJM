@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function ArticleCard() {
   return (
-    <div className="m-auto mb-10 flex w-[300px] flex-col items-start gap-5">
+    <div className="bg-muted border-foreground m-auto mb-10 flex w-[300px] flex-col items-start gap-5 rounded-xl border-1 p-4 shadow-lg">
       <Image
         alt="image of the article"
         src="/dummy-image-square8.png"
@@ -13,7 +13,7 @@ export default function ArticleCard() {
         height={310}
       />
       <div>
-        <h1 className="text-[22px] text-[#4C7F5D]">Article's Title</h1>
+        <h1 className="text-foreground text-[22px]">Article's Title</h1>
         <p className="text-md mt-1 line-clamp-4">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua ...

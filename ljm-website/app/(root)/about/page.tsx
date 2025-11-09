@@ -11,17 +11,17 @@ export default function AboutUspage() {
   return (
     <div>
       <section className="@container mt-10 flex justify-center p-5">
-        <div className="gap- grid w-full max-w-[350px] gap-2 font-[700] @[700px]:max-w-[750px] @[700px]:grid-cols-2">
+        <div className="gap- grid w-full max-w-[350px] gap-2 font-[700] @[700px]:max-w-[850px] @[700px]:grid-cols-2">
           <div className="w-full space-y-3 rounded-3xl bg-[#e2ddb4] p-5 text-center @[700px]:col-span-2">
-            <h1 className="text-3xl font-semibold text-[#3E5F44]">
-              Our Origin story
+            <h1 className="text-2xl font-semibold text-[#3E5F44]">
+              Our origin story
             </h1>
             <div
               className={`overflow-hidden transition-all duration-300 @[700px]:max-h-none ${
                 isOpen ? "max-h-none" : "max-h-40"
               }`}
             >
-              <p>
+              <p className="font-medium">
                 LJM Memorial Hospice exists because of the way our community
                 showed up when it mattered most. When my husband Liam was dying
                 of brain cancer, it was the people around us—friends,
@@ -64,10 +64,10 @@ export default function AboutUspage() {
           </div>
 
           <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-[#A2AF9B] p-5 text-center">
-            <h1 className="text-3xl font-semibold text-[#3E5F44]">
+            <h1 className="text-2xl font-semibold text-[#3E5F44]">
               Our Vision
             </h1>
-            <p>
+            <p className="font-medium">
               "Empathetic, humane and family-oriented not-for-profit hospice
               care for people of all demographics." We know the impact that poor
               quality end of life care can have on the health of the patient as
@@ -77,10 +77,10 @@ export default function AboutUspage() {
           </div>
 
           <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-[#D3DAD9] p-5 text-center">
-            <h1 className="text-3xl font-semibold text-[#3E5F44]">
+            <h1 className="text-2xl font-semibold text-[#3E5F44]">
               Our mission
             </h1>
-            <p>
+            <p className="font-medium">
               LJM Memorial Hospice was established in 2018 by Kate McLaughlin.
               Kate wanted to find a way to give back to the WA community after
               they had provided so much support to her husband Liam when he
@@ -98,8 +98,8 @@ export default function AboutUspage() {
           </div>
 
           <div className="w-full space-y-3 rounded-3xl bg-[#D6DAC8] p-5 text-center @[700px]:col-span-2">
-            <h1 className="text-3xl font-semibold text-[#3E5F44]">About Us</h1>
-            <p>
+            <h1 className="text-2xl font-semibold text-[#3E5F44]">About Us</h1>
+            <p className="font-medium">
               LJM Memorial Hospice was established in 2018 by Kate McLaughlin.
               Kate wanted to find a way to give back to the WA community after
               they had provided so much support to her husband Liam when he
@@ -117,7 +117,7 @@ export default function AboutUspage() {
       </div>
       {/* gradient background */}
       <section className="flex flex-col items-center gap-4 bg-[#ebe0cd]">
-        <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-7xl">
+        <h1 className="text-foreground font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
           Our Values
         </h1>
         <h2 className="max-w-[90%] text-center text-xl">
@@ -130,7 +130,7 @@ export default function AboutUspage() {
               <h3 className="mb-3 text-2xl font-semibold text-[#3E5F44]">
                 Connection
               </h3>
-              <p className="text-gray-700">
+              <p className="text-foreground">
                 From child to elder, patient to family member, nurse to
                 volunteer—everyone belongs. We design spaces and experiences
                 that encourage togetherness.
@@ -142,7 +142,7 @@ export default function AboutUspage() {
               <h3 className="mb-3 text-2xl font-semibold text-[#3E5F44]">
                 Choice{" "}
               </h3>
-              <p className="text-gray-700">
+              <p className="text-foreground">
                 End-of-life care should reflect the values and wishes of the
                 individual. We advocate for more options—spaces that feel like
                 home, moments shared with loved ones, and the freedom to shape
@@ -155,7 +155,7 @@ export default function AboutUspage() {
               <h3 className="mb-3 text-2xl font-semibold text-[#3E5F44]">
                 Community{" "}
               </h3>
-              <p className="text-gray-700">
+              <p className="text-foreground">
                 We believe healing and comfort are made possible through human
                 connection. Our community is at the heart of everything—our
                 supporters, volunteers, neighbours, and the families we serve.
@@ -167,7 +167,7 @@ export default function AboutUspage() {
               <h3 className="mb-3 text-2xl font-semibold text-[#3E5F44]">
                 Dignity{" "}
               </h3>
-              <p className="text-gray-700">
+              <p className="text-foreground">
                 Every person deserves to feel seen, heard, and valued—especially
                 at the end of life. We prioritise respect, gentleness, and care
                 for all.
@@ -184,7 +184,7 @@ export default function AboutUspage() {
         <div className="container mx-auto py-16"></div>
       </div>
       <section className="@container mx-auto max-w-[95%] px-4 py-12">
-        <h1 className="mb-12 text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
+        <h1 className="text-foreground mb-12 text-center font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
           Meet Our Team
         </h1>
         <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-5">

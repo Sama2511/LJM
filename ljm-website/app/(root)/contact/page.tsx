@@ -13,7 +13,7 @@ import { Card } from "@/components/ui/card";
 export default function page() {
   return (
     <div className="m-auto max-w-[90%] py-10">
-      <h1 className="mt-10 text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-6xl lg:text-7xl">
+      <h1 className="text-foreground mt-10 text-center font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
         Get in touch
       </h1>
 

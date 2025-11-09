@@ -43,7 +43,7 @@ export default async function page() {
     <>
       <div className="flex h-screen flex-col items-center gap-2">
         <div className="w-[90%]">
-          <h1 className="mt-15 text-center font-serif text-3xl font-bold text-[#157A4E] lg:text-4xl">
+          <h1 className="text-foreground mt-15 text-center font-serif text-3xl font-bold lg:text-4xl">
             Welcome to the volunteer Portal
           </h1>
           <p className="mt-2 text-center">
@@ -53,7 +53,9 @@ export default async function page() {
         </div>
         <Card className="bg-muted mt-10 flex w-[90%] max-w-3xl text-center drop-shadow-xl">
           <CardHeader>
-            <CardTitle className="text-2xl">Sign in to continue</CardTitle>
+            <CardTitle className="text-foreground text-2xl">
+              Sign in to continue
+            </CardTitle>
             <CardDescription>
               Access your volunteer dashboard and manage your commitments
             </CardDescription>

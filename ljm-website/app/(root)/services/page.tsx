@@ -3,17 +3,24 @@ import React from "react";
 export default function page() {
   return (
     <>
-      <div className="flex w-full flex-col text-white">
-        <h1 className="my-10 text-center font-serif text-5xl font-bold text-[#157A4E] sm:text-6xl lg:text-7xl">
-          Services
-        </h1>
+      <div className="flex h-screen w-full flex-col text-white">
+        <div className="mb-20 space-y-[16px]">
+          <h1 className="text-foreground mt-10 text-center font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
+            Services
+          </h1>
+          <h2 className="text-foreground m-auto max-w-[90%] text-center text-xl">
+            Community-Led Care for Life's Final Chapter
+          </h2>
+        </div>
         {/* --- Section 1 --- */}
-        <div className="group relative min-h-[150px] overflow-hidden rounded-none bg-[url(/bgPic1.png)] bg-cover bg-center text-center transition-all duration-700 ease-in-out lg:hover:min-h-[400px]">
-          <div className="absolute inset-0 bg-black/30 transition-colors duration-700 ease-in-out lg:group-hover:bg-black/50"></div>
+        <div className="group relative min-h-[150px] overflow-hidden rounded-none bg-[url(/servicePic.jpg)] bg-cover bg-center text-center transition-all duration-700 ease-in-out lg:hover:min-h-[400px]">
+          <div className="absolute inset-0 bg-green-700/10 transition-colors duration-700 ease-in-out lg:group-hover:bg-green-700/20"></div>
 
-          <h3 className="relative z-10 mt-10 text-center text-3xl font-bold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 ease-in-out lg:text-5xl">
-            Advanced Care Planning
-          </h3>
+          <div className="mt-10 text-center">
+            <h3 className="relative z-10 text-3xl font-bold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)] lg:text-5xl">
+              Advanced Care Planning
+            </h3>
+          </div>
 
           <p className="relative z-10 mx-auto flex items-center justify-center p-10 px-7 text-center leading-loose text-white drop-shadow-[3px_3px_4.4px_#000000] transition-all duration-700 ease-in-out lg:absolute lg:inset-0 lg:mt-5 lg:max-w-[75%] lg:translate-y-full lg:pt-20 lg:text-lg lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
             We believe that every individual deserves to have their end-of-life
@@ -31,8 +38,8 @@ export default function page() {
           </p>
         </div>
 
-        <div className="group relative min-h-[150px] overflow-hidden rounded-none bg-[url(/bgPic2.png)] bg-cover bg-center text-center transition-all duration-700 ease-in-out lg:hover:min-h-[350px]">
-          <div className="absolute inset-0 bg-black/30 transition-colors duration-700 ease-in-out lg:group-hover:bg-black/50"></div>
+        <div className="group relative min-h-[150px] overflow-hidden rounded-none bg-[url(/compassionate.png)] bg-cover bg-center text-center transition-all duration-700 ease-in-out lg:hover:min-h-[350px]">
+          <div className="absolute inset-0 bg-green-700/20 transition-colors duration-700 ease-in-out lg:group-hover:bg-green-700/15"></div>
 
           <h3 className="relative z-10 mt-10 text-center text-3xl font-bold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 ease-in-out lg:text-5xl">
             Conpassionate Communities
@@ -50,8 +57,8 @@ export default function page() {
           </p>
         </div>
 
-        <div className="group relative min-h-[150px] overflow-hidden rounded-none bg-[url(/bgPic3.png)] bg-cover bg-center text-center transition-all duration-700 ease-in-out lg:hover:min-h-[300px]">
-          <div className="absolute inset-0 bg-black/30 transition-colors duration-700 ease-in-out lg:group-hover:bg-black/50"></div>
+        <div className="group relative min-h-[150px] overflow-hidden rounded-none bg-[url(/Rectangle120.png)] bg-cover bg-center text-center transition-all duration-700 ease-in-out lg:hover:min-h-[300px]">
+          <div className="absolute inset-0 bg-green-700/20 transition-colors duration-700 ease-in-out lg:group-hover:bg-green-700/15"></div>
 
           <h3 className="relative z-10 mt-10 text-center text-3xl font-bold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)] transition-all duration-700 ease-in-out lg:text-5xl">
             Death cafes

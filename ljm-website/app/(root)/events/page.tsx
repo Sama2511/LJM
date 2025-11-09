@@ -5,7 +5,7 @@ export default function page() {
   return (
     <section className="my-10 flex w-full flex-col items-center gap-6">
       <div className="mb-10 flex flex-col items-center">
-        <h1 className="font-serif text-5xl font-bold text-[#157A4E] sm:text-7xl lg:text-8xl">
+        <h1 className="text-foreground font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
           Events
         </h1>
         <h2 className="mt-5 max-w-[90%] text-center text-xl">
