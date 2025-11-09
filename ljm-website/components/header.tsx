@@ -27,20 +27,22 @@ function Header() {
             className="w-[280px] @[600]:w-[300px] @[1100]:w-[350px]"
           />
         </Link>
-        <SearchBar />
+        <div className="flex gap-5">
+          <SearchBar />
 
-        <div className="flex items-center gap-5">
-          <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-px">
-            <Button className="border-primary bg-primary rounded-lg border px-4 text-center font-mono text-[16px] font-bold @[600]:px-10 @[600]:text-[22px]">
-              Donate
-            </Button>
-          </div>
+          <div className="flex items-center gap-5">
+            <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-px">
+              <Button className="border-primary bg-primary rounded-lg border px-4 text-center font-mono text-[16px] font-bold @[600]:px-10 @[600]:text-[22px]">
+                Donate
+              </Button>
+            </div>
 
-          <div
-            onClick={handleNav}
-            className="flex cursor-pointer items-center justify-end @[600]:hidden"
-          >
-            <Menu width={30} height={30} className="text-gray-400" />
+            <div
+              onClick={handleNav}
+              className="flex cursor-pointer items-center justify-end @[600]:hidden"
+            >
+              <Menu width={30} height={30} className="text-gray-400" />
+            </div>
           </div>
         </div>
       </div>

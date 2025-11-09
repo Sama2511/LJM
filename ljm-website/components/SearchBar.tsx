@@ -13,15 +13,16 @@ export default function SearchCommand() {
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <div className="hidden sm:flex">
       <Button
         onClick={() => setOpen(true)}
-        className="flex items-center justify-center"
+        className="flex items-center justify-center border-1"
+        variant="ghost"
       >
         <Search style={{ width: 22, height: 22 }} />
         <input
-          className="w-[200px] cursor-pointer"
-          placeholder="Search events,articles..."
+          className="text-md w-[90px] cursor-pointer"
+          placeholder="Search..."
         />
       </Button>
 
@@ -29,6 +30,6 @@ export default function SearchCommand() {
         <CommandInput placeholder="Search..." />
         <CommandList></CommandList>
       </CommandDialog>
-    </>
+    </div>
   );
 }
