@@ -64,13 +64,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <div className="flex">
             <img
               src="/image14.png"
-              width={45}
-              height={45}
+              width={50}
+              height={30}
               className="rounded-md"
             />
             <div className="ml-[6px] grid text-left text-sm leading-tight">
-              <span className="truncate font-bold">Memorial Hospital</span>
-              <span className="truncate font-medium">Volunteer portal</span>
+              <span className="truncate text-lg font-bold">
+                Memorial Hospital
+              </span>
+              <span className="truncate font-medium">Admin portal</span>
             </div>
           </div>
         </SidebarMenuItem>

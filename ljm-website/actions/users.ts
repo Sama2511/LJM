@@ -6,24 +6,6 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-// export async function login(formData: FormData) {
-//   const supabase = await createClient();
-
-//   const data = {
-//     email: formData.get("email") as string,
-//     password: formData.get("password") as string,
-//   };
-
-//   const { error } = await supabase.auth.signInWithPassword(data);
-
-//   if (error) {
-//     redirect("/error");
-//   }
-
-//   revalidatePath("/", "layout");
-//   redirect("/logged");
-// }
-
 export async function signup(formData: z.infer<typeof signUpSchema>) {
   const supabase = await createClient();
 
@@ -39,24 +21,24 @@ export async function signup(formData: z.infer<typeof signUpSchema>) {
   }
   if (!error) {
     console.log("user auth created");
-  }
 
-  const { error: dberror } = await supabase.from("users").insert({
-    id: data?.user?.id,
-    firstname: formData.firstname,
-    lastname: formData.lastname,
-    phonenumber: formData.phoneNumber,
-    formcompleted: false,
-  });
-  if (!dberror) {
-    console.log("user added to table");
+    const { error: dberror } = await supabase.from("users").insert({
+      id: data?.user?.id,
+      firstname: formData.firstname,
+      lastname: formData.lastname,
+      phonenumber: formData.phoneNumber,
+      formcompleted: false,
+    });
+    if (!dberror) {
+      console.log("user added to table");
+    }
+    if (dberror) {
+      console.log(dberror);
+      redirect("/error");
+    }
+    revalidatePath("/", "layout");
+    redirect("/check-email");
   }
-  if (dberror) {
-    console.log(dberror);
-    redirect("/error");
-  }
-  revalidatePath("/", "layout");
-  redirect("/check-email");
 }
 
 export async function logout() {

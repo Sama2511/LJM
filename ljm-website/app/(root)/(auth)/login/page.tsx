@@ -54,6 +54,9 @@ export default function page({
       if (!formProgress?.formcompleted) {
         router.replace("/volunteerForm");
         return;
+      } else if (formProgress?.formcompleted) {
+        router.replace("/confirmation");
+        return;
       }
 
       const { data: status, error: statusError } = await supabase
@@ -85,7 +88,7 @@ export default function page({
     <div className="mt-20 flex min-h-svh w-full justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
         <div className={cn("flex flex-col gap-6", className)} {...props}>
-          <Card className="mx-w-[300px] bg-[#e2dfda]">
+          <Card className="mx-w-[300px] bg-muted">
             <CardHeader>
               <CardTitle className="text-2xl">Login</CardTitle>
               <CardDescription>

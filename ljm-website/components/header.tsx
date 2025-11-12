@@ -31,7 +31,7 @@ function Header() {
           <SearchBar />
 
           <div className="flex items-center gap-5">
-            <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-px">
+            <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-[2px]">
               <Button className="border-primary bg-primary rounded-lg border px-4 text-center font-mono text-[16px] font-bold @[600]:px-10 @[600]:text-[22px]">
                 Donate
               </Button>
