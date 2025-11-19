@@ -22,7 +22,7 @@ export default function page() {
         <Card className="m-auto my-10 mt-30 h-fit w-fit border-1 p-10">
           <h2 className="text-xl font-semibold text-[#157A4E]">Chat with us</h2>
           <ul className="mb-10 space-y-3">
-            <li className="flex gap-3">
+            <li className="flex gap-3 ">
               <Phone />
               +91 0000 0000
             </li>

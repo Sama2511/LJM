@@ -6,11 +6,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="font-sans">
-        <DashNav />
-        {children}
-      </body>
-    </html>
+    <div className="font-sans">
+      <DashNav />
+      {children}
+    </div>
   );
 }
