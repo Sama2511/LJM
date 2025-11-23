@@ -12,17 +12,17 @@ import { Card } from "@/components/ui/card";
 
 export default function page() {
   return (
-    <div className="m-auto max-w-[90%] py-10">
-      <h1 className="text-foreground mt-10 text-center font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
+    <div className="font-chillax m-auto h-screen max-w-[90%] py-10">
+      <h1 className="text-foreground mt-10 text-center text-5xl font-medium sm:text-6xl lg:text-7xl">
         Get in touch
       </h1>
 
       <section className="m-auto max-w-[900px] gap-20 md:flex md:gap-5 lg:gap-30">
         <ContactForm />
-        <Card className="m-auto my-10 mt-30 h-fit w-fit border-1 p-10">
+        <Card className="bg-muted m-auto my-10 mt-30 h-fit w-fit border-1 p-10">
           <h2 className="text-xl font-semibold text-[#157A4E]">Chat with us</h2>
           <ul className="mb-10 space-y-3">
-            <li className="flex gap-3 ">
+            <li className="flex gap-3">
               <Phone />
               +91 0000 0000
             </li>

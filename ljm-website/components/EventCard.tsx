@@ -31,7 +31,7 @@ export function EventCard({
 }: Props) {
   return (
     <>
-      <Card className="bg-muted flex w-[280px] gap-2 border-1 border-black drop-shadow-xl">
+      <Card className="bg-muted font-chillax flex w-[285px] gap-2 border-1 border-black drop-shadow-xl">
         <CardHeader className="relative">
           <div className="">
             {imageUrl ? (

@@ -6,7 +6,6 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Menu, Search } from "lucide-react";
 import { X } from "lucide-react";
-import { Card } from "./ui/card";
 import SearchBar from "./SearchBar";
 
 function Header() {
@@ -16,7 +15,7 @@ function Header() {
   };
 
   return (
-    <nav className="@container sticky top-0 z-50 bg-[#4d7555] p-4 text-white">
+    <nav className="font-chillax @container sticky top-0 z-50 bg-[#4d7555] p-4 text-white">
       <div className="flex items-center justify-between gap-5 @[600]:flex-row @[1000]:mx-auto @[1000]:w-full @[1000]:max-w-[90%] @[1200]:max-w-[80%]">
         <Link href="/">
           <Image
@@ -32,7 +31,7 @@ function Header() {
 
           <div className="flex items-center gap-5">
             <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-[2px]">
-              <Button className="border-primary bg-primary rounded-lg border px-4 text-center font-mono text-[16px] font-bold @[600]:px-10 @[600]:text-[22px]">
+              <Button className="border-primary bg-primary rounded-lg border px-4 text-center text-[16px] font-medium @[600]:px-10 @[600]:text-[22px]">
                 Donate
               </Button>
             </div>

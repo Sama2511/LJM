@@ -57,7 +57,7 @@ export default function ContactForm() {
   }
 
   return (
-    <Card className="m-auto mt-20 w-full sm:max-w-md">
+    <Card className="bg-muted m-auto mt-20 w-full sm:max-w-md">
       <CardContent>
         <form id="contact-form" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>

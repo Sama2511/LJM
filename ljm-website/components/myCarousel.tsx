@@ -12,7 +12,7 @@ import { RockingChair, Coffee, Users } from "lucide-react";
 function MyCarouselServices() {
   return (
     <Carousel
-      className="m-auto w-[250px] sm:w-[550px] lg:w-[850px]"
+      className="font-chillax m-auto w-[250px] sm:w-[550px] lg:w-[850px]"
       opts={{
         align: "start",
       }}
