@@ -9,8 +9,8 @@ import {
   ShipWheelIcon,
 } from "lucide-react";
 
-import { NavMain } from "@/app/(dashboard)/components/dashboardNav/nav-main";
-import { NavUser } from "@/app/(dashboard)/components/dashboardNav/nav-user";
+import { NavMain } from "@/app/(root)/(admin)/components/dashboardNav/nav-main";
+import { NavUser } from "@/app/(root)/(admin)/components/dashboardNav/nav-user";
 import {
   Sidebar,
   SidebarContent,

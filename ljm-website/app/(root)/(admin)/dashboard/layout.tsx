@@ -1,5 +1,5 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/app/(dashboard)/components/dashboardNav/dash-sidebar";
+import { AppSidebar } from "@/app/(root)/(admin)/components/dashboardNav/dash-sidebar";
 import "@/app/globals.css";
 export default function RootLayout({
   children,
