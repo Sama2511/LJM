@@ -8,10 +8,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    // console.log("📦 Received body:", body);
 
     const validatedData = formSchema.parse(body);
-    // console.log("✅ Validated data:", validatedData);
 
     const { data, error } = await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",
@@ -32,8 +30,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, data });
   } catch (error) {
-    // console.error("❌ Send route error:", error);
-
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 400 });
     }

@@ -25,7 +25,7 @@ export default function Home() {
               Supporte With Compassion at Life's Most Sacred Moments
             </h1>
           </div>
-          <p className="text-foreground/80 font-chillax mt-4 max-w-[90%] text-center text-base @[630]:max-w-[85%] @[630]:text-left @[800]:text-lg @[1000]:max-w-[80%] @[1000]:text-xl @[1200]:max-w-[75%]">
+          <p className="text-foreground/80 font-chillax mt-4 max-w-[90%] text-center font-sans text-base @[630]:max-w-[85%] @[630]:text-left @[800]:text-lg @[1000]:max-w-[80%] @[1000]:text-xl @[1200]:max-w-[75%]">
             Providing dignified end-of-life care, grief support, and community
             resources to families during their most challenging times.
           </p>
@@ -59,7 +59,7 @@ export default function Home() {
       </section>
 
       <div
-        className="h-50 bg-gradient-to-b from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
+        className="font-ch h-50 bg-gradient-to-b from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>

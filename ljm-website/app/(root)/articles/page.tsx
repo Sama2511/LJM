@@ -6,9 +6,9 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="@container flex flex-col items-center">
+    <div className="font-chillax @container flex h-screen flex-col items-center">
       <div className="mb-20 flex flex-col items-center">
-        <h1 className="text-foreground mt-10 font-serif text-4xl font-bold sm:text-6xl lg:text-7xl">
+        <h1 className="text-foreground mt-10 text-4xl font-medium sm:text-6xl lg:text-7xl">
           Articles
         </h1>
         <h2 className="mt-5 max-w-[85%] text-center text-lg">

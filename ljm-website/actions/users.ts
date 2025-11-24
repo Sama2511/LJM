@@ -33,7 +33,7 @@ export async function signup(formData: z.infer<typeof signUpSchema>) {
       console.log("user added to table");
     }
     if (dberror) {
-      console.log(dberror);
+      console.log(`this is the an insert error: ${dberror.message}`);
       redirect("/error");
     }
     revalidatePath("/", "layout");
@@ -56,8 +56,13 @@ export async function logout() {
 export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
   const supabase = await createClient();
   const user = await getUser();
-  const { error } = await supabase.from("volunteer_form").insert({
-    id: user?.id,
+  console.log(user?.id);
+  if (!user) {
+    redirect("/error");
+  }
+
+  const { error: insertError } = await supabase.from("volunteer_form").insert({
+    id: user.id,
     activities: formData.activities,
     inspiration: formData.inspiration,
     skills: formData.skills,
@@ -66,12 +71,25 @@ export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
     certificate: formData.certificate,
     availability: formData.availability,
   });
-  if (!error) {
-    console.log("volunteer form was submitted");
+
+  if (insertError) {
+    console.error("Insert error:", insertError.message);
+    redirect("/error");
   }
-  if (error) {
-    console.log(error.message);
+
+  console.log("Volunteer form submitted successfully");
+
+  const { error: updateError } = await supabase
+    .from("users")
+    .update({ formcompleted: true })
+    .eq("id", user.id);
+
+  if (updateError) {
+    console.error("Update error:", updateError.message);
+    redirect("/error");
   }
+
+  redirect("/confirmation");
 }
 export default async function userStatus() {
   const supabase = await createClient();
