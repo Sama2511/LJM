@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import "@/app/globals.css";
-import Header from "@/components/Header";
+import "@/app/(root)/globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import Footer from "@/components/Footer";
 import localFont from "next/font/local";
 
 const chillax = localFont({
@@ -54,9 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${chillax.variable}`}>
-        <Header />
         {children}
-        <Footer />
         <Toaster />
       </body>
     </html>

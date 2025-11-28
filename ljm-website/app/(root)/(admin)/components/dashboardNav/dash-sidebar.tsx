@@ -18,7 +18,6 @@ import {
   SidebarHeader,
   SidebarMenuItem,
   SidebarRail,
-  SidebarSeparator,
 } from "@/components/ui/sidebar";
 
 const data = {
@@ -58,7 +57,11 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar
+      collapsible="icon"
+      className="sticky top-[120px] h-[calc(100vh-120px)] self-start overflow-y-auto"
+      {...props}
+    >
       <SidebarHeader className="border-b-2 py-5">
         <SidebarMenuItem>
           <div className="flex">

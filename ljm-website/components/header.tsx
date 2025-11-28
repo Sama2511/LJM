@@ -8,7 +8,7 @@ import { Menu, Search } from "lucide-react";
 import { X } from "lucide-react";
 import SearchBar from "./SearchBar";
 
-function Header() {
+export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const handleNav = () => {
     setIsOpen(!isOpen);
@@ -136,4 +136,3 @@ function Header() {
     </nav>
   );
 }
-export default Header;

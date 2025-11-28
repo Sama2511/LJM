@@ -1,22 +1,23 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/app/(root)/(admin)/components/dashboardNav/dash-sidebar";
-import "@/app/globals.css";
-export default function RootLayout({
+import "@/app/(root)/globals.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html>
-      <body className="font-sans">
-        <SidebarProvider className="">
-          <AppSidebar />
-          <main>
-            <SidebarTrigger />
-            {children}
-          </main>
-        </SidebarProvider>
-      </body>
-    </html>
+    <div>
+      <Header />
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarTrigger />
+        {children}
+      </SidebarProvider>
+      <Footer />
+    </div>
   );
 }
