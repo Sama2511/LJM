@@ -1,18 +1,22 @@
-import "@/app/globals.css";
-import UserSidebar from "../components/UserSidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { UserSidebar } from "@/app/(root)/(users)/components/dashboardNav/user-sidebar";
 
-export default function UserLayout({
+export default function UserDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      {/* Sidebar */}
-      <UserSidebar />
-
-      {/* Page content */}
-      <main className="flex-1 p-8">{children}</main>
-    </div>
+    <html>
+      <body className="font-sans">
+        <SidebarProvider>
+          <UserSidebar />
+          <main className="flex-1">
+            <SidebarTrigger />
+            {children}
+          </main>
+        </SidebarProvider>
+      </body>
+    </html>
   );
 }
