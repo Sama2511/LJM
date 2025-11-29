@@ -59,7 +59,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       collapsible="icon"
-      className="sticky top-[120px] h-[calc(100vh-120px)] self-start overflow-y-auto"
+      className="sticky top-[120px] h-[calc(100vh-120px)]"
       {...props}
     >
       <SidebarHeader className="border-b-2 py-5">
