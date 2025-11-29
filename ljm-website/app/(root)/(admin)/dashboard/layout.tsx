@@ -3,6 +3,7 @@ import { AppSidebar } from "@/app/(root)/(admin)/components/dashboardNav/dash-si
 import "@/app/(root)/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export default function DashboardLayout({
   children,
@@ -16,6 +17,7 @@ export default function DashboardLayout({
         <AppSidebar />
         <SidebarTrigger />
         {children}
+        <Toaster />
       </SidebarProvider>
       <Footer />
     </div>
