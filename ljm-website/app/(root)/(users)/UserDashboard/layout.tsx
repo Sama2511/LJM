@@ -7,16 +7,15 @@ export default function UserDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
-      <body className="font-sans">
-        <SidebarProvider>
-          <UserSidebar />
-          <main className="flex-1">
-            <SidebarTrigger />
-            {children}
-          </main>
-        </SidebarProvider>
-      </body>
-    </html>
+    <div className="font-chillax flex">
+      <SidebarProvider>
+        <UserSidebar />
+
+        <main className="flex-1 p-4">
+          <SidebarTrigger />
+          {children}
+        </main>
+      </SidebarProvider>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { LayoutDashboard, User, CalendarCheck2, Star, Bell } from "lucide-react";
+import { LayoutDashboard, User, CalendarCheck2, Star, Bell, Settings, CalendarDays, HeartHandshake } from "lucide-react";
 
 import { NavMain } from "./nav-main";
 import { NavUser } from "./nav-user";
@@ -32,11 +32,16 @@ const data = {
       url: "/UserDashboard/profile",
       icon: User,
     },
-    {
-      title: "My Status",
-      url: "/UserDashboard/status",
-      icon: CalendarCheck2,
-    },
+     {
+      title: "Browse Events",
+      url: "/UserDashboard/level",
+      icon: CalendarDays,
+     },
+      {
+      title: "My Volunteering",
+      url: "/UserDashboard/level",
+      icon: HeartHandshake,
+      },
     {
       title: "Volunteer Level",
       url: "/UserDashboard/level",
@@ -46,6 +51,11 @@ const data = {
       title: "Notifications",
       url: "/UserDashboard/notifications",
       icon: Bell,
+    },
+     {
+      title: "Settings",
+      url: "/UserDashboard/status",
+      icon: Settings,
     },
   ],
 };
