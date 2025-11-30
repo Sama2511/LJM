@@ -25,3 +25,16 @@ export async function CreateEvent(formData: z.infer<typeof eventForm>) {
   }
   return { success: true };
 }
+
+export async function FetchEvent() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.from("events").select("*");
+
+  if (error) {
+    console.error("Error fetching events:", error.message);
+    return { error: error.message };
+  }
+
+  return { data };
+}

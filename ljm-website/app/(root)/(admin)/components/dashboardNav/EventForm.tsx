@@ -109,7 +109,6 @@ export default function EventForm() {
           id="event-form"
           onSubmit={form.handleSubmit(async (data) => {
             const file = imageInputRef.current?.files?.[0];
-            console.log("FILE:", file);
 
             if (file) {
               try {
