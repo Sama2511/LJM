@@ -26,10 +26,8 @@ export default function EventMngtCard({
   onDelete,
 }: Props) {
   const percentage = (capacity / maxCapacity) * 100;
-
   return (
-    <div className="group max-w-[350px] overflow-hidden rounded-2xl border border-[#3E5F44]/40 bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:border-[#3E5F44] hover:shadow-xl">
-      {/* IMAGE HEADER */}
+    <div className="group bg-muted max-w-[350px] overflow-hidden rounded-2xl border border-[#3E5F44]/40 shadow-md transition-all duration-300 hover:-translate-y-2 hover:border-[#3E5F44] hover:shadow-xl">
       <div className="relative h-48 w-full overflow-hidden">
         <img
           src={image || "/dummy-image-square8.png"} //
@@ -37,10 +35,8 @@ export default function EventMngtCard({
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
 
-        {/* DARK OVERLAY */}
         <div className="absolute inset-0 bg-black/30"></div>
 
-        {/* TEXT OVER IMAGE */}
         <div className="absolute bottom-3 left-4">
           <h2 className="text-2xl font-semibold text-white drop-shadow">
             {title}
@@ -48,13 +44,11 @@ export default function EventMngtCard({
         </div>
       </div>
 
-      {/* DESCRIPTION */}
       <div className="p-6">
         <p className="mb-6 line-clamp-3 text-base text-[#3E5F44]/80">
           {description}
         </p>
 
-        {/* DETAILS */}
         <div className="mb-6 space-y-3 text-base text-[#3E5F44]">
           <div className="flex items-center gap-2">
             <Calendar className="h-5 w-5" />
@@ -72,7 +66,6 @@ export default function EventMngtCard({
           </div>
         </div>
 
-        {/* CAPACITY BAR */}
         <div>
           <p className="mb-1 text-sm text-[#3E5F44]">
             Capacity: {capacity}/{maxCapacity}
@@ -86,7 +79,6 @@ export default function EventMngtCard({
           </div>
         </div>
 
-        {/* BUTTONS */}
         <div className="mt-8 flex items-center justify-between font-semibold">
           <button
             onClick={onEdit}

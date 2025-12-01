@@ -6,14 +6,12 @@ import React from "react";
 
 export default async function page() {
   const user = await getUser();
-  const { status, error } = await userStatus();
-  console.log(status);
+  // const { status, error } = await userStatus();
   return (
     <div className="h-screen">
       <p>user is logged in with id: {user?.id}</p>
       <Button onClick={logout}>log Out</Button>
-
-      <div>{status}</div>
+      {/* {status && <div>{status}</div>} */}
     </div>
   );
 }
