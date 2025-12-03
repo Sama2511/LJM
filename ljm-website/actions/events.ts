@@ -71,3 +71,31 @@ export async function FetchEventForEdit(id: string) {
   return { data };
 }
 
+export async function UpdateEvent(
+  eventId: string,
+  formData: z.infer<typeof eventForm>,
+) {
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("events")
+    .update({
+      title: formData.title,
+      description: formData.description,
+      date: formData.date,
+      starts_at: formData.starts_at,
+      ends_at: formData.ends_at,
+      location: formData.location,
+      image_url: formData.image_url,
+      capacity: formData.capacity,
+    })
+    .eq("id", eventId);
+
+  if (error) {
+    console.log(error);
+    return { success: false, error: error.message };
+  }
+
+  revalidatePath("/eventManagement");
+  return { success: true };
+}
