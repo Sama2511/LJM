@@ -15,7 +15,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
-import { Calendar22 } from "../ui/DatePicker";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { v4 as uuid } from "uuid";
@@ -33,6 +32,7 @@ import { Plus } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { createClient } from "@/app/utils/client";
+import { Calendar22 } from "./DatePicker";
 
 async function uploadImage(file: File) {
   const supabase = createClient();
@@ -337,7 +337,7 @@ export default function EventForm() {
           >
             {form.formState.isSubmitting ? (
               <>
-                <Spinner /> Creating
+                <Spinner /> Create
               </>
             ) : (
               "Create"
