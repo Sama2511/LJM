@@ -41,7 +41,7 @@ export default function Home() {
             <Button asChild variant="outline">
               <Link
                 href="/"
-                className="flex items-center justify-center border-2 border-[#759D7E] py-[19px] text-[18px] font-bold text-[#3E5F44] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
+                className="flex items-center justify-center border-2 py-[19px] text-[18px] font-bold @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
               >
                 Join The Crew
               </Link>
