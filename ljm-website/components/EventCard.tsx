@@ -1,13 +1,5 @@
 import { Calendar, Clock, MapPin, ExternalLink } from "lucide-react";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -18,7 +10,7 @@ type Props = {
   date: string;
   time: string;
   location: string;
-  imageUrl: string;
+  image?: string;
 };
 
 export function EventCard({
@@ -27,60 +19,54 @@ export function EventCard({
   date,
   time,
   location,
-  imageUrl,
+  image,
 }: Props) {
   return (
     <>
-      <Card className="bg-muted font-chillax flex w-[285px] gap-2 border-1 border-black drop-shadow-xl">
-        <CardHeader className="relative">
-          <div className="">
-            {imageUrl ? (
-              <Image
-                className="rounded-2xl"
-                src={imageUrl}
-                alt={title}
-                width={350}
-                height={180}
-              />
-            ) : (
-              <Image
-                src="/dummy-image-square8.png"
-                alt="Event picture"
-                width={300}
-                height={180}
-              />
-            )}
-          </div>
-          <div className="rounded-b-0 absolute top-0 right-7 space-y-1 rounded-se-2xl bg-black/25 px-3 py-2 text-white shadow-[0_0_6px_rgba(0,0,0,0.5)] backdrop-blur-[2px]">
-            <div className="flex items-center gap-2">
-              <Calendar className="size-5 text-green-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
-              <span className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
-                {date}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="size-5 text-green-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
-              <span className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
-                {time}
-              </span>
+      <Card className="group bg-muted w-[320px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <CardTitle>
+          <div className="relative h-40 w-full overflow-hidden">
+            <Image
+              src={image || "/dummy-image-square8.png"}
+              alt="event image"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+              fill
+            />
+            <div className="absolute inset-0 bg-black/30"></div>
+
+            <div className="absolute bottom-3 left-4">
+              <h2 className="text-2xl font-semibold text-white drop-shadow">
+                {title}
+              </h2>
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
-          <CardTitle className="text-foreground mb-1 text-xl">
-            {title}
-          </CardTitle>
-          <div className="mb-3 flex items-center gap-1 text-sm">
-            <MapPin className="size-4" />
-            {location}
+        </CardTitle>
+
+        <CardContent className="grid grid-rows-[120px_25px]">
+          <div className="text-foreground mb-6 space-y-3 text-sm">
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                <span className="font-medium">{date}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-5 w-5" />
+                <span className="font-medium">{time}</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="h-5 w-5" />
+              <span className="font-medium">{location}</span>
+            </div>
+            <p className="text-foreground/80 mt-4 mb-6 line-clamp-3 text-base">
+              {description}
+            </p>
           </div>
-          <CardDescription className="my-5 line-clamp-3 text-sm">
-            {description}
-          </CardDescription>
         </CardContent>
-        <CardFooter className="mx-auto space-x-5">
+
+        <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
           <Button asChild>
-            <Link href="/volunteer"> Volunteer</Link>
+            <Link href="/volunteer">Volunteer</Link>
           </Button>
           <Button asChild variant="outline">
             <Link href="/event" className="px-6">
@@ -99,64 +85,57 @@ export function PastEventCard({
   date,
   time,
   location,
-  imageUrl,
+  image,
 }: Props) {
   return (
     <>
-      <Card className="relative flex w-[280px] gap-2 border-1 border-black bg-[#E2DFDA]">
+      <Card className="group relative w-[320px] overflow-hidden rounded-2xl bg-[#E2DFDA] p-0 shadow-md transition-all duration-300">
         <div className="pointer-events-none absolute inset-0 z-10 rounded-xl bg-black/30" />
-        <CardHeader className="pointer-events-none relative transition-all">
-          <div className="">
-            {imageUrl ? (
-              <Image
-                className="rounded-2xl"
-                src={imageUrl}
-                alt={title}
-                width={350}
-                height={180}
-              />
-            ) : (
-              <Image
-                src="/dummy-image-square8.png"
-                alt="Event picture"
-                width={300}
-                height={180}
-              />
-            )}
-          </div>
-          <div className="rounded-b-0 absolute top-0 right-7 space-y-1 rounded-se-2xl bg-black/25 px-3 py-2 text-white shadow-[0_0_6px_rgba(0,0,0,0.5)] backdrop-blur-[2px]">
-            <div className="flex items-center gap-2">
-              <Calendar className="size-5 text-green-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
-              <span className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
-                {date}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="size-5 text-green-200 drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]" />
-              <span className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
-                {time}
-              </span>
+        <CardTitle>
+          <div className="relative h-40 w-full overflow-hidden">
+            <Image
+              src={image || "/dummy-image-square8.png"}
+              alt="event image"
+              className="h-full w-full object-cover"
+              fill
+            />
+
+            <div className="absolute inset-0 bg-black/30"></div>
+
+            <div className="absolute bottom-3 left-4">
+              <h2 className="text-2xl font-semibold text-white drop-shadow">
+                {title}
+              </h2>
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
-          <CardTitle className="mb-1 text-xl text-[#3E5F44]">{title}</CardTitle>
-          <div className="mb-3 flex items-center gap-1 text-sm">
-            <MapPin className="size-4" />
-            {location}
+        </CardTitle>
+
+        <CardContent className="grid grid-rows-[160px_25px]">
+          <div className="text-foreground mb-6 space-y-3 text-sm">
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                <span className="font-medium">{date}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="h-5 w-5" />
+                <span className="font-medium">{time}</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <MapPin className="h-5 w-5" />
+              <span className="font-medium">{location}</span>
+            </div>
+            <p className="text-foreground/80 mb-6 line-clamp-3 text-base">
+              {description}
+            </p>
           </div>
-          <CardDescription className="my-5 line-clamp-3 text-sm">
-            {description}
-          </CardDescription>
         </CardContent>
-        <CardFooter className="mx-auto space-x-5">
-          <Button asChild>
-            <Link href="/volunteer"> Volunteer</Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link href="/event" className="px-6">
-              Details
-            </Link>
+
+        <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
+          <Button disabled={true}>Volunteer</Button>
+          <Button variant="outline" disabled={true}>
+            Details
           </Button>
         </CardFooter>
       </Card>

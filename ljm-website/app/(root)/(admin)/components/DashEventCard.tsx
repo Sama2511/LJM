@@ -36,7 +36,6 @@ export default function EventMngtCard({
 }: Props) {
   const percentage = (capacity / maxCapacity) * 100;
   const [isDeleting, setIsDeleting] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const handleDelete = async () => {
     setIsDeleting(true);
@@ -45,7 +44,7 @@ export default function EventMngtCard({
   };
 
   return (
-    <Card className="group bg-muted w-[350px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+    <Card className="group bg-muted w-[320px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
       <CardTitle>
         <div className="relative h-40 w-full overflow-hidden">
           <Image
@@ -70,18 +69,18 @@ export default function EventMngtCard({
           <div className="flex gap-4">
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
-              <span>{date}</span>
+              <span className="font-medium">{date}</span>
             </div>
 
             <div className="flex items-center gap-2">
               <Clock className="h-5 w-5" />
-              <span>{time}</span>
+              <span className="font-medium">{time}</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <MapPin className="h-5 w-5" />
-            <span>{location}</span>
+            <span className="font-medium">{location}</span>
           </div>
           <p className="mb-6 line-clamp-3 text-base text-[#3E5F44]/80">
             {description}

@@ -5,7 +5,7 @@ import EventMngtCard from "./DashEventCard";
 
 export default async function EventList() {
   const eventsData = await FetchEvent();
-  //   await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
 
