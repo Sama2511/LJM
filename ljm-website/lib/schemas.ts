@@ -23,7 +23,6 @@ export const signUpSchema = z
       .string()
       .min(3, { message: "Last Name should be at least 3 characters" }),
     email: z.email({ message: "Please enter a valid Email" }),
-    phoneNumber: z.string().regex(/^\+?\d{10,15}$/, "Invalid phone number"),
     password: z
       .string()
       .min(8, { message: "Minimum 8 characters" })

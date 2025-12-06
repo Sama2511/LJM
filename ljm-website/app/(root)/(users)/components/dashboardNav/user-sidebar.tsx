@@ -62,7 +62,7 @@ const data = {
 
 export function UserSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" {...props} className="sticky top-[120px] h-[calc(100vh-120px)]">
       <SidebarHeader className="border-b-2 py-5">
         <SidebarMenuItem>
           <div className="flex">

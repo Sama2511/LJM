@@ -25,7 +25,6 @@ export default function page() {
       firstname: "",
       lastname: "",
       email: "",
-      phoneNumber: "",
       password: "",
       repeatPassword: "",
     },
@@ -87,30 +86,7 @@ export default function page() {
                   )}
                 />
 
-                <Controller
-                  name="phoneNumber"
-                  control={signupForm.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel
-                        className="font-semibold"
-                        htmlFor={field.name}
-                      >
-                        Phone Number
-                      </FieldLabel>
-                      <Input
-                        {...field}
-                        id="phoneNumber"
-                        aria-invalid={fieldState.invalid}
-                        placeholder="phone number"
-                        autoComplete="mobile tel"
-                      />
-                      {fieldState.invalid && (
-                        <FieldError errors={[fieldState.error]} />
-                      )}
-                    </Field>
-                  )}
-                />
+                
                 <Controller
                   name="email"
                   control={signupForm.control}

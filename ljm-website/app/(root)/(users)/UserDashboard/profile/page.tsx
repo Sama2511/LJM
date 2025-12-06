@@ -1,30 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
+import { createClient } from "@/app/utils/client";
 
 export default function ProfilePage() {
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const supabase = createClient()
 
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
   async function loadUser() {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
+    const user = (await supabase.auth.getUser()).data.user?.id
     if (!user) return;
 
     const { data } = await supabase
       .from("users")
       .select("*")
-      .eq("id", user.id)
+      .eq("id", user)
       .single();
 
     setUserData(data);
@@ -34,9 +28,8 @@ export default function ProfilePage() {
   async function saveChanges() {
     setSaving(true);
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+        const user = (await supabase.auth.getUser()).data.user?.id
+
 
     await supabase
       .from("users")
@@ -45,7 +38,7 @@ export default function ProfilePage() {
         lastname: userData.lastname,
         phonenumber: userData.phonenumber,
       })
-      .eq("id", user?.id);
+      .eq("id", user);
 
     setSaving(false);
     alert("Profile updated!");

@@ -26,7 +26,6 @@ export async function signup(formData: z.infer<typeof signUpSchema>) {
       id: data?.user?.id,
       firstname: formData.firstname,
       lastname: formData.lastname,
-      phonenumber: formData.phoneNumber,
       formcompleted: false,
     });
     if (!dberror) {
