@@ -2,10 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import MyCarouselServices from "@/components/MyCarousel";
-import { EventCard } from "@/components/EventCard";
-export default function Home() {
+import { UpcomingEvents } from "@/components/UpcomingEvents";
+import EventLoading from "../(admin)/components/EventLoading";
+
+export default async function Home() {
   return (
     <>
       <section className="@container mt-5 flex">
@@ -83,40 +86,9 @@ export default function Home() {
         <h1 className="text-foreground font-chillax max-w-[70%] text-center text-5xl leading-tight font-medium sm:text-6xl lg:text-7xl">
           Upcoming Events
         </h1>
-        <div className="grid max-w-[95%] grid-flow-col gap-4 overflow-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
-          <EventCard
-            title="Event Title"
-            description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
-            date="September 9, 2025 "
-            time="9:00 AM - 1:00 PM"
-            location="Location"
-            imageUrl=""
-          />
-          <EventCard
-            title="Event Title"
-            description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
-            date="September 9, 2025 "
-            time="9:00 AM - 1:00 PM"
-            location="Location"
-            imageUrl=""
-          />
-          <EventCard
-            title="Event Title"
-            description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
-            date="September 9, 2025 "
-            time="9:00 AM - 1:00 PM"
-            location="Location"
-            imageUrl=""
-          />
-          <EventCard
-            title="Event Title"
-            description="Description of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliquaDescription of the Event: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqu"
-            date="September 9, 2025 "
-            time="9:00 AM - 1:00 PM"
-            location="Location"
-            imageUrl=""
-          />
-        </div>
+        <Suspense fallback={<EventLoading />}>
+          <UpcomingEvents />
+        </Suspense>
       </section>
       <section className="mt-40 bg-[#e6dac7] p-10">
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">

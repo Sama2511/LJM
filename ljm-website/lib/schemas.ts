@@ -51,17 +51,17 @@ export const volunteerForm = z.object({
     )
     .min(1, "Choose at least 1 option"),
 
-  interests: z.string().max(100).optional(),
-  skills: z.string().max(200).optional(),
+  interests: z.string().max(250).optional(),
+  skills: z.string().max(250).optional(),
   story: z.string().max(400).optional(),
   inspiration: z
     .string()
     .min(3, { message: "this field is mondatory" })
-    .max(200),
+    .max(250),
   availability: z
     .string()
     .min(3, { message: "this field is mondatory" })
-    .max(100),
+    .max(200),
   certificate: z.array(z.enum(["clearance", "childrenCheck"])),
 });
 
