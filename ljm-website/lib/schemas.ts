@@ -1,3 +1,4 @@
+import { title } from "process";
 import { z } from "zod";
 
 export const formSchema = z.object({
@@ -61,4 +62,15 @@ export const volunteerForm = z.object({
     .min(3, { message: "this field is mondatory" })
     .max(100),
   certificate: z.array(z.enum(["clearance", "childrenCheck"])),
+});
+
+export const eventForm = z.object({
+  title: z.string().min(3, { message: "This field is mondatory" }),
+  description: z.string().min(3, { message: "This field is mondatory" }),
+  date: z.date(),
+  starts_at: z.string(),
+  ends_at: z.string(),
+  location: z.string().min(1, { message: "Location is required" }),
+  image_url: z.string(),
+  capacity: z.number().optional(),
 });

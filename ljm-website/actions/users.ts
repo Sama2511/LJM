@@ -14,27 +14,22 @@ export async function signup(formData: z.infer<typeof signUpSchema>) {
     password: formData.password as string,
   };
 
-  const { data, error } = await supabase.auth.signUp(userInfo);
+  const { error } = await supabase.auth.signUp({
+    email: formData.email as string,
+    password: formData.password as string,
+    options: {
+      data: {
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+      },
+    },
+  });
 
   if (error) {
     redirect("/error");
   }
   if (!error) {
-    console.log("user auth created");
-
-    const { error: dberror } = await supabase.from("users").insert({
-      id: data?.user?.id,
-      firstname: formData.firstname,
-      lastname: formData.lastname,
-      formcompleted: false,
-    });
-    if (!dberror) {
-      console.log("user added to table");
-    }
-    if (dberror) {
-      console.log(`this is the an insert error: ${dberror.message}`);
-      redirect("/error");
-    }
+    console.log("user auth created with metadata");
     revalidatePath("/", "layout");
     redirect("/check-email");
   }
@@ -78,11 +73,13 @@ export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
 
   console.log("Volunteer form submitted successfully");
 
-  const { error: updateError } = await supabase
+  const { data, error: updateError } = await supabase
     .from("users")
     .update({ formcompleted: true })
-    .eq("id", user.id);
+    .eq("id", user.id)
+    .select();
 
+  console.log(`form completed was modified to true: ${data}`);
   if (updateError) {
     console.error("Update error:", updateError.message);
     redirect("/error");
@@ -99,8 +96,8 @@ export default async function userStatus() {
     .eq("id", user?.id)
     .single();
 
-  // if (error) {
-  //   redirect("/error");
-  // }
+  if (error) {
+    redirect("/error");
+  }
   return { status: data?.status, error };
 }

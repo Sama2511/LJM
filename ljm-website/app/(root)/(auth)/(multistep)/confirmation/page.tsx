@@ -1,3 +1,4 @@
+import userStatus from "@/actions/users";
 import { createClient, getUser } from "@/app/utils/server";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,20 +13,11 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function page() {
-  const supabase = await createClient();
+  const { status } = await userStatus();
 
-  const user = await getUser();
-  const { data, error } = await supabase
-    .from("volunteer_form")
-    .select("status")
-    .eq("id", user?.id)
-    .single();
-  if (error) {
-    console.log(error);
-  }
-  if (data?.status === "approved") {
-    redirect("/logged");
-  } else if (data?.status === "rejected") {
+  if (status === "approved") {
+    redirect("/dashboard");
+  } else if (status === "rejected") {
     redirect("/rejected");
   }
   return (

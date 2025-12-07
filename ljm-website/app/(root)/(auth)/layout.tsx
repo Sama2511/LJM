@@ -1,5 +1,3 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/app/(root)/(admin)/components/dashboardNav/dash-sidebar";
 import "@/app/(root)/globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -13,12 +11,8 @@ export default function DashboardLayout({
   return (
     <div>
       <Header />
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarTrigger />
-        {children}
-        <Toaster />
-      </SidebarProvider>
+      {children}
+      <Toaster />
       <Footer />
     </div>
   );

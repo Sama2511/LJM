@@ -25,7 +25,7 @@ export default function Home() {
               Supporte With Compassion at Life's Most Sacred Moments
             </h1>
           </div>
-          <p className="text-foreground/80 font-chillax mt-4 max-w-[90%] text-center font-sans text-base @[630]:max-w-[85%] @[630]:text-left @[800]:text-lg @[1000]:max-w-[80%] @[1000]:text-xl @[1200]:max-w-[75%]">
+          <p className="text-foreground/80 mt-4 max-w-[90%] text-center font-sans text-base @[630]:max-w-[85%] @[630]:text-left @[800]:text-lg @[1000]:max-w-[80%] @[1000]:text-xl @[1200]:max-w-[75%]">
             Providing dignified end-of-life care, grief support, and community
             resources to families during their most challenging times.
           </p>
@@ -41,7 +41,7 @@ export default function Home() {
             <Button asChild variant="outline">
               <Link
                 href="/"
-                className="flex items-center justify-center border-2 border-[#759D7E] py-[19px] text-[18px] font-bold text-[#3E5F44] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
+                className="flex items-center justify-center border-2 py-[19px] text-[18px] font-bold @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
               >
                 Join The Crew
               </Link>

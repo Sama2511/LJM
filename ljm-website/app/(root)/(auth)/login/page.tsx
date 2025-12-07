@@ -15,6 +15,7 @@ import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function page({
   className,
@@ -51,11 +52,9 @@ export default function page({
         router.push("/error");
         return;
       }
+
       if (!formProgress?.formcompleted) {
         router.replace("/volunteerForm");
-        return;
-      } else if (formProgress?.formcompleted) {
-        router.replace("/confirmation");
         return;
       }
 
@@ -64,14 +63,16 @@ export default function page({
         .select("status")
         .eq("id", user)
         .single();
+
       if (statusError) {
         router.push("/error");
         return;
       }
+
       if (status?.status === "pending") {
         router.replace("/confirmation");
       } else if (status?.status === "approved") {
-        router.replace("/contact");
+        router.replace("/dashboard");
       } else if (status?.status === "rejected") {
         router.replace("/rejected");
       } else {
@@ -129,7 +130,14 @@ export default function page({
                   </div>
                   {error && <p className="text-sm text-red-500">{error}</p>}
                   <Button type="submit" className="w-full" disabled={isLoading}>
-                    {isLoading ? "Logging in..." : "Login"}
+                    {isLoading ? (
+                      <p>
+                        <Spinner />
+                        Logging in
+                      </p>
+                    ) : (
+                      "Login"
+                    )}
                   </Button>
                 </div>
                 <div className="mt-4 text-center text-sm">
