@@ -34,7 +34,7 @@ const data = {
     },
      {
       title: "Browse Events",
-      url: "/UserDashboard/level",
+      url: "/UserDashboard/events",
       icon: CalendarDays,
      },
       {

@@ -5,14 +5,15 @@ import Image from "next/image";
 import { createClient } from "@/app/utils/client";
 
 export default function ProfilePage() {
-  const supabase = createClient()
+  const supabase = createClient();
 
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   async function loadUser() {
-    const user = (await supabase.auth.getUser()).data.user?.id
+    const user = (await supabase.auth.getUser()).data.user?.id;
     if (!user) return;
 
     const { data } = await supabase
@@ -28,8 +29,7 @@ export default function ProfilePage() {
   async function saveChanges() {
     setSaving(true);
 
-        const user = (await supabase.auth.getUser()).data.user?.id
-
+    const user = (await supabase.auth.getUser()).data.user?.id;
 
     await supabase
       .from("users")
@@ -44,6 +44,70 @@ export default function ProfilePage() {
     alert("Profile updated!");
   }
 
+  // -----------------------
+  // 🚀 Upload Avatar Handler
+  // -----------------------
+  async function uploadAvatar(event: any) {
+    try {
+      setUploading(true);
+
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const user = (await supabase.auth.getUser()).data.user?.id;
+      if (!user) {
+        alert("User not logged in");
+        return;
+      }
+
+      // имя файла = userId + расширение
+      const fileExt = file.name.split(".").pop();
+      const filePath = `${user}.${fileExt}`;
+
+      // загрузка в Storage
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) {
+        console.log(uploadError);
+        alert("Error uploading avatar");
+        setUploading(false);
+        return;
+      }
+
+      // публичный URL
+      const { data: urlData } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(filePath);
+
+      // обновление таблицы users
+      const { error: updateError } = await supabase
+        .from("users")
+        .update({ avatar_url: urlData.publicUrl })
+        .eq("id", user);
+
+      if (updateError) {
+        console.log(updateError);
+        alert("Error saving avatar URL");
+        setUploading(false);
+        return;
+      }
+
+      // обновление UI
+      setUserData((prev: any) => ({
+        ...prev,
+        avatar_url: urlData.publicUrl,
+      }));
+
+      setUploading(false);
+      alert("Avatar updated!");
+    } catch (e) {
+      console.error(e);
+      alert("Unexpected error");
+    }
+  }
+
   useEffect(() => {
     loadUser();
   }, []);
@@ -56,7 +120,6 @@ export default function ProfilePage() {
       <p className="text-gray-600 mb-8">Manage your personal information.</p>
 
       <div className="bg-white shadow-sm rounded-lg p-6 max-w-xl">
-
         {/* Avatar */}
         <div className="flex items-center gap-4 mb-6">
           <Image
@@ -67,10 +130,15 @@ export default function ProfilePage() {
             alt="Avatar"
           />
           <div>
-            <p className="text-lg font-semibold">
-              {userData.firstname} {userData.lastname}
-            </p>
-            <p className="text-sm text-gray-500">{userData.email}</p>
+            <label className="cursor-pointer text-green-700 underline">
+              {uploading ? "Uploading..." : "Upload Avatar"}
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={uploadAvatar}
+              />
+            </label>
           </div>
         </div>
 
@@ -115,12 +183,12 @@ export default function ProfilePage() {
 
         {/* Non-editable fields */}
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700">Role</label>
+          <label className="block text-sm font-medium">Role</label>
           <p className="text-gray-800 font-semibold">{userData.role}</p>
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700">Status</label>
+          <label className="block text-sm font-medium">Status</label>
           <p className="text-gray-800 font-semibold">{userData.status}</p>
         </div>
 
