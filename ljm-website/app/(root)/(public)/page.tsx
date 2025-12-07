@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 
-import MyCarouselServices from "@/components/MyCarousel";
+import MyCarouselServices from "@/components/myCarousel";
 import { EventCard } from "@/components/EventCard";
 export default function Home() {
   return (

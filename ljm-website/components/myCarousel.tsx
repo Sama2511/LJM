@@ -6,7 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import ServiceCard from "./ServiceCard";
+import ServiceCard from "./serviceCard";
 import { RockingChair, Coffee, Users } from "lucide-react";
 
 function MyCarouselServices() {
