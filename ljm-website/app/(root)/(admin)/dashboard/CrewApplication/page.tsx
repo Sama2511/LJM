@@ -8,7 +8,6 @@ export default function CrewApplication() {
       fullName: "Maria Isabel Dacuma",
       email: "12203834@students.koi.edu.au",
       phone: "0412345678",
-      preferredRole: "Team Leader",
       status: "accepted",
     },
     {
@@ -16,7 +15,6 @@ export default function CrewApplication() {
       fullName: "Diana Zubrytska",
       email: "12301789@students.koi.edu.au",
       phone: "0499988877",
-      preferredRole: "Crew",
       status: "pending",
     },
     {
@@ -24,7 +22,6 @@ export default function CrewApplication() {
       fullName: "Oussama Hassoune",
       email: "20020990@students.koi.edu.au",
       phone: "0400111222",
-      preferredRole: "Crew",
       status: "rejected",
     },
     {
@@ -32,7 +29,6 @@ export default function CrewApplication() {
       fullName: "Carlos Eli Esma",
       email: "12301679@students.koi.edu.au",
       phone: "0422334455",
-      preferredRole: "Crew",
       status: "pending",
     },
   ]);
@@ -55,7 +51,6 @@ export default function CrewApplication() {
         <td className="p-3">{app.fullName}</td>
         <td className="p-3">{app.email}</td>
         <td className="p-3">{app.phone}</td>
-        <td className="p-3">{app.preferredRole}</td>
         <td className="p-3">
           {app.status === "pending" && (
             <span className="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm">
@@ -109,7 +104,6 @@ export default function CrewApplication() {
             <th className="p-3">Name</th>
             <th className="p-3">Email</th>
             <th className="p-3">Phone</th>
-            <th className="p-3">Preferred Role</th>
             <th className="p-3">Status</th>
             {showActions && <th className="p-3">Actions</th>}
           </tr>
@@ -127,11 +121,11 @@ export default function CrewApplication() {
 
       {/* Sections */}
       {pendingApps.length > 0 &&
-        renderSection("Pending", pendingApps, true, "bg-green-50")}
+        renderSection("Pending", pendingApps, true, "bg-muted-50")}
       {acceptedApps.length > 0 &&
-        renderSection("Accepted", acceptedApps, false, "bg-green-100")}
+        renderSection("Accepted", acceptedApps, false, "bg-muted-100")}
       {rejectedApps.length > 0 &&
-        renderSection("Rejected", rejectedApps, false, "bg-red-50")}
+        renderSection("Rejected", rejectedApps, false, "bg-muted-50")}
     </div>
   );
 }
