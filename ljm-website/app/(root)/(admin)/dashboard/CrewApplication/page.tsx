@@ -1,4 +1,6 @@
 "use client";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 
 export default function CrewApplication() {
@@ -35,7 +37,7 @@ export default function CrewApplication() {
 
   const updateStatus = (id: number, newStatus: string) => {
     setApplications((prev) =>
-      prev.map((app) => (app.id === id ? { ...app, status: newStatus } : app))
+      prev.map((app) => (app.id === id ? { ...app, status: newStatus } : app)),
     );
   };
 
@@ -53,38 +55,29 @@ export default function CrewApplication() {
         <td className="p-3">{app.phone}</td>
         <td className="p-3">
           {app.status === "pending" && (
-            <span className="bg-yellow-200 text-yellow-800 px-3 py-1 rounded-full text-sm">
+            <span className="rounded-full bg-yellow-200 px-3 py-1 text-sm text-yellow-800">
               Pending
             </span>
           )}
-          {app.status === "accepted" && (
-            <span className="bg-green-200 text-green-800 px-3 py-1 rounded-full text-sm">
-              Accepted
-            </span>
-          )}
+          {app.status === "accepted" && <Badge>Accepted</Badge>}
           {app.status === "rejected" && (
-            <span className="bg-red-200 text-red-800 px-3 py-1 rounded-full text-sm">
+            <span className="rounded-full bg-red-200 px-3 py-1 text-sm text-red-800">
               Rejected
             </span>
           )}
         </td>
         {showActions && (
-          <td className="p-3 space-x-2">
-            <button
-              onClick={() => updateStatus(app.id, "accepted")}
-              className="px-3 py-1 text-sm bg-green-600 text-white rounded-md hover:bg-green-700"
-            >
+          <td className="space-x-2 p-3">
+            <Button onClick={() => updateStatus(app.id, "accepted")}>
               Accept
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={"destructive"}
               onClick={() => updateStatus(app.id, "rejected")}
-              className="px-3 py-1 text-sm bg-red-600 text-white rounded-md hover:bg-red-700"
             >
               Reject
-            </button>
-            <button className="px-3 py-1 text-sm bg-gray-700 text-white rounded-md hover:bg-gray-800">
-              View
-            </button>
+            </Button>
+            <Button variant={"outline"}>View</Button>
           </td>
         )}
       </tr>
@@ -94,13 +87,13 @@ export default function CrewApplication() {
     title: string,
     apps: typeof applications,
     showActions: boolean,
-    bgColor: string
+    bgColor: string,
   ) => (
-    <div className={`p-6 rounded-xl shadow-md ${bgColor} space-y-4`}>
+    <div className={`rounded-xl p-6 shadow-md ${bgColor} space-y-4`}>
       <h2 className={sectionHeaderStyle}>{title}</h2>
-      <table className="w-full border-collapse bg-white rounded-lg overflow-hidden">
+      <table className="w-full border-collapse overflow-hidden rounded-lg">
         <thead>
-          <tr className="text-left border-b bg-gray-100">
+          <tr className="bg-muted border-b text-left">
             <th className="p-3">Name</th>
             <th className="p-3">Email</th>
             <th className="p-3">Phone</th>
@@ -114,9 +107,11 @@ export default function CrewApplication() {
   );
 
   return (
-    <div className="w-full container pt-10 space-y-8">
+    <div className="container w-full space-y-8 pt-10">
       <div className="flex justify-between pb-10">
-        <h1 className="font-chillax text-3xl font-semibold">Crew Applications</h1>
+        <h1 className="font-chillax text-3xl font-semibold">
+          Crew Applications
+        </h1>
       </div>
 
       {/* Sections */}

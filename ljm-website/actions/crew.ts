@@ -3,12 +3,20 @@
 import { createClient } from "@/app/utils/server";
 import { revalidatePath } from "next/cache";
 
-export async function FetchCrew() {
+export async function FetchCrew(searchQuery?: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase
+  let query = supabase
     .from("users")
     .select("*")
     .in("role", ["Kindler", "Kindling", "Flame", "Fire-keepers"]);
+
+  if (searchQuery) {
+    query = query.or(
+      `firstname.ilike.%${searchQuery}%,lastname.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%`,
+    );
+  }
+
+  const { data, error } = await query;
   if (error) {
     console.error("Error fetching crew members:", error.message);
     return { error: error.message };
@@ -16,12 +24,17 @@ export async function FetchCrew() {
   return { data };
 }
 
-export async function fetchAdmins() {
+export async function fetchAdmins(searchQuery?: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("users")
-    .select("*")
-    .in("role", ["admin"]);
+  let query = supabase.from("users").select("*").in("role", ["admin"]);
+
+  if (searchQuery) {
+    query = query.or(
+      `firstname.ilike.%${searchQuery}%,lastname.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%`,
+    );
+  }
+
+  const { data, error } = await query;
   if (error) {
     console.error("Error fetching admin:", error.message);
     return { error: error.message };

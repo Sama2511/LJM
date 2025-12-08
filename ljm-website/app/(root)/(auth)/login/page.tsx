@@ -131,9 +131,9 @@ export default function page({
                   {error && <p className="text-sm text-red-500">{error}</p>}
                   <Button type="submit" className="w-full" disabled={isLoading}>
                     {isLoading ? (
-                      <p>
+                      <p className="flex items-center justify-center gap-1">
                         <Spinner />
-                        Logging in
+                        Login
                       </p>
                     ) : (
                       "Login"

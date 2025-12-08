@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import {
   Table,
   TableBody,
@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   MoreVertical,
   FileText,
@@ -32,6 +33,8 @@ import {
   Ban,
   Trash2,
   ShieldOff,
+  Search,
+  X,
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -44,6 +47,8 @@ import {
 } from "@/actions/crew";
 import { toast } from "sonner";
 import ViewVolunteerFormDialog from "./ViewVolunteerFormDialog";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Spinner } from "@/components/ui/spinner";
 
 const getInitials = (firstname: string, lastname: string) => {
   return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -87,24 +92,41 @@ export default function UserManagementClient({
   Crew,
   Admins,
 }: UserManagementClientProps) {
-  const [users, setUsers] = useState(Crew);
-  const [admins, setAdmins] = useState(Admins);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [isPending, startTransition] = useTransition();
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedFormData, setSelectedFormData] = useState<any>(null);
+  const [searchInput, setSearchInput] = useState(searchParams.get("q") || "");
+
+  const handleSearch = (value: string) => {
+    setSearchInput(value);
+    startTransition(() => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (value) {
+        params.set("q", value);
+      } else {
+        params.delete("q");
+      }
+      router.push(`?${params.toString()}`);
+    });
+  };
+
+  const handleClearSearch = () => {
+    setSearchInput("");
+    startTransition(() => {
+      router.push("/dashboard/user-management");
+    });
+  };
 
   const handleRoleChange = async (userId: string, newRole: string) => {
-    setUsers((prev) =>
-      prev.map((user) =>
-        user.id === userId ? { ...user, role: newRole } : user,
-      ),
-    );
-
     const result = await UpdateUserRole(userId, newRole);
     if (!result.success) {
-      setUsers(Crew);
       toast.error(result.error || "Failed to update role");
     } else {
       toast.success("Role updated successfully");
+      router.refresh();
     }
   };
 
@@ -123,13 +145,8 @@ export default function UserManagementClient({
     if (!result.success) {
       toast.error(result.error || "Failed to make user admin");
     } else {
-      // Remove from users list and add to admins
-      setUsers((prev) => prev.filter((user) => user.id !== userId));
-      const updatedUser = users.find((user) => user.id === userId);
-      if (updatedUser) {
-        setAdmins((prev) => [...prev, { ...updatedUser, role: "admin" }]);
-      }
       toast.success("User promoted to admin");
+      router.refresh();
     }
   };
 
@@ -138,12 +155,12 @@ export default function UserManagementClient({
     if (!result.success) {
       toast.error(result.error || "Failed to ban user");
     } else {
-      setUsers((prev) => prev.filter((user) => user.id !== userId));
       toast.success("User banned successfully");
+      router.refresh();
     }
   };
 
-  const handleDeleteUser = async (userId: string, isAdmin: boolean = false) => {
+  const handleDeleteUser = async (userId: string) => {
     if (
       !confirm(
         "Are you sure you want to delete this user? This action cannot be undone.",
@@ -156,12 +173,8 @@ export default function UserManagementClient({
     if (!result.success) {
       toast.error(result.error || "Failed to delete user");
     } else {
-      if (isAdmin) {
-        setAdmins((prev) => prev.filter((admin) => admin.id !== userId));
-      } else {
-        setUsers((prev) => prev.filter((user) => user.id !== userId));
-      }
       toast.success("User deleted successfully");
+      router.refresh(); // Refresh to get updated data from server
     }
   };
 
@@ -170,16 +183,8 @@ export default function UserManagementClient({
     if (!result.success) {
       toast.error(result.error || "Failed to remove admin privileges");
     } else {
-      // Remove from admins list and add to users
-      setAdmins((prev) => prev.filter((admin) => admin.id !== userId));
-      const removedAdmin = admins.find((admin) => admin.id === userId);
-      if (removedAdmin) {
-        setUsers((prev) => [
-          ...prev,
-          { ...removedAdmin, role: "kindling", formcompleted: false },
-        ]);
-      }
       toast.success("Admin privileges removed");
+      router.refresh();
     }
   };
 
@@ -195,10 +200,35 @@ export default function UserManagementClient({
       </div>
 
       <Tabs defaultValue="crew" className="w-full">
-        <TabsList>
-          <TabsTrigger value="crew">Crew</TabsTrigger>
-          <TabsTrigger value="admin">Admin</TabsTrigger>
-        </TabsList>
+        <div className="flex gap-5">
+          <TabsList>
+            <TabsTrigger value="crew">Crew</TabsTrigger>
+            <TabsTrigger value="admin">Admin</TabsTrigger>
+          </TabsList>
+          <div className="mb-6 flex items-center gap-2">
+            <div className="bg-muted relative max-w-md flex-1">
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+              <Input
+                type="text"
+                placeholder="Search by name or email..."
+                value={searchInput}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="pr-9 pl-9"
+              />
+              {searchInput && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleClearSearch}
+                  className="absolute top-1/2 right-1 h-7 w-7 -translate-y-1/2"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
+            {isPending && <Spinner className="bg-background" />}
+          </div>
+        </div>
         <TabsContent value="crew">
           <div className="bg-card rounded-lg border shadow-sm">
             <Table className="">
@@ -215,7 +245,7 @@ export default function UserManagementClient({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {users.map((user) => (
+                {Crew.map((user) => (
                   <TableRow key={user.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
@@ -306,7 +336,7 @@ export default function UserManagementClient({
                             Ban User
                           </DropdownMenuItem>
                           <DropdownMenuItem
-                            onClick={() => handleDeleteUser(user.id, false)}
+                            onClick={() => handleDeleteUser(user.id)}
                             className="text-destructive gap-2"
                           >
                             <Trash2 className="h-4 w-4" />
@@ -333,7 +363,7 @@ export default function UserManagementClient({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {admins.map((admin) => (
+                {Admins.map((admin) => (
                   <TableRow key={admin.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
@@ -378,7 +408,7 @@ export default function UserManagementClient({
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
-                            onClick={() => handleDeleteUser(admin.id, true)}
+                            onClick={() => handleDeleteUser(admin.id)}
                             className="text-destructive gap-2"
                           >
                             <Trash2 className="h-4 w-4" />

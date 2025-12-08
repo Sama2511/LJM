@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { createClient } from "@/app/utils/client";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function ProfilePage() {
   const supabase = createClient();
@@ -116,12 +119,13 @@ export default function ProfilePage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-3">My Profile</h1>
-      <p className="text-gray-600 mb-8">Manage your personal information.</p>
+      <h1 className="mb-3 text-3xl font-bold">My Profile</h1>
+      <p className="mb-8 text-gray-600">Manage your personal information.</p>
 
-      <div className="bg-white shadow-sm rounded-lg p-6 max-w-xl">
+      <div className="bg-muted max-w-xl rounded-lg p-6 shadow-sm">
         {/* Avatar */}
-        <div className="flex items-center gap-4 mb-6">
+
+        <div className="mb-6 flex items-center gap-4">
           <Image
             src={userData.avatar_url || "/default-avatar.png"}
             width={70}
@@ -132,7 +136,7 @@ export default function ProfilePage() {
           <div>
             <label className="cursor-pointer text-green-700 underline">
               {uploading ? "Uploading..." : "Upload Avatar"}
-              <input
+              <Input
                 type="file"
                 accept="image/*"
                 className="hidden"
@@ -144,61 +148,64 @@ export default function ProfilePage() {
 
         {/* First Name */}
         <div className="mb-6">
-          <label className="block mb-1 text-sm font-medium">First Name</label>
-          <input
+          <label className="mb-1 block text-sm font-medium">First Name</label>
+          <Input
             type="text"
             value={userData.firstname || ""}
             onChange={(e) =>
               setUserData({ ...userData, firstname: e.target.value })
             }
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded border px-3 py-2"
           />
         </div>
 
         {/* Last Name */}
         <div className="mb-6">
-          <label className="block mb-1 text-sm font-medium">Last Name</label>
+          <label className="mb-1 block text-sm font-medium">Last Name</label>
           <input
             type="text"
             value={userData.lastname || ""}
             onChange={(e) =>
               setUserData({ ...userData, lastname: e.target.value })
             }
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded border px-3 py-2"
           />
         </div>
 
         {/* Phone */}
         <div className="mb-6">
-          <label className="block mb-1 text-sm font-medium">Phone Number</label>
+          <label className="mb-1 block text-sm font-medium">Phone Number</label>
           <input
             type="text"
             value={userData.phonenumber || ""}
             onChange={(e) =>
               setUserData({ ...userData, phonenumber: e.target.value })
             }
-            className="w-full border rounded px-3 py-2"
+            className="w-full rounded border px-3 py-2"
           />
         </div>
 
         {/* Non-editable fields */}
         <div className="mb-6">
           <label className="block text-sm font-medium">Role</label>
-          <p className="text-gray-800 font-semibold">{userData.role}</p>
+          <p className="font-semibold text-gray-800">{userData.role}</p>
         </div>
 
         <div className="mb-6">
           <label className="block text-sm font-medium">Status</label>
-          <p className="text-gray-800 font-semibold">{userData.status}</p>
+          <p className="font-semibold text-gray-800">{userData.status}</p>
         </div>
 
-        <button
-          onClick={saveChanges}
-          disabled={saving}
-          className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-md"
-        >
-          {saving ? "Saving..." : "Save Changes"}
-        </button>
+        <Button onClick={saveChanges} disabled={saving}>
+          {saving ? (
+            <p className="flex gap-2">
+              <Spinner />
+              Saving
+            </p>
+          ) : (
+            "Save Changes"
+          )}
+        </Button>
       </div>
     </div>
   );
