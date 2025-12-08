@@ -9,11 +9,6 @@ import { z } from "zod";
 export async function signup(formData: z.infer<typeof signUpSchema>) {
   const supabase = await createClient();
 
-  const userInfo = {
-    email: formData.email as string,
-    password: formData.password as string,
-  };
-
   const { error } = await supabase.auth.signUp({
     email: formData.email as string,
     password: formData.password as string,
@@ -21,7 +16,7 @@ export async function signup(formData: z.infer<typeof signUpSchema>) {
       data: {
         firstname: formData.firstname,
         lastname: formData.lastname,
-        phonenumber: formData.phoneNumber,
+        email: formData.email,
       },
     },
   });

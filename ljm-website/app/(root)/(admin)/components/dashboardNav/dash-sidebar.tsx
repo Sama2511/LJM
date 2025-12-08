@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   Settings,
   ShipWheelIcon,
+  UserCog,
 } from "lucide-react";
 
 import { NavMain } from "@/app/(root)/(admin)/components/dashboardNav/nav-main";
@@ -46,6 +47,11 @@ const data = {
       title: "Crew request",
       url: "/dashboard/requests",
       icon: CalendarCheck2,
+    },
+    {
+      title: "User Management",
+      url: "/dashboard/user-management",
+      icon: UserCog,
     },
     {
       title: "settings",

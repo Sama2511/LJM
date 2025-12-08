@@ -3,6 +3,7 @@ import { type NextRequest } from "next/server";
 
 import { redirect } from "next/navigation";
 import { createClient } from "@/app/utils/server";
+import { email } from "zod";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
@@ -27,7 +28,7 @@ export async function GET(request: NextRequest) {
           id: user.id,
           firstname: user.user_metadata.firstname,
           lastname: user.user_metadata.lastname,
-          phonenumber: user.user_metadata.phonenumber,
+          email: user.user_metadata.email,
           formcompleted: false,
         });
 

@@ -44,7 +44,7 @@ export default function EventMngtCard({
   };
 
   return (
-    <Card className="group bg-muted w-[320px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+    <Card className="group bg-muted w-[330px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
       <CardTitle>
         <div className="relative h-40 w-full overflow-hidden">
           <Image
