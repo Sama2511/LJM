@@ -8,7 +8,7 @@ export async function FetchCrew() {
   const { data, error } = await supabase
     .from("users")
     .select("*")
-    .in("role", ["kindler", "kindling", "flame", "flamekeeper"]);
+    .in("role", ["Kindler", "Kindling", "Flame", "Fire-keepers"]);
   if (error) {
     console.error("Error fetching crew members:", error.message);
     return { error: error.message };
@@ -46,17 +46,16 @@ export async function UpdateUserRole(id: string, newRole: string) {
 
 export async function MakeUserAdmin(id: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("users")
     .update({ role: "admin" })
-    .eq("id", id)
-    .select();
+    .eq("id", id);
   if (error) {
     console.error("Error updating role:", error.message);
     return { success: false, error: error.message };
   }
   revalidatePath("/dashboard/user-management");
-  return { success: true, data };
+  return { success: true };
 }
 
 export async function RemoveAdminPrivileges(id: string) {

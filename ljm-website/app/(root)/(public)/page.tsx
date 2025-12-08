@@ -6,6 +6,8 @@ import { Suspense } from "react";
 
 import MyCarouselServices from "@/components/myCarousel";
 import { EventCard } from "@/components/EventCard";
+import EventLoading from "../(admin)/components/EventLoading";
+import { UpcomingEvents } from "@/components/UpcomingEvents";
 export default function Home() {
   return (
     <>

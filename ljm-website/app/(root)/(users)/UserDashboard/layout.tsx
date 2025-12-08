@@ -10,8 +10,7 @@ export default function UserDashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="font-chillax flex flex-col min-h-screen">
-
+    <div className="font-chillax flex min-h-screen flex-col">
       {/* ---------- HEADER ---------- */}
       <Header />
 
