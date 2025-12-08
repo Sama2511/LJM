@@ -4,11 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 
-import MyCarouselServices from "@/components/MyCarousel";
-import { UpcomingEvents } from "@/components/UpcomingEvents";
-import EventLoading from "../(admin)/components/EventLoading";
-
-export default async function Home() {
+import MyCarouselServices from "@/components/myCarousel";
+import { EventCard } from "@/components/EventCard";
+export default function Home() {
   return (
     <>
       <section className="@container mt-5 flex">

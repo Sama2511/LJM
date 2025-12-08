@@ -39,12 +39,12 @@ const data = {
       icon: ShipWheelIcon,
     },
     {
-      title: "Volunteer Application",
-      url: "/dashboard/applications",
+      title: "Crew Application",
+      url: "/dashboard/CrewApplication",
       icon: FileUser,
     },
     {
-      title: "Volunteer request",
+      title: "Crew request",
       url: "/dashboard/requests",
       icon: CalendarCheck2,
     },

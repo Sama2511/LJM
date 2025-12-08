@@ -1,5 +1,5 @@
 import "@/app/(root)/globals.css";
-import Header from "@/components/Header";
+import Header from "@/components/header";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 
