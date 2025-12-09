@@ -58,55 +58,12 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  // const supabase = createClient();
-  // const [user, setUser] = React.useState<any>(null);
-
-  // React.useEffect(() => {
-  //   const fetchuser = async () => {
-  //     const userId = (await supabase.auth.getUser()).data.user?.id;
-  //     if (!userId) return;
-
-  //     const { data, error } = await supabase
-  //       .from("users")
-  //       .select("*")
-  //       .eq("id", userId)
-  //       .single();
-
-  //     if (error) {
-  //       console.error("Error fetching user data:", error.message);
-  //       return;
-  //     }
-
-  //     setUser(data);
-  //     console.log(data);
-  //   };
-
-  //   fetchuser();
-  // }, []);
   return (
     <Sidebar
       collapsible="icon"
       className="sticky top-[120px] h-[calc(100vh-120px)]"
       {...props}
     >
-      {/* <SidebarHeader className="border-b-2 py-5">
-        <SidebarMenuItem>
-          <div className="flex">
-            <img
-              src="/image14.png"
-              width={50}
-              height={30}
-              className="rounded-md"
-            />
-            <div className="ml-[6px] grid text-left text-sm leading-tight">
-              <span className="truncate text-lg font-bold">
-                Memorial Hospital
-              </span>
-              <span className="truncate font-medium">Admin portal</span>
-            </div>
-          </div>
-        </SidebarMenuItem>
-      </SidebarHeader> */}
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>

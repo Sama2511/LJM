@@ -1,9 +1,13 @@
+import UserProfile from "@/components/UserProfile";
+
 export default function VolunteerLevelPage() {
     return (
-<div className="mx-auto mt-20 mb-56 w-[90%] max-w-6xl pb-28">
-          <h2 className="text-foreground mb-12 text-center font-chillax text-3xl font-bold lg:text-4xl">
-            Volunteer Levels
-          </h2>
+<div className="w-full p-6">
+      <UserProfile pageName="Volunteer Levels" />
+<div className="mx-auto max-w-6xl">
+          <p className="text-muted-foreground mb-12 text-center">
+            Explore the different volunteer levels and what they represent
+          </p>
 
           <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
             {/* Kindling */}
@@ -51,5 +55,6 @@ export default function VolunteerLevelPage() {
             </div>
           </div>
         </div>
+      </div>
     );
      }

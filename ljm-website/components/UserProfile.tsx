@@ -69,7 +69,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
 
   if (loading) {
     return (
-      <div className="mt-10 mb-10 flex justify-between">
+      <div className="mb-6 flex justify-between">
         <Skeleton className="h-8 w-48" />
         <div className="flex gap-2">
           <Skeleton className="h-10 w-10 rounded-full" />
@@ -81,7 +81,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
 
   if (error || !user) {
     return (
-      <div className="mt-10 mb-10 flex justify-between">
+      <div className="mb-6 flex justify-between">
         <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
           {pageName}
         </h1>
@@ -93,7 +93,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
   }
 
   return (
-    <div className="mt-10 mb-10 flex justify-between">
+    <div className="mb-10 flex justify-between">
       <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
         {pageName}
       </h1>
@@ -110,7 +110,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
           </TooltipTrigger>
           <TooltipContent>Notifications</TooltipContent>
         </Tooltip>
-        <div className="font-chillax flex h-fit items-center justify-center gap-2 py-2 font-medium">
+        <div className="font-chillax flex h-fit items-center gap-3 py-2">
           <Avatar>
             <AvatarImage
               src={user.avatar_url}
@@ -120,7 +120,14 @@ export default function UserProfile({ pageName }: UserProfileProps) {
               {getInitials(user.firstname, user.lastname)}
             </AvatarFallback>
           </Avatar>
-          {user.firstname} {user.lastname}
+          <div className="flex flex-col">
+            <span className="font-medium">
+              {user.firstname} {user.lastname}
+            </span>
+            <span className="text-muted-foreground text-xs capitalize">
+              {user.role}
+            </span>
+          </div>
         </div>
       </div>
     </div>

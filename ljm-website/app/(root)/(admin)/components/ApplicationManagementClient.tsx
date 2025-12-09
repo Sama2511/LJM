@@ -18,6 +18,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter, useSearchParams } from "next/navigation";
 import ViewVolunteerFormDialog from "./ViewVolunteerFormDialog";
 import { toast } from "sonner";
+import UserProfile from "@/components/UserProfile";
 
 const getInitials = (firstname: string, lastname: string) => {
   return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -179,14 +180,7 @@ export default function ApplicationManagementClient({
 
   return (
     <div className="w-full p-6">
-      <div className="mb-6">
-        <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
-          Crew Applications
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          Manage volunteer application submissions
-        </p>
-      </div>
+      <UserProfile pageName="Crew Applications" />
 
       <Tabs defaultValue="pending" className="w-full">
         <div className="flex gap-5">

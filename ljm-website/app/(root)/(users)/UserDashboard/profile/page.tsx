@@ -3,70 +3,131 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { createClient } from "@/app/utils/client";
+import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Upload, Trash2, User, Mail, Phone, Shield } from "lucide-react";
+import UserProfile from "@/components/UserProfile";
+
+interface UserData {
+  id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phonenumber?: string;
+  avatar_url?: string;
+  role: string;
+  status?: string;
+  formcompleted: boolean;
+  created_at: string;
+}
 
 export default function ProfilePage() {
   const supabase = createClient();
 
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
+  const getInitials = (firstname: string, lastname: string) => {
+    return `${firstname?.charAt(0)}${lastname?.charAt(0)}`.toUpperCase();
+  };
+
   async function loadUser() {
-    const user = (await supabase.auth.getUser()).data.user?.id;
-    if (!user) return;
+    try {
+      const { data: authData, error: authError } =
+        await supabase.auth.getUser();
+      if (authError || !authData.user) {
+        toast.error("Failed to get user");
+        setLoading(false);
+        return;
+      }
 
-    const { data } = await supabase
-      .from("users")
-      .select("*")
-      .eq("id", user)
-      .single();
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", authData.user.id)
+        .single();
 
-    setUserData(data);
-    setLoading(false);
+      if (error) {
+        toast.error("Failed to load profile");
+        setLoading(false);
+        return;
+      }
+
+      setUserData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error loading user:", error);
+      toast.error("An unexpected error occurred");
+      setLoading(false);
+    }
   }
 
   async function saveChanges() {
+    if (!userData) return;
+
     setSaving(true);
 
-    const user = (await supabase.auth.getUser()).data.user?.id;
+    try {
+      const { data: authData } = await supabase.auth.getUser();
 
-    await supabase
-      .from("users")
-      .update({
-        firstname: userData.firstname,
-        lastname: userData.lastname,
-        phonenumber: userData.phonenumber,
-      })
-      .eq("id", user);
+      const { error } = await supabase
+        .from("users")
+        .update({
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+          phonenumber: userData.phonenumber,
+        })
+        .eq("id", authData.user?.id);
 
-    setSaving(false);
-    toast.success("Profile updated!");
+      if (error) {
+        toast.error("Failed to update profile");
+      } else {
+        toast.success("Profile updated successfully!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("An unexpected error occurred");
+    } finally {
+      setSaving(false);
+    }
   }
 
-  // Upload Avatar
-  async function uploadAvatar(event: any) {
+  async function uploadAvatar(event: React.ChangeEvent<HTMLInputElement>) {
     try {
       setUploading(true);
 
-      const file = event.target.files[0];
+      const file = event.target.files?.[0];
       if (!file) return;
 
-      const user = (await supabase.auth.getUser()).data.user?.id;
-      if (!user) {
+      const { data: authData } = await supabase.auth.getUser();
+      const userId = authData.user?.id;
+
+      if (!userId) {
         toast.error("User not logged in");
         return;
       }
 
       const fileExt = file.name.split(".").pop();
-      const filePath = `${user}.${fileExt}`;
+      const filePath = `${userId}.${fileExt}`;
 
       const { error: uploadError } = await supabase.storage
         .from("avatars")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {
-        console.log(uploadError);
+        console.error(uploadError);
         toast.error("Error uploading avatar");
         setUploading(false);
         return;
@@ -79,14 +140,18 @@ export default function ProfilePage() {
       await supabase
         .from("users")
         .update({ avatar_url: urlData.publicUrl })
-        .eq("id", user);
+        .eq("id", userId);
 
-      setUserData((prev: any) => ({
-        ...prev,
-        avatar_url: urlData.publicUrl,
-      }));
+      setUserData((prev) =>
+        prev
+          ? {
+              ...prev,
+              avatar_url: urlData.publicUrl,
+            }
+          : null,
+      );
 
-      toast.success("Avatar updated!");
+      toast.success("Avatar updated successfully!");
     } catch (e) {
       console.error(e);
       toast.error("Unexpected error");
@@ -95,33 +160,41 @@ export default function ProfilePage() {
     }
   }
 
-  // Delete Avatar
   async function deleteAvatar() {
     try {
       setUploading(true);
 
-      const user = (await supabase.auth.getUser()).data.user?.id;
-      if (!user) return;
+      const { data: authData } = await supabase.auth.getUser();
+      const userId = authData.user?.id;
 
-      if (!userData.avatar_url) {
+      if (!userId) return;
+
+      if (!userData?.avatar_url) {
         toast.error("No avatar to delete");
         setUploading(false);
         return;
       }
 
       const fileExt = userData.avatar_url.split(".").pop();
-      const filePath = `${user}.${fileExt}`;
+      const filePath = `${userId}.${fileExt}`;
 
       await supabase.storage.from("avatars").remove([filePath]);
 
-      await supabase.from("users").update({ avatar_url: null }).eq("id", user);
+      await supabase
+        .from("users")
+        .update({ avatar_url: null })
+        .eq("id", userId);
 
-      setUserData((prev: any) => ({
-        ...prev,
-        avatar_url: null,
-      }));
+      setUserData((prev) =>
+        prev
+          ? {
+              ...prev,
+              avatar_url: undefined,
+            }
+          : null,
+      );
 
-      toast.success("Avatar deleted!");
+      toast.success("Avatar deleted successfully!");
     } catch (error) {
       console.error(error);
       toast.error("Error deleting avatar");
@@ -134,101 +207,189 @@ export default function ProfilePage() {
     loadUser();
   }, []);
 
-  if (loading) return <p className="p-8">Loading...</p>;
+  if (loading) {
+    return (
+      <div className="w-full p-6">
+        <UserProfile pageName="Profile" />
+        <div className="mt-6 space-y-4">
+          <Skeleton className="h-48 w-full max-w-2xl" />
+          <Skeleton className="h-96 w-full max-w-2xl" />
+        </div>
+      </div>
+    );
+  }
+
+  if (!userData) {
+    return (
+      <div className="w-full p-6">
+        <UserProfile pageName="Profile" />
+        <p className="text-muted-foreground mt-6">
+          Failed to load profile data
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="p-8">
-      <h1 className="mb-3 text-3xl font-bold">My Profile</h1>
-      <p className="mb-8 text-gray-600">Manage your personal information.</p>
+    <div className="w-full p-6">
+      <UserProfile pageName="Profile" />
+      <div className="mt-6 max-w-2xl space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Profile Picture</CardTitle>
+            <CardDescription className="font-sans">
+              Update your profile picture
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center gap-6">
+              <Avatar className="h-24 w-24">
+                <AvatarImage
+                  src={userData.avatar_url}
+                  alt={`${userData.firstname} ${userData.lastname}`}
+                />
+                <AvatarFallback className="bg-[#3E5F44] text-2xl text-white">
+                  {getInitials(userData.firstname, userData.lastname)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col gap-2">
+                <label htmlFor="avatar-upload">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={uploading}
+                    className="cursor-pointer"
+                    onClick={() =>
+                      document.getElementById("avatar-upload")?.click()
+                    }
+                  >
+                    <Upload className="mr-2 h-4 w-4" />
+                    {uploading ? "Uploading..." : "Upload Avatar"}
+                  </Button>
+                  <Input
+                    id="avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={uploadAvatar}
+                    disabled={uploading}
+                  />
+                </label>
+                {userData.avatar_url && (
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    onClick={deleteAvatar}
+                    disabled={uploading}
+                  >
+                    <Trash2 className="mr-2 h-4 w-4" />
+                    Delete Avatar
+                  </Button>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-      <div className="max-w-xl rounded-lg bg-white p-6 shadow-sm">
-        {/* Avatar */}
-        <div className="mb-6 flex items-center gap-4">
-          <Image
-            src={userData.avatar_url || "/default-avatar.png"}
-            width={70}
-            height={70}
-            className="rounded-full border"
-            alt="Avatar"
-          />
-          <div>
-            <label className="cursor-pointer text-green-700 underline">
-              {uploading ? "Uploading..." : "Upload Avatar"}
+        {/* Personal Information Card */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Personal Information</CardTitle>
+            <CardDescription>Update your personal details</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="firstname">
+                  <User className="mb-1 inline h-4 w-4" /> First Name
+                </Label>
+                <Input
+                  id="firstname"
+                  type="text"
+                  value={userData.firstname || ""}
+                  onChange={(e) =>
+                    setUserData({ ...userData, firstname: e.target.value })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="lastname">
+                  <User className="mb-1 inline h-4 w-4" /> Last Name
+                </Label>
+                <Input
+                  id="lastname"
+                  type="text"
+                  value={userData.lastname || ""}
+                  onChange={(e) =>
+                    setUserData({ ...userData, lastname: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">
+                <Mail className="mb-1 inline h-4 w-4" /> Email
+              </Label>
               <Input
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={uploadAvatar}
+                id="email"
+                type="email"
+                value={userData.email || ""}
+                disabled
+                className="bg-muted"
               />
-            </label>
+              <p className="text-muted-foreground text-xs">
+                Email cannot be changed
+              </p>
+            </div>
 
-            <button
-              onClick={deleteAvatar}
-              className="mt-1 text-sm text-red-600 underline"
-              disabled={uploading}
+            <div className="space-y-2">
+              <Label htmlFor="phone">
+                <Phone className="mb-1 inline h-4 w-4" /> Phone Number
+              </Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={userData.phonenumber || ""}
+                onChange={(e) =>
+                  setUserData({ ...userData, phonenumber: e.target.value })
+                }
+                placeholder="Enter phone number"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label>
+                <Shield className="mb-1 inline h-4 w-4" /> Role
+              </Label>
+              <div className="bg-muted flex h-10 items-center rounded-md px-3">
+                <p className="text-sm font-medium capitalize">
+                  {userData.role}
+                </p>
+              </div>
+            </div>
+
+            {userData.status && (
+              <div className="space-y-2">
+                <Label>Status</Label>
+                <div className="bg-muted flex h-10 items-center rounded-md px-3">
+                  <p className="text-sm font-medium capitalize">
+                    {userData.status}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <Button
+              onClick={saveChanges}
+              disabled={saving}
+              className="w-full bg-[#3E5F44] hover:bg-[#2d4432]"
             >
-              Delete Avatar
-            </button>
-          </div>
-        </div>
-
-        {/* First Name */}
-        <div className="mb-6">
-          <label className="mb-1 block text-sm font-medium">First Name</label>
-          <Input
-            type="text"
-            value={userData.firstname || ""}
-            onChange={(e) =>
-              setUserData({ ...userData, firstname: e.target.value })
-            }
-            className="w-full rounded border px-3 py-2"
-          />
-        </div>
-
-        {/* Last Name */}
-        <div className="mb-6">
-          <label className="mb-1 block text-sm font-medium">Last Name</label>
-          <input
-            type="text"
-            value={userData.lastname || ""}
-            onChange={(e) =>
-              setUserData({ ...userData, lastname: e.target.value })
-            }
-            className="w-full rounded border px-3 py-2"
-          />
-        </div>
-
-        {/* Phone */}
-        <div className="mb-6">
-          <label className="mb-1 block text-sm font-medium">Phone Number</label>
-          <input
-            type="text"
-            value={userData.phonenumber || ""}
-            onChange={(e) =>
-              setUserData({ ...userData, phonenumber: e.target.value })
-            }
-            className="w-full rounded border px-3 py-2"
-          />
-        </div>
-
-        {/* Role */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium">Role</label>
-          <p className="font-semibold text-gray-800">{userData.role}</p>
-        </div>
-
-        <div className="mb-6">
-          <label className="block text-sm font-medium">Status</label>
-          <p className="font-semibold text-gray-800">{userData.status}</p>
-        </div>
-
-        <button
-          onClick={saveChanges}
-          disabled={saving}
-          className="rounded-md bg-green-700 px-6 py-2 text-white hover:bg-green-800"
-        >
-          {saving ? "Saving..." : "Save Changes"}
-        </button>
+              {saving ? "Saving..." : "Save Changes"}
+            </Button>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

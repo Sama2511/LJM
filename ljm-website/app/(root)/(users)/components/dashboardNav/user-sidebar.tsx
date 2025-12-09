@@ -4,23 +4,14 @@ import * as React from "react";
 import { LayoutDashboard, User, CalendarCheck2, Star, Bell, Settings, CalendarDays, HeartHandshake } from "lucide-react";
 
 import { NavMain } from "./nav-main";
-import { NavUser } from "./nav-user";
 
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
 
 const data = {
-  user: {
-    name: "Volunteer",
-    email: "volunteer@example.com",
-    avatar: "",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -63,7 +54,7 @@ const data = {
 export function UserSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props} className="sticky top-[120px] h-[calc(100vh-120px)]">
-      <SidebarHeader className="border-b-2 py-5">
+      {/* <SidebarHeader className="border-b-2 py-5">
         <SidebarMenuItem>
           <div className="flex">
             <img
@@ -80,15 +71,11 @@ export function UserSidebar(props: React.ComponentProps<typeof Sidebar>) {
             </div>
           </div>
         </SidebarMenuItem>
-      </SidebarHeader>
+      </SidebarHeader> */}
 
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-
-      <SidebarFooter className="border-t-2">
-        <NavUser user={data.user} />
-      </SidebarFooter>
 
       <SidebarRail />
     </Sidebar>

@@ -1,5 +1,6 @@
 import { FetchEvent } from "@/actions/events";
 import VolunteerEventCard from "@/app/(root)/(users)/components/VolunteerEventCard";
+import UserProfile from "@/components/UserProfile";
 
 export default async function BrowseEventsPage() {
   const eventsData = await FetchEvent();
@@ -20,8 +21,8 @@ export default async function BrowseEventsPage() {
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6">Browse Events</h1>
+    <div className="w-full p-6">
+      <UserProfile pageName="Browse Events" />
 
       <div className="flex flex-wrap gap-8">
         {eventsData.data?.map((event) => (
