@@ -191,15 +191,7 @@ export default function UserManagementClient({
 
   return (
     <div className="w-full p-6">
-      <div className="mb-6">
-        <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
-          User Management
-        </h1>
-        <p className="text-muted-foreground mt-2">
-          Manage users and their roles
-        </p>
-      </div>
-
+      <UserProfile pageName="User management" />
       <Tabs defaultValue="crew" className="w-full">
         <div className="flex gap-5">
           <TabsList>
