@@ -1,11 +1,8 @@
 "use client";
 
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { createClient } from "@/app/utils/client";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 
 export default function ProfilePage() {
   const supabase = createClient();
@@ -44,12 +41,10 @@ export default function ProfilePage() {
       .eq("id", user);
 
     setSaving(false);
-    alert("Profile updated!");
+    toast.success("Profile updated!");
   }
 
-  // -----------------------
-  // 🚀 Upload Avatar Handler
-  // -----------------------
+  // Upload Avatar
   async function uploadAvatar(event: any) {
     try {
       setUploading(true);
@@ -59,55 +54,79 @@ export default function ProfilePage() {
 
       const user = (await supabase.auth.getUser()).data.user?.id;
       if (!user) {
-        alert("User not logged in");
+        toast.error("User not logged in");
         return;
       }
 
-      // имя файла = userId + расширение
       const fileExt = file.name.split(".").pop();
       const filePath = `${user}.${fileExt}`;
 
-      // загрузка в Storage
       const { error: uploadError } = await supabase.storage
         .from("avatars")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {
         console.log(uploadError);
-        alert("Error uploading avatar");
+        toast.error("Error uploading avatar");
         setUploading(false);
         return;
       }
 
-      // публичный URL
       const { data: urlData } = supabase.storage
         .from("avatars")
         .getPublicUrl(filePath);
 
-      // обновление таблицы users
-      const { error: updateError } = await supabase
+      await supabase
         .from("users")
         .update({ avatar_url: urlData.publicUrl })
         .eq("id", user);
 
-      if (updateError) {
-        console.log(updateError);
-        alert("Error saving avatar URL");
-        setUploading(false);
-        return;
-      }
-
-      // обновление UI
       setUserData((prev: any) => ({
         ...prev,
         avatar_url: urlData.publicUrl,
       }));
 
-      setUploading(false);
-      alert("Avatar updated!");
+      toast.success("Avatar updated!");
     } catch (e) {
       console.error(e);
-      alert("Unexpected error");
+      toast.error("Unexpected error");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  // Delete Avatar
+  async function deleteAvatar() {
+    try {
+      setUploading(true);
+
+      const user = (await supabase.auth.getUser()).data.user?.id;
+      if (!user) return;
+
+      if (!userData.avatar_url) {
+        toast.error("No avatar to delete");
+        setUploading(false);
+        return;
+      }
+
+      const fileExt = userData.avatar_url.split(".").pop();
+      const filePath = `${user}.${fileExt}`;
+
+      await supabase.storage.from("avatars").remove([filePath]);
+
+      await supabase.from("users").update({ avatar_url: null }).eq("id", user);
+
+      setUserData((prev: any) => ({
+        ...prev,
+        avatar_url: null,
+      }));
+
+      toast.success("Avatar deleted!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Error deleting avatar");
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -122,9 +141,8 @@ export default function ProfilePage() {
       <h1 className="mb-3 text-3xl font-bold">My Profile</h1>
       <p className="mb-8 text-gray-600">Manage your personal information.</p>
 
-      <div className="bg-muted max-w-xl rounded-lg p-6 shadow-sm">
+      <div className="max-w-xl rounded-lg bg-white p-6 shadow-sm">
         {/* Avatar */}
-
         <div className="mb-6 flex items-center gap-4">
           <Image
             src={userData.avatar_url || "/default-avatar.png"}
@@ -143,6 +161,14 @@ export default function ProfilePage() {
                 onChange={uploadAvatar}
               />
             </label>
+
+            <button
+              onClick={deleteAvatar}
+              className="mt-1 text-sm text-red-600 underline"
+              disabled={uploading}
+            >
+              Delete Avatar
+            </button>
           </div>
         </div>
 
@@ -185,7 +211,7 @@ export default function ProfilePage() {
           />
         </div>
 
-        {/* Non-editable fields */}
+        {/* Role */}
         <div className="mb-6">
           <label className="block text-sm font-medium">Role</label>
           <p className="font-semibold text-gray-800">{userData.role}</p>
@@ -196,16 +222,13 @@ export default function ProfilePage() {
           <p className="font-semibold text-gray-800">{userData.status}</p>
         </div>
 
-        <Button onClick={saveChanges} disabled={saving}>
-          {saving ? (
-            <p className="flex gap-2">
-              <Spinner />
-              Saving
-            </p>
-          ) : (
-            "Save Changes"
-          )}
-        </Button>
+        <button
+          onClick={saveChanges}
+          disabled={saving}
+          className="rounded-md bg-green-700 px-6 py-2 text-white hover:bg-green-800"
+        >
+          {saving ? "Saving..." : "Save Changes"}
+        </button>
       </div>
     </div>
   );
