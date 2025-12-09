@@ -1,8 +1,11 @@
 "use client";
 
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { createClient } from "@/app/utils/client";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 
 export default function ProfilePage() {
   const supabase = createClient();
@@ -41,12 +44,10 @@ export default function ProfilePage() {
       .eq("id", user);
 
     setSaving(false);
-    alert("Profile updated!");
+    toast.success("Profile updated!");
   }
 
-  // -----------------------
-  // 🚀 Upload Avatar Handler
-  // -----------------------
+  // Upload Avatar
   async function uploadAvatar(event: any) {
     try {
       setUploading(true);
@@ -56,55 +57,82 @@ export default function ProfilePage() {
 
       const user = (await supabase.auth.getUser()).data.user?.id;
       if (!user) {
-        alert("User not logged in");
+        toast.error("User not logged in");
         return;
       }
 
-      // имя файла = userId + расширение
       const fileExt = file.name.split(".").pop();
       const filePath = `${user}.${fileExt}`;
 
-      // загрузка в Storage
       const { error: uploadError } = await supabase.storage
         .from("avatars")
         .upload(filePath, file, { upsert: true });
 
       if (uploadError) {
         console.log(uploadError);
-        alert("Error uploading avatar");
+        toast.error("Error uploading avatar");
         setUploading(false);
         return;
       }
 
-      // публичный URL
       const { data: urlData } = supabase.storage
         .from("avatars")
         .getPublicUrl(filePath);
 
-      // обновление таблицы users
-      const { error: updateError } = await supabase
+      await supabase
         .from("users")
         .update({ avatar_url: urlData.publicUrl })
         .eq("id", user);
 
-      if (updateError) {
-        console.log(updateError);
-        alert("Error saving avatar URL");
-        setUploading(false);
-        return;
-      }
-
-      // обновление UI
       setUserData((prev: any) => ({
         ...prev,
         avatar_url: urlData.publicUrl,
       }));
 
-      setUploading(false);
-      alert("Avatar updated!");
+      toast.success("Avatar updated!");
     } catch (e) {
       console.error(e);
-      alert("Unexpected error");
+      toast.error("Unexpected error");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  // Delete Avatar
+  async function deleteAvatar() {
+    try {
+      setUploading(true);
+
+      const user = (await supabase.auth.getUser()).data.user?.id;
+      if (!user) return;
+
+      if (!userData.avatar_url) {
+        toast.error("No avatar to delete");
+        setUploading(false);
+        return;
+      }
+
+      const fileExt = userData.avatar_url.split(".").pop();
+      const filePath = `${user}.${fileExt}`;
+
+      await supabase.storage.from("avatars").remove([filePath]);
+
+      await supabase
+        .from("users")
+        .update({ avatar_url: null })
+        .eq("id", user);
+
+      setUserData((prev: any) => ({
+        ...prev,
+        avatar_url: null,
+      }));
+
+      toast.success("Avatar deleted!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Error deleting avatar");
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -119,18 +147,20 @@ export default function ProfilePage() {
       <h1 className="text-3xl font-bold mb-3">My Profile</h1>
       <p className="text-gray-600 mb-8">Manage your personal information.</p>
 
-      <div className="bg-white shadow-sm rounded-lg p-6 max-w-xl">
-        {/* Avatar */}
+      <div className="bg-muted shadow-md rounded-2xl p-6 max-w-xl">
+        
+        {/* AVATAR BLOCK */}
         <div className="flex items-center gap-4 mb-6">
-          <Image
-            src={userData.avatar_url || "/default-avatar.png"}
-            width={70}
-            height={70}
-            className="rounded-full border"
-            alt="Avatar"
-          />
-          <div>
-            <label className="cursor-pointer text-green-700 underline">
+          <Avatar className="w-[70px] h-[70px] border">
+            <AvatarImage src={userData.avatar_url || ""} />
+            <AvatarFallback className="bg-[#3E5F44] text-white text-xl">
+              {userData.firstname?.charAt(0).toUpperCase()}
+              {userData.lastname?.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+
+          <div className="flex flex-col leading-tight">
+            <label className="cursor-pointer text-green-700 underline text-sm">
               {uploading ? "Uploading..." : "Upload Avatar"}
               <input
                 type="file"
@@ -139,6 +169,14 @@ export default function ProfilePage() {
                 onChange={uploadAvatar}
               />
             </label>
+
+            <button
+              onClick={deleteAvatar}
+              className="text-red-600 underline text-sm mt-1"
+              disabled={uploading}
+            >
+              Delete Avatar
+            </button>
           </div>
         </div>
 
@@ -181,24 +219,22 @@ export default function ProfilePage() {
           />
         </div>
 
-        {/* Non-editable fields */}
+        {/* Role */}
         <div className="mb-6">
           <label className="block text-sm font-medium">Role</label>
           <p className="text-gray-800 font-semibold">{userData.role}</p>
         </div>
 
-        <div className="mb-6">
-          <label className="block text-sm font-medium">Status</label>
-          <p className="text-gray-800 font-semibold">{userData.status}</p>
-        </div>
-
-        <button
-          onClick={saveChanges}
-          disabled={saving}
-          className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-md"
-        >
-          {saving ? "Saving..." : "Save Changes"}
-        </button>
+    {/*Save button with spinner*/}
+        <Button onClick={saveChanges} disabled={saving}>
+          {saving ? (
+            <>
+              <Spinner className="mr-2" /> Saving…
+            </>
+          ) : (
+            "Save Changes"
+          )}
+        </Button>
       </div>
     </div>
   );

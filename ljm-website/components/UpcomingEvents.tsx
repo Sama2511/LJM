@@ -11,12 +11,20 @@ const formatTime = (timeString: string) => {
   return `${hour12}:${minutes} ${period}`;
 };
 
+const getEventEndDate = (event: any) => {
+  return new Date(`${event.date}T${event.ends_at}`);
+};
+
 export async function UpcomingEvents() {
   const events = await FetchEvent();
 
+  const upcoming = events.data?.filter(
+    (event) => getEventEndDate(event) >= new Date()
+  );
+
   return (
     <>
-      {events.data?.length === 0 && (
+      {(!upcoming || upcoming.length === 0) && (
         <div className="flex flex-col items-center justify-center px-5 py-20">
           <Calendar size={50} className="mb-5" />
           <h2 className="font-chillax mb-2 text-2xl font-semibold text-gray-800">
@@ -24,8 +32,15 @@ export async function UpcomingEvents() {
           </h2>
         </div>
       )}
-      <div className="grid max-w-[95%] grid-flow-col gap-4 overflow-auto pt-5 pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
-        {events.data?.map((event) => (
+
+      <div className="grid max-w-[95%] grid-flow-col gap-4 overflow-auto pt-5 pb-8 
+        [&::-webkit-scrollbar]:h-2 
+        [&::-webkit-scrollbar-thumb]:rounded-2xl 
+        [&::-webkit-scrollbar-thumb]:bg-[#62605d] 
+        [&::-webkit-scrollbar-track]:rounded-2xl 
+        [&::-webkit-scrollbar-track]:bg-[#e2dfda]"
+      >
+        {upcoming?.map((event) => (
           <EventCard
             key={event.id}
             title={event.title}
