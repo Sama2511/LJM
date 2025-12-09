@@ -20,13 +20,9 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { createClient } from "@/app/utils/client";
 
 const data = {
-  user: {
-    name: "Oussama",
-    email: "Hassouneoussama@gmail.com",
-    avatar: "",
-  },
   navMain: [
     {
       title: "Dashboard",
@@ -62,13 +58,38 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  // const supabase = createClient();
+  // const [user, setUser] = React.useState<any>(null);
+
+  // React.useEffect(() => {
+  //   const fetchuser = async () => {
+  //     const userId = (await supabase.auth.getUser()).data.user?.id;
+  //     if (!userId) return;
+
+  //     const { data, error } = await supabase
+  //       .from("users")
+  //       .select("*")
+  //       .eq("id", userId)
+  //       .single();
+
+  //     if (error) {
+  //       console.error("Error fetching user data:", error.message);
+  //       return;
+  //     }
+
+  //     setUser(data);
+  //     console.log(data);
+  //   };
+
+  //   fetchuser();
+  // }, []);
   return (
     <Sidebar
       collapsible="icon"
       className="sticky top-[120px] h-[calc(100vh-120px)]"
       {...props}
     >
-      <SidebarHeader className="border-b-2 py-5">
+      {/* <SidebarHeader className="border-b-2 py-5">
         <SidebarMenuItem>
           <div className="flex">
             <img
@@ -85,13 +106,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </div>
           </div>
         </SidebarMenuItem>
-      </SidebarHeader>
+      </SidebarHeader> */}
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter className="border-t-2">
-        <NavUser user={data.user} />
-      </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
   );

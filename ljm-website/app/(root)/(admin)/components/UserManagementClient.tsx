@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { Suspense, useState, useTransition } from "react";
 import {
   Table,
   TableBody,
@@ -49,6 +49,7 @@ import { toast } from "sonner";
 import ViewVolunteerFormDialog from "./ViewVolunteerFormDialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
+import UserProfile from "@/components/UserProfile";
 
 const getInitials = (firstname: string, lastname: string) => {
   return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -174,7 +175,7 @@ export default function UserManagementClient({
       toast.error(result.error || "Failed to delete user");
     } else {
       toast.success("User deleted successfully");
-      router.refresh(); // Refresh to get updated data from server
+      router.refresh();
     }
   };
 

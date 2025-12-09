@@ -97,3 +97,18 @@ export default async function userStatus() {
   }
   return { status: data?.status, error };
 }
+
+export async function UserInfo() {
+  const supabase = await createClient();
+  const user = await getUser();
+
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", user?.id)
+    .single();
+  if (error) {
+    redirect("/error");
+  }
+  return { userData: data };
+}

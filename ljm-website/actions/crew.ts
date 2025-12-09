@@ -130,3 +130,84 @@ export async function FetchVolunteerForm(userId: string) {
   }
   return { data };
 }
+
+export async function FetchPendingApplications(searchQuery?: string) {
+  const supabase = await createClient();
+  let query = supabase
+    .from("volunteer_form")
+    .select(
+      `
+      *,
+      users!inner(id, firstname, lastname, email, avatar_url, created_at)
+      `,
+    )
+    .eq("status", "Pending");
+
+  if (searchQuery) {
+    query = query.or(
+      `firstname.ilike.%${searchQuery}%,lastname.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%`,
+      { foreignTable: "users" },
+    );
+  }
+
+  const { data, error } = await query.order("created_at", { ascending: false });
+  if (error) {
+    console.error("Error fetching pending applications:", error.message);
+    return { error: error.message };
+  }
+  return { data };
+}
+
+export async function FetchAcceptedApplications(searchQuery?: string) {
+  const supabase = await createClient();
+  let query = supabase
+    .from("volunteer_form")
+    .select(
+      `
+      *,
+      users!inner(id, firstname, lastname, email, avatar_url, created_at)
+      `,
+    )
+    .eq("status", "Approved");
+
+  if (searchQuery) {
+    query = query.or(
+      `firstname.ilike.%${searchQuery}%,lastname.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%`,
+      { foreignTable: "users" },
+    );
+  }
+
+  const { data, error } = await query.order("created_at", { ascending: false });
+  if (error) {
+    console.error("Error fetching accepted applications:", error.message);
+    return { error: error.message };
+  }
+  return { data };
+}
+
+export async function FetchRejectedApplications(searchQuery?: string) {
+  const supabase = await createClient();
+  let query = supabase
+    .from("volunteer_form")
+    .select(
+      `
+      *,
+      users!inner(id, firstname, lastname, email, avatar_url, created_at)
+      `,
+    )
+    .eq("status", "Rejected");
+
+  if (searchQuery) {
+    query = query.or(
+      `firstname.ilike.%${searchQuery}%,lastname.ilike.%${searchQuery}%,email.ilike.%${searchQuery}%`,
+      { foreignTable: "users" },
+    );
+  }
+
+  const { data, error } = await query.order("created_at", { ascending: false });
+  if (error) {
+    console.error("Error fetching rejected applications:", error.message);
+    return { error: error.message };
+  }
+  return { data };
+}
