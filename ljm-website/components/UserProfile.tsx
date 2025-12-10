@@ -5,6 +5,7 @@ import { Skeleton } from "./ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Bell, Settings } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import Link from "next/link";
 
 interface User {
   id: string;
@@ -82,9 +83,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
   if (error || !user) {
     return (
       <div className="mb-6 flex justify-between">
-        <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
-          {pageName}
-        </h1>
+        <h1 className="text-2xl font-semibold md:text-3xl">{pageName}</h1>
         <div className="text-muted-foreground text-sm">
           {error || "User not found"}
         </div>
@@ -93,14 +92,14 @@ export default function UserProfile({ pageName }: UserProfileProps) {
   }
 
   return (
-    <div className="mb-10 flex justify-between">
-      <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
-        {pageName}
-      </h1>
+    <div className="mt-5 mb-10 flex justify-between">
+      <h1 className="text-2xl font-semibold md:text-3xl">{pageName}</h1>
       <div className="bg-muted flex items-center gap-6 rounded-3xl border-2 px-5">
         <Tooltip>
           <TooltipTrigger>
-            <Settings className="cursor-pointer transition-opacity hover:opacity-70" />
+            <Link href="/dashboard/settings">
+              <Settings className="cursor-pointer transition-opacity hover:opacity-70" />
+            </Link>
           </TooltipTrigger>
           <TooltipContent>Settings</TooltipContent>
         </Tooltip>
@@ -108,6 +107,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
           <TooltipTrigger>
             <Bell className="cursor-pointer transition-opacity hover:opacity-70" />
           </TooltipTrigger>
+
           <TooltipContent>Notifications</TooltipContent>
         </Tooltip>
         <div className="font-chillax flex h-fit items-center gap-3 py-2">
@@ -124,7 +124,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
             <span className="font-medium">
               {user.firstname} {user.lastname}
             </span>
-            <span className="text-muted-foreground text-xs capitalize">
+            <span className="text-muted-foreground text-sm capitalize">
               {user.role}
             </span>
           </div>

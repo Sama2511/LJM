@@ -8,6 +8,7 @@ import {
   Settings,
   ShipWheelIcon,
   UserCog,
+  LogOut,
 } from "lucide-react";
 
 import { NavMain } from "@/app/(root)/(admin)/components/dashboardNav/nav-main";
@@ -19,8 +20,12 @@ import {
   SidebarHeader,
   SidebarMenuItem,
   SidebarRail,
+  SidebarMenu,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar";
 import { createClient } from "@/app/utils/client";
+import { logout } from "@/actions/users";
+import { useTransition } from "react";
 
 const data = {
   navMain: [
@@ -49,15 +54,18 @@ const data = {
       url: "/dashboard/user-management",
       icon: UserCog,
     },
-    {
-      title: "settings",
-      url: "/dashboard/settings",
-      icon: Settings,
-    },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const [isPending, startTransition] = useTransition();
+
+  const handleLogout = () => {
+    startTransition(async () => {
+      await logout();
+    });
+  };
+
   return (
     <Sidebar
       collapsible="icon"
@@ -67,6 +75,23 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
+      <SidebarFooter className="border-t">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={handleLogout}
+              disabled={isPending}
+              tooltip="Logout"
+              className="h-[50px]"
+            >
+              <LogOut style={{ width: 22, height: 22 }} />
+              <span className="text-[17px] font-medium">
+                {isPending ? "Logging out..." : "Logout"}
+              </span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
 
       <SidebarRail />
     </Sidebar>

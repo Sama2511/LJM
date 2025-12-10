@@ -23,7 +23,7 @@ export function EventCard({
 }: Props) {
   return (
     <>
-      <Card className="group bg-muted w-[330px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+      <Card className="group bg-muted max-w-[335px] min-w-[335px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
         <CardTitle>
           <div className="relative h-40 w-full overflow-hidden">
             <Image
@@ -89,7 +89,7 @@ export function PastEventCard({
 }: Props) {
   return (
     <>
-      <Card className="group relative w-[320px] overflow-hidden rounded-2xl bg-[#E2DFDA] p-0 shadow-md transition-all duration-300">
+      <Card className="group relative max-w-[335px] min-w-[335px] overflow-hidden rounded-2xl bg-[#E2DFDA] p-0 shadow-md transition-all duration-300">
         <div className="pointer-events-none absolute inset-0 z-10 rounded-xl bg-black/30" />
         <CardTitle>
           <div className="relative h-40 w-full overflow-hidden">

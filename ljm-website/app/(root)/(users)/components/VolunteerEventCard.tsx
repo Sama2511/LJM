@@ -44,31 +44,21 @@ function EventDetailsModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        className="
-          bg-muted 
-          rounded-2xl 
-          shadow-xl 
-          p-0 
-          overflow-hidden
-          max-w-3xl
-          w-[92%]
-
-          max-h-[90vh]    /* модал не выходит за экран */
-          flex 
-          flex-col
-        "
-      >
+      <DialogContent className="bg-muted /* модал не выходит за экран */ flex max-h-[90vh] w-[92%] max-w-3xl flex-col overflow-hidden rounded-2xl p-0 shadow-xl">
         {/* IMAGE */}
         <div className="relative h-60 w-full">
-          <Image src={event.image} alt={event.title} fill className="object-cover" />
+          <Image
+            src={event.image}
+            alt={event.title}
+            fill
+            className="object-cover"
+          />
         </div>
 
         {/* SCROLLABLE CONTENT */}
-        <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5">
-
+        <div className="flex-1 space-y-5 overflow-y-auto px-6 py-5">
           <DialogHeader>
-            <DialogTitle className="text-2xl text-[#3E5F44] font-semibold">
+            <DialogTitle className="text-2xl font-semibold text-[#3E5F44]">
               {event.title}
             </DialogTitle>
           </DialogHeader>
@@ -78,11 +68,9 @@ function EventDetailsModal({
             <p className="flex items-center gap-2 text-sm">
               <Calendar className="h-5 w-5" /> {event.date}
             </p>
-
             <p className="flex items-center gap-2 text-sm">
               <Clock className="h-5 w-5" /> {event.time}
             </p>
-
             <p className="flex items-center gap-2 text-sm">
               <MapPin className="h-5 w-5" /> {event.location}
             </p>
@@ -90,31 +78,35 @@ function EventDetailsModal({
 
           {/* DESCRIPTION */}
           <div>
-            <h3 className="text-lg font-semibold text-[#3E5F44] mb-1">Description</h3>
-            <p className="text-[#3E5F44]/80 whitespace-pre-wrap">
+            <h3 className="mb-1 text-lg font-semibold text-[#3E5F44]">
+              Description
+            </h3>
+            <p className="whitespace-pre-wrap text-[#3E5F44]/80">
               {event.description}
             </p>
           </div>
 
           {/* CAPACITY */}
           <div>
-            <h3 className="text-lg font-semibold text-[#3E5F44] mb-1">Capacity</h3>
+            <h3 className="mb-1 text-lg font-semibold text-[#3E5F44]">
+              Capacity
+            </h3>
 
             <p className="flex items-center gap-2 text-sm text-[#3E5F44]">
               <Users className="h-4 w-4" /> {event.capacity}/{event.maxCapacity}
             </p>
 
-            <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
+            <div className="bg-secondary h-2 w-full overflow-hidden rounded-full">
               <div
                 style={{ width: `${percentage}%` }}
-                className="h-full bg-[#3E5F44] rounded-full"
+                className="h-full rounded-full bg-[#3E5F44]"
               />
             </div>
           </div>
         </div>
 
         {/* FIXED FOOTER BUTTON */}
-        <div className="p-4 border-t bg-muted">
+        <div className="bg-muted border-t p-4">
           <DialogClose asChild>
             <Button className="w-full bg-[#3E5F44] text-white hover:bg-[#2D4A36]">
               Close
@@ -173,8 +165,7 @@ export default function VolunteerEventCard({
 
   return (
     <>
-      <Card className="group bg-muted w-[320px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
-
+      <Card className="group bg-muted max-w-[335px] min-w-[335px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
         {/* IMAGE */}
         <CardTitle>
           <div className="relative h-40 w-full overflow-hidden rounded-t-2xl">
@@ -198,33 +189,35 @@ export default function VolunteerEventCard({
         {/* CONTENT */}
         <CardContent className="grid grid-rows-[160px_25px]">
           <div className="mb-6 space-y-3 text-sm text-[#3E5F44]">
+            <div className="flex gap-4">
+              <div className="flex items-center gap-2">
+                <Calendar className="h-5 w-5" />
+                <span className="font-medium">{date}</span>
+              </div>
 
-            <p className="flex items-center gap-2">
-              <Calendar className="h-5 w-5" /> {date}
-            </p>
+              <div className="flex items-center gap-2">
+                <Clock className="h-5 w-5" />
+                <span className="font-medium">{time}</span>
+              </div>
+            </div>
 
-            <p className="flex items-center gap-2">
-              <Clock className="h-5 w-5" /> {time}
-            </p>
-
-            <p className="flex items-center gap-2">
-              <MapPin className="h-5 w-5" /> {location}
-            </p>
-
-            <p className="line-clamp-3 text-base text-[#3E5F44]/80">
+            <div className="flex items-center gap-2">
+              <MapPin className="h-5 w-5" />
+              <span className="font-medium">{location}</span>
+            </div>
+            <p className="mb-6 line-clamp-3 text-base text-[#3E5F44]/80">
               {description}
             </p>
           </div>
 
-          {/* CAPACITY BAR */}
           <div>
-            <p className="text-sm text-[#3E5F44] mb-2">
+            <p className="mb-2 text-sm text-[#3E5F44]">
               Capacity: {capacity}/{maxCapacity}
             </p>
 
-            <div className="h-2 bg-secondary rounded-full overflow-hidden">
+            <div className="bg-secondary h-2 w-full overflow-hidden rounded-full">
               <div
-                className="h-full bg-[#3E5F44] rounded-full"
+                className="h-full rounded-full bg-[#3E5F44]"
                 style={{ width: `${percentage}%` }}
               />
             </div>
@@ -234,7 +227,11 @@ export default function VolunteerEventCard({
         {/* FOOTER BUTTONS */}
         <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
           <Button onClick={handleRequest} disabled={requested || isPending}>
-            {requested ? "Requested" : isPending ? "Loading…" : "Request to Volunteer"}
+            {requested
+              ? "Requested"
+              : isPending
+                ? "Loading…"
+                : "Request to Volunteer"}
           </Button>
 
           <Button variant="outline" onClick={() => setDetailsOpen(true)}>

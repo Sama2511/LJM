@@ -17,6 +17,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Upload, Trash2, User, Mail, Phone, Shield } from "lucide-react";
 import UserProfile from "@/components/UserProfile";
+import { Spinner } from "@/components/ui/spinner";
 
 interface UserData {
   id: string;
@@ -233,7 +234,7 @@ export default function ProfilePage() {
   return (
     <div className="w-full p-6">
       <UserProfile pageName="Profile" />
-      <div className="mt-6 max-w-2xl space-y-6">
+      <div className="mt-5 max-w-2xl space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>Profile Picture</CardTitle>
@@ -243,7 +244,7 @@ export default function ProfilePage() {
           </CardHeader>
           <CardContent>
             <div className="flex items-center gap-6">
-              <Avatar className="h-24 w-24">
+              <Avatar className="h-18 w-18">
                 <AvatarImage
                   src={userData.avatar_url}
                   alt={`${userData.firstname} ${userData.lastname}`}
@@ -264,7 +265,14 @@ export default function ProfilePage() {
                     }
                   >
                     <Upload className="mr-2 h-4 w-4" />
-                    {uploading ? "Uploading..." : "Upload Avatar"}
+                    {uploading ? (
+                      <p className="flex items-center gap-1">
+                        <Spinner />
+                        Uploading
+                      </p>
+                    ) : (
+                      "Upload Avatar"
+                    )}
                   </Button>
                   <Input
                     id="avatar-upload"
@@ -386,7 +394,14 @@ export default function ProfilePage() {
               disabled={saving}
               className="w-full bg-[#3E5F44] hover:bg-[#2d4432]"
             >
-              {saving ? "Saving..." : "Save Changes"}
+              {saving ? (
+                <p className="flex items-center gap-1">
+                  <Spinner />
+                  Saving
+                </p>
+              ) : (
+                "Save Changes"
+              )}
             </Button>
           </CardContent>
         </Card>

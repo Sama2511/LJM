@@ -1,7 +1,17 @@
 "use client";
 
 import * as React from "react";
-import { LayoutDashboard, User, CalendarCheck2, Star, Bell, Settings, CalendarDays, HeartHandshake } from "lucide-react";
+import {
+  LayoutDashboard,
+  User,
+  CalendarCheck2,
+  Star,
+  Bell,
+  Settings,
+  CalendarDays,
+  HeartHandshake,
+  LogOut,
+} from "lucide-react";
 
 import { NavMain } from "./nav-main";
 
@@ -9,7 +19,13 @@ import {
   Sidebar,
   SidebarContent,
   SidebarRail,
+  SidebarFooter,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar";
+import { logout } from "@/actions/users";
+import { useTransition } from "react";
 
 const data = {
   navMain: [
@@ -19,41 +35,43 @@ const data = {
       icon: LayoutDashboard,
     },
     {
-      title: "My Profile",
-      url: "/UserDashboard/profile",
-      icon: User,
-    },
-     {
       title: "Browse Events",
       url: "/UserDashboard/events",
       icon: CalendarDays,
-     },
-      {
+    },
+    {
       title: "My Volunteering",
       url: "/UserDashboard/level",
       icon: HeartHandshake,
-      },
+    },
     {
       title: "Volunteer Level",
       url: "/UserDashboard/volunteer-levels",
       icon: Star,
     },
     {
-      title: "Notifications",
-      url: "/UserDashboard/notifications",
-      icon: Bell,
-    },
-     {
-      title: "Settings",
-      url: "/UserDashboard/status",
-      icon: Settings,
+      title: "My Profile",
+      url: "/UserDashboard/profile",
+      icon: User,
     },
   ],
 };
 
 export function UserSidebar(props: React.ComponentProps<typeof Sidebar>) {
+  const [isPending, startTransition] = useTransition();
+
+  const handleLogout = () => {
+    startTransition(async () => {
+      await logout();
+    });
+  };
+
   return (
-    <Sidebar collapsible="icon" {...props} className="sticky top-[120px] h-[calc(100vh-120px)]">
+    <Sidebar
+      collapsible="icon"
+      {...props}
+      className="sticky top-[120px] h-[calc(100vh-120px)]"
+    >
       {/* <SidebarHeader className="border-b-2 py-5">
         <SidebarMenuItem>
           <div className="flex">
@@ -76,6 +94,24 @@ export function UserSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
+
+      <SidebarFooter className="border-t">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={handleLogout}
+              disabled={isPending}
+              tooltip="Logout"
+              className="h-[50px]"
+            >
+              <LogOut style={{ width: 22, height: 22 }} />
+              <span className="text-[17px] font-medium">
+                {isPending ? "Logging out..." : "Logout"}
+              </span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
 
       <SidebarRail />
     </Sidebar>
