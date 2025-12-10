@@ -9,11 +9,11 @@ export default function AboutUspage() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
-      <section className="font-chillax @container mt-10 flex justify-center p-5">
+    <div className="font-poppins">
+      <section className="@container mt-10 flex justify-center p-5">
         <div className="gap- grid w-full max-w-[350px] gap-2 font-[700] @[700px]:max-w-[850px] @[700px]:grid-cols-2">
           <div className="w-full space-y-3 rounded-3xl bg-[#e2ddb4] p-5 text-center @[700px]:col-span-2">
-            <h1 className="text-3xl font-semibold text-[#3E5F44]">
+            <h1 className="font-chillax text-3xl font-semibold text-[#3E5F44]">
               Our origin story
             </h1>
             <div
@@ -21,7 +21,7 @@ export default function AboutUspage() {
                 isOpen ? "max-h-none" : "max-h-40"
               }`}
             >
-              <p className="font-medium">
+              <p className="font-light">
                 LJM Memorial Hospice exists because of the way our community
                 showed up when it mattered most. When my husband Liam was dying
                 of brain cancer, it was the people around us—friends,
@@ -64,10 +64,10 @@ export default function AboutUspage() {
           </div>
 
           <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-[#A2AF9B] p-5 text-center">
-            <h1 className="text-3xl font-semibold text-[#3E5F44]">
+            <h1 className="font-chillax text-3xl font-semibold text-[#3E5F44]">
               Our Vision
             </h1>
-            <p className="font-medium">
+            <p className="font-light">
               "Empathetic, humane and family-oriented not-for-profit hospice
               care for people of all demographics." We know the impact that poor
               quality end of life care can have on the health of the patient as
@@ -77,10 +77,10 @@ export default function AboutUspage() {
           </div>
 
           <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-[#D3DAD9] p-5 text-center">
-            <h1 className="text-3xl font-semibold text-[#3E5F44]">
+            <h1 className="font-chillax text-3xl font-semibold text-[#3E5F44]">
               Our mission
             </h1>
-            <p className="font-medium">
+            <p className="font-light">
               LJM Memorial Hospice was established in 2018 by Kate McLaughlin.
               Kate wanted to find a way to give back to the WA community after
               they had provided so much support to her husband Liam when he
@@ -98,8 +98,8 @@ export default function AboutUspage() {
           </div>
 
           <div className="w-full space-y-3 rounded-3xl bg-[#D6DAC8] p-5 text-center @[700px]:col-span-2">
-            <h1 className="text-3xl font-semibold text-[#3E5F44]">About Us</h1>
-            <p className="font-medium">
+            <h1 className="font-chillax text-3xl font-semibold text-[#3E5F44]">About Us</h1>
+            <p className="font-light">
               LJM Memorial Hospice was established in 2018 by Kate McLaughlin.
               Kate wanted to find a way to give back to the WA community after
               they had provided so much support to her husband Liam when he
@@ -116,21 +116,21 @@ export default function AboutUspage() {
         <div className="container mx-auto py-16"></div>
       </div>
       {/* gradient background */}
-      <section className="font-chillax flex flex-col items-center gap-4 bg-[#ebe0cd]">
-        <h1 className="text-foreground text-5xl font-medium sm:text-6xl lg:text-7xl">
+      <section className="flex flex-col items-center gap-4 bg-[#ebe0cd]">
+        <h1 className="text-foreground font-chillax text-5xl font-medium sm:text-6xl lg:text-7xl">
           Our Values
         </h1>
-        <h2 className="max-w-[90%] text-center text-xl">
+        <h2 className="max-w-[90%] text-center text-xl font-light">
           These four values guide every decision we make
         </h2>
         <section className="container mx-auto px-6 py-12">
           <div className="mx-auto grid max-w-5xl grid-cols-1 md:grid-cols-2">
             {/* Item 1 */}
             <div className="border-b border-gray-300 p-6 md:border-r md:border-b">
-              <h3 className="mb-3 text-2xl font-semibold text-[#3E5F44]">
+              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#3E5F44]">
                 Connection
               </h3>
-              <p className="text-foreground">
+              <p className="text-foreground font-light">
                 From child to elder, patient to family member, nurse to
                 volunteer—everyone belongs. We design spaces and experiences
                 that encourage togetherness.
@@ -139,10 +139,10 @@ export default function AboutUspage() {
 
             {/* Item 2 */}
             <div className="border-b border-gray-300 p-6 md:border-b">
-              <h3 className="mb-3 text-2xl font-semibold text-[#3E5F44]">
+              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#3E5F44]">
                 Choice{" "}
               </h3>
-              <p className="text-foreground">
+              <p className="text-foreground font-light">
                 End-of-life care should reflect the values and wishes of the
                 individual. We advocate for more options—spaces that feel like
                 home, moments shared with loved ones, and the freedom to shape
@@ -152,10 +152,10 @@ export default function AboutUspage() {
 
             {/* Item 3 */}
             <div className="border-b border-gray-300 p-6 md:border-r md:border-b-0">
-              <h3 className="mb-3 text-2xl font-semibold text-[#3E5F44]">
+              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#3E5F44]">
                 Community
               </h3>
-              <p className="text-foreground">
+              <p className="text-foreground font-light">
                 We believe healing and comfort are made possible through human
                 connection. Our community is at the heart of everything—our
                 supporters, volunteers, neighbours, and the families we serve.
@@ -164,10 +164,10 @@ export default function AboutUspage() {
 
             {/* Item 4 */}
             <div className="p-6">
-              <h3 className="mb-3 text-2xl font-semibold text-[#3E5F44]">
+              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#3E5F44]">
                 Dignity{" "}
               </h3>
-              <p className="text-foreground">
+              <p className="text-foreground font-light">
                 Every person deserves to feel seen, heard, and valued—especially
                 at the end of life. We prioritise respect, gentleness, and care
                 for all.
@@ -184,7 +184,7 @@ export default function AboutUspage() {
         <div className="container mx-auto py-16"></div>
       </div>
       <section className="@container mx-auto max-w-[95%] px-4 py-12">
-        <h1 className="text-foreground mb-12 text-center font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
+        <h1 className="text-foreground font-chillax mb-12 text-center text-5xl font-bold sm:text-6xl lg:text-7xl">
           Meet Our Team
         </h1>
         <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-5">
@@ -216,7 +216,7 @@ export default function AboutUspage() {
         </div>
       </section>
       <section className="py-10">
-        <h1 className="text-center font-sans text-xl font-bold text-[#157A4E] sm:text-2xl lg:text-4xl">
+        <h1 className="font-chillax text-center text-xl font-bold text-[#157A4E] sm:text-2xl lg:text-4xl">
           Annual Report & Financial Statements
         </h1>
       </section>
