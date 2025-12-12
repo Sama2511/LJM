@@ -110,7 +110,7 @@ export function PastEventCard({
           </div>
         </CardTitle>
 
-        <CardContent className="grid grid-rows-[160px_25px]">
+        <CardContent className="grid grid-rows-[120px_25px]">
           <div className="text-foreground mb-6 space-y-3 text-sm">
             <div className="flex gap-4">
               <div className="flex items-center gap-2">
@@ -126,7 +126,7 @@ export function PastEventCard({
               <MapPin className="h-5 w-5" />
               <span className="font-medium">{location}</span>
             </div>
-            <p className="text-foreground/80 mb-6 line-clamp-3 text-base">
+            <p className="text-foreground/80 mt-4 mb-6 line-clamp-3 text-base">
               {description}
             </p>
           </div>

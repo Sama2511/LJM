@@ -1,5 +1,5 @@
 import React from "react";
-import UserProfile from "@/components/UserProfile";
+import UserProfile from "@/app/(root)/(users)/components/UserProfile";
 
 export default function page() {
   return (

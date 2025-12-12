@@ -49,7 +49,7 @@ import { toast } from "sonner";
 import ViewVolunteerFormDialog from "./ViewVolunteerFormDialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
-import UserProfile from "@/components/UserProfile";
+import AdminProfile from "./AdminProfile";
 
 const getInitials = (firstname: string, lastname: string) => {
   return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -191,7 +191,7 @@ export default function UserManagementClient({
 
   return (
     <div className="w-full p-6">
-      <UserProfile pageName="User management" />
+      <AdminProfile pageName="User management" />
       <Tabs defaultValue="crew" className="w-full">
         <div className="flex gap-5">
           <TabsList>

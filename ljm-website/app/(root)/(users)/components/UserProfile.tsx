@@ -1,10 +1,18 @@
 "use client";
 import { createClient } from "@/app/utils/client";
 import React, { useEffect, useState } from "react";
-import { Skeleton } from "./ui/skeleton";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { Skeleton } from "../../../../components/ui/skeleton";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../../../components/ui/avatar";
 import { Bell, Settings } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "../../../../components/ui/tooltip";
 import Link from "next/link";
 
 interface User {
@@ -97,7 +105,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
       <div className="bg-muted flex items-center gap-6 rounded-3xl border-2 px-5">
         <Tooltip>
           <TooltipTrigger>
-            <Link href="/dashboard/settings">
+            <Link href="/UserDashboard/profile">
               <Settings className="cursor-pointer transition-opacity hover:opacity-70" />
             </Link>
           </TooltipTrigger>

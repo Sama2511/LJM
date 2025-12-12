@@ -17,8 +17,7 @@ import { Search, X, FileText, CheckCircle, XCircle } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter, useSearchParams } from "next/navigation";
 import ViewVolunteerFormDialog from "./ViewVolunteerFormDialog";
-import { toast } from "sonner";
-import UserProfile from "@/components/UserProfile";
+import AdminProfile from "./AdminProfile";
 
 const getInitials = (firstname: string, lastname: string) => {
   return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -180,7 +179,7 @@ export default function ApplicationManagementClient({
 
   return (
     <div className="w-full p-6">
-      <UserProfile pageName="Crew Applications" />
+      <AdminProfile pageName="Crew Applications" />
 
       <Tabs defaultValue="pending" className="w-full">
         <div className="flex gap-5">

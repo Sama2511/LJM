@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Upload, Trash2, User, Mail, Phone, Shield } from "lucide-react";
-import UserProfile from "@/components/UserProfile";
+import UserProfile from "@/app/(root)/(users)/components/UserProfile";
 import { Spinner } from "@/components/ui/spinner";
 
 interface UserData {

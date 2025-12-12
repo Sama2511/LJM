@@ -1,6 +1,6 @@
 import { FetchEvent } from "@/actions/events";
 import VolunteerEventCard from "@/app/(root)/(users)/components/VolunteerEventCard";
-import UserProfile from "@/components/UserProfile";
+import UserProfile from "@/app/(root)/(users)/components/UserProfile";
 
 export default async function BrowseEventsPage() {
   const eventsData = await FetchEvent();
