@@ -1,10 +1,17 @@
 import { FetchEvent } from "@/actions/events";
 import VolunteerEventCard from "@/app/(root)/(users)/components/VolunteerEventCard";
 import UserProfile from "@/app/(root)/(users)/components/UserProfile";
+import {
+  GetUserVolunteerRequests,
+  VolunteerCapacity,
+} from "@/actions/volunteer";
+import { getUser } from "@/app/utils/server";
 
 export default async function BrowseEventsPage() {
   const eventsData = await FetchEvent();
-
+  const capacityData = await VolunteerCapacity();
+  const user = await getUser();
+  const userRequests = user ? await GetUserVolunteerRequests(user.id) : null;
   const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -35,8 +42,15 @@ export default async function BrowseEventsPage() {
             time={`${formatTime(event.starts_at)} - ${formatTime(event.ends_at)}`}
             location={event.location}
             image={`https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/event-pics/${event.image_url}`}
-            capacity={0}
+            capacity={
+              capacityData.data?.find((ev) => ev.event_id === event.id)
+                ?.capacity || 0
+            }
             maxCapacity={event.capacity}
+            hasRequested={
+              userRequests?.data?.some((req) => req.event_id === event.id) ||
+              false
+            }
           />
         ))}
       </div>

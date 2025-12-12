@@ -101,7 +101,9 @@ export default function UserProfile({ pageName }: UserProfileProps) {
 
   return (
     <div className="mt-5 mb-10 flex justify-between">
-      <h1 className="text-2xl font-semibold md:text-3xl">{pageName}</h1>
+      <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
+        {pageName}
+      </h1>
       <div className="bg-muted flex items-center gap-6 rounded-3xl border-2 px-5">
         <Tooltip>
           <TooltipTrigger>
@@ -118,7 +120,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
 
           <TooltipContent>Notifications</TooltipContent>
         </Tooltip>
-        <div className="font-chillax flex h-fit items-center gap-3 py-2">
+        <div className="flex h-fit items-center gap-3 py-2">
           <Avatar>
             <AvatarImage
               src={user.avatar_url}

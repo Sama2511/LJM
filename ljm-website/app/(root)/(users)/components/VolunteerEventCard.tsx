@@ -7,6 +7,7 @@ import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 /* DIALOG */
 import {
@@ -27,6 +28,7 @@ interface VolunteerEventCardProps {
   image: string;
   capacity: number;
   maxCapacity: number;
+  hasRequested?: boolean;
 }
 
 function EventDetailsModal({
@@ -131,10 +133,11 @@ export default function VolunteerEventCard({
   image,
   capacity,
   maxCapacity,
+  hasRequested = false,
 }: VolunteerEventCardProps) {
-  const [requested, setRequested] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [detailsOpen, setDetailsOpen] = useState(false);
+  const router = useRouter();
 
   const percentage = (capacity / maxCapacity) * 100;
 
@@ -156,7 +159,7 @@ export default function VolunteerEventCard({
 
       if (res.success) {
         toast.success("Request sent!");
-        setRequested(true);
+        router.refresh();
       } else {
         toast.error(res.message || "Something went wrong");
       }
@@ -224,10 +227,9 @@ export default function VolunteerEventCard({
           </div>
         </CardContent>
 
-        {/* FOOTER BUTTONS */}
         <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
-          <Button onClick={handleRequest} disabled={requested || isPending}>
-            {requested
+          <Button onClick={handleRequest} disabled={hasRequested || isPending}>
+            {hasRequested
               ? "Requested"
               : isPending
                 ? "Loading…"

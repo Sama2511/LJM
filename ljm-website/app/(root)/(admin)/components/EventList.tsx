@@ -2,9 +2,16 @@ import { FetchEvent } from "@/actions/events";
 import { Calendar } from "lucide-react";
 import React from "react";
 import EventMngtCard from "./DashEventCard";
+import {
+  GetUserVolunteerRequests,
+  VolunteerCapacity,
+} from "@/actions/volunteer";
+import { getUser } from "@/app/utils/server";
 
 export default async function EventList() {
   const eventsData = await FetchEvent();
+  const capacityData = await VolunteerCapacity();
+
   await new Promise((resolve) => setTimeout(resolve, 2000));
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -47,7 +54,10 @@ export default async function EventList() {
             location={event.location}
             image={`https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/event-pics/${event.image_url}`}
             maxCapacity={event.capacity}
-            capacity={2}
+            capacity={
+              capacityData.data?.find((ev) => ev.event_id === event.id)
+                ?.capacity || 0
+            }
             id={event.id}
           />
         ))}
