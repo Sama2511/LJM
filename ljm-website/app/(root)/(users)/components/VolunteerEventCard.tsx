@@ -60,13 +60,13 @@ function EventDetailsModal({
         {/* SCROLLABLE CONTENT */}
         <div className="flex-1 space-y-5 overflow-y-auto px-6 py-5">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-semibold text-[#3E5F44]">
+            <DialogTitle className="text-foreground text-2xl font-semibold">
               {event.title}
             </DialogTitle>
           </DialogHeader>
 
           {/* DATE / TIME / LOCATION */}
-          <div className="space-y-2 text-[#3E5F44]">
+          <div className="text-foreground space-y-2">
             <p className="flex items-center gap-2 text-sm">
               <Calendar className="h-5 w-5" /> {event.date}
             </p>
@@ -80,28 +80,28 @@ function EventDetailsModal({
 
           {/* DESCRIPTION */}
           <div>
-            <h3 className="mb-1 text-lg font-semibold text-[#3E5F44]">
+            <h3 className="text-foreground mb-1 text-lg font-semibold">
               Description
             </h3>
-            <p className="whitespace-pre-wrap text-[#3E5F44]/80">
+            <p className="text-foreground/80 whitespace-pre-wrap">
               {event.description}
             </p>
           </div>
 
           {/* CAPACITY */}
           <div>
-            <h3 className="mb-1 text-lg font-semibold text-[#3E5F44]">
+            <h3 className="text-foreground mb-1 text-lg font-semibold">
               Capacity
             </h3>
 
-            <p className="flex items-center gap-2 text-sm text-[#3E5F44]">
+            <p className="text-foreground flex items-center gap-2 text-sm">
               <Users className="h-4 w-4" /> {event.capacity}/{event.maxCapacity}
             </p>
 
             <div className="bg-secondary h-2 w-full overflow-hidden rounded-full">
               <div
                 style={{ width: `${percentage}%` }}
-                className="h-full rounded-full bg-[#3E5F44]"
+                className="bg-fortext-foreground h-full rounded-full"
               />
             </div>
           </div>
@@ -110,7 +110,7 @@ function EventDetailsModal({
         {/* FIXED FOOTER BUTTON */}
         <div className="bg-muted border-t p-4">
           <DialogClose asChild>
-            <Button className="w-full bg-[#3E5F44] text-white hover:bg-[#2D4A36]">
+            <Button className="bg-fortext-foreground w-full text-white hover:bg-[#2D4A36]">
               Close
             </Button>
           </DialogClose>
@@ -191,7 +191,7 @@ export default function VolunteerEventCard({
 
         {/* CONTENT */}
         <CardContent className="grid grid-rows-[160px_25px]">
-          <div className="mb-6 space-y-3 text-sm text-[#3E5F44]">
+          <div className="text-foreground mb-6 space-y-3 text-sm">
             <div className="flex gap-4">
               <div className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
@@ -208,19 +208,19 @@ export default function VolunteerEventCard({
               <MapPin className="h-5 w-5" />
               <span className="font-medium">{location}</span>
             </div>
-            <p className="mb-6 line-clamp-3 text-base text-[#3E5F44]/80">
+            <p className="text-foreground/80 mb-6 line-clamp-3 text-base">
               {description}
             </p>
           </div>
 
           <div>
-            <p className="mb-2 text-sm text-[#3E5F44]">
+            <p className="text-foreground mb-2 text-sm">
               Capacity: {capacity}/{maxCapacity}
             </p>
 
             <div className="bg-secondary h-2 w-full overflow-hidden rounded-full">
               <div
-                className="h-full rounded-full bg-[#3E5F44]"
+                className="bg-primary h-full rounded-full"
                 style={{ width: `${percentage}%` }}
               />
             </div>

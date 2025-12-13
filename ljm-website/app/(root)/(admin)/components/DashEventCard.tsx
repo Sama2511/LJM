@@ -65,7 +65,7 @@ export default function EventMngtCard({
       </CardTitle>
 
       <CardContent className="grid grid-rows-[160px_25px]">
-        <div className="mb-6 space-y-3 text-sm text-[#3E5F44]">
+        <div className="text-foreground mb-6 space-y-3 text-sm">
           <div className="flex gap-4">
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
@@ -82,19 +82,19 @@ export default function EventMngtCard({
             <MapPin className="h-5 w-5" />
             <span className="font-medium">{location}</span>
           </div>
-          <p className="mb-6 line-clamp-3 text-base text-[#3E5F44]/80">
+          <p className="text-foreground/80 mb-6 line-clamp-3 text-base">
             {description}
           </p>
         </div>
 
         <div>
-          <p className="mb-2 text-sm text-[#3E5F44]">
+          <p className="text-foreground mb-2 text-sm">
             Capacity: {capacity}/{maxCapacity}
           </p>
 
           <div className="bg-secondary h-2 w-full overflow-hidden rounded-full">
             <div
-              className="h-full rounded-full bg-[#3E5F44]"
+              className="bg-primary h-full rounded-full"
               style={{ width: `${percentage}%` }}
             />
           </div>
