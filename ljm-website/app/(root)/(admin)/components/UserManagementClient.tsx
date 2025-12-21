@@ -24,6 +24,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -162,14 +173,6 @@ export default function UserManagementClient({
   };
 
   const handleDeleteUser = async (userId: string) => {
-    if (
-      !confirm(
-        "Are you sure you want to delete this user? This action cannot be undone.",
-      )
-    ) {
-      return;
-    }
-
     const result = await DeleteUser(userId);
     if (!result.success) {
       toast.error(result.error || "Failed to delete user");
@@ -321,20 +324,69 @@ export default function UserManagementClient({
                             Make Admin
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem
-                            onClick={() => handleBanUser(user.id)}
-                            className="gap-2"
-                          >
-                            <Ban className="h-4 w-4" />
-                            Ban User
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => handleDeleteUser(user.id)}
-                            className="text-destructive gap-2"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                            Delete User
-                          </DropdownMenuItem>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <DropdownMenuItem
+                                onSelect={(e) => e.preventDefault()}
+                                className="gap-2"
+                              >
+                                <Ban className="h-4 w-4" />
+                                Ban User
+                              </DropdownMenuItem>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Ban this user?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  This user will be banned from accessing the
+                                  platform. You can unban them later if needed.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleBanUser(user.id)}
+                                  className="bg-destructive hover:bg-destructive/90"
+                                >
+                                  Ban User
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <DropdownMenuItem
+                                onSelect={(e) => e.preventDefault()}
+                                className="text-destructive gap-2"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                                Delete User
+                              </DropdownMenuItem>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Are you sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  This action cannot be undone. This will
+                                  permanently delete the user account and all
+                                  associated data.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleDeleteUser(user.id)}
+                                  className="bg-destructive hover:bg-destructive/90"
+                                >
+                                  Delete
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
@@ -400,13 +452,38 @@ export default function UserManagementClient({
                             Remove Admin
                           </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem
-                            onClick={() => handleDeleteUser(admin.id)}
-                            className="text-destructive gap-2"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                            Delete User
-                          </DropdownMenuItem>
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <DropdownMenuItem
+                                onSelect={(e) => e.preventDefault()}
+                                className="text-destructive gap-2"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                                Delete User
+                              </DropdownMenuItem>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>
+                                  Are you sure?
+                                </AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  This action cannot be undone. This will
+                                  permanently delete the user account and all
+                                  associated data.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                <AlertDialogAction
+                                  onClick={() => handleDeleteUser(admin.id)}
+                                  className="bg-destructive hover:bg-destructive/90"
+                                >
+                                  Delete
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
