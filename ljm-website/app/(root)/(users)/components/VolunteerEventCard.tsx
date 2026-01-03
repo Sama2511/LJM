@@ -133,7 +133,7 @@ export default function VolunteerEventCard({
   image,
   capacity,
   maxCapacity,
-  hasRequested = false,
+  hasRequested,
 }: VolunteerEventCardProps) {
   const [isPending, startTransition] = useTransition();
   const [detailsOpen, setDetailsOpen] = useState(false);
@@ -158,7 +158,7 @@ export default function VolunteerEventCard({
       const res = await RequestToVolunteer(id);
 
       if (res.success) {
-        toast.success("Request sent!");
+        toast.success("You've joined the event!");
         router.refresh();
       } else {
         toast.error(res.message || "Something went wrong");
@@ -230,10 +230,10 @@ export default function VolunteerEventCard({
         <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
           <Button onClick={handleRequest} disabled={hasRequested || isPending}>
             {hasRequested
-              ? "Requested"
+              ? "Joined"
               : isPending
-                ? "Loading…"
-                : "Request to Volunteer"}
+                ? "Joining…"
+                : "Volunteer"}
           </Button>
 
           <Button variant="outline" onClick={() => setDetailsOpen(true)}>

@@ -14,6 +14,14 @@ import {
   TooltipTrigger,
 } from "../../../../components/ui/tooltip";
 import Link from "next/link";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 interface User {
   id: string;
@@ -34,6 +42,7 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [notificationOpen, setNotificationOpen] = useState(false);
 
   const getInitials = (firstname: string, lastname: string) => {
     return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -76,6 +85,25 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
     loadUser();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = (e: Event) => {
+      if (notificationOpen) {
+        const target = e.target;
+
+        if (
+          target === document ||
+          target === document.documentElement ||
+          target === document.body
+        ) {
+          setNotificationOpen(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, true);
+    return () => window.removeEventListener("scroll", handleScroll, true);
+  }, [notificationOpen]);
+
   if (loading) {
     return (
       <div className="mb-6 flex justify-between">
@@ -114,12 +142,129 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
           <TooltipContent>Settings</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <TooltipTrigger>
-            <Bell className="cursor-pointer transition-opacity hover:opacity-70" />
-          </TooltipTrigger>
+          <Popover open={notificationOpen} onOpenChange={setNotificationOpen}>
+            <TooltipTrigger>
+              <PopoverTrigger asChild>
+                <div className="relative">
+                  <Bell className="cursor-pointer transition-opacity hover:opacity-70" />
+                  {/* Unread badge */}
+                  <span className="bg-destructive absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold text-white">
+                    3
+                  </span>
+                </div>
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-0" align="end">
+                <div className="border-b px-4 py-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold">Notifications</h3>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-primary h-auto p-0 text-xs"
+                    >
+                      Mark all as read
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="max-h-[400px] overflow-y-auto">
+                  <div className="bg-muted/50 hover:bg-muted border-b px-4 py-3 transition-colors">
+                    <div className="flex gap-3">
+                      <div className="bg-primary mt-1 h-2 w-2 flex-shrink-0 rounded-full"></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">New Event Created</p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          Beach Cleanup event has been added to the calendar
+                        </p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          2 hours ago
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-muted/50 hover:bg-muted border-b px-4 py-3 transition-colors">
+                    <div className="flex gap-3">
+                      <div className="bg-primary mt-1 h-2 w-2 flex-shrink-0 rounded-full"></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">
+                          Volunteer Request Approved
+                        </p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          Your request for Park Cleanup has been approved
+                        </p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          5 hours ago
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-muted/50 hover:bg-muted border-b px-4 py-3 transition-colors">
+                    <div className="flex gap-3">
+                      <div className="bg-primary mt-1 h-2 w-2 flex-shrink-0 rounded-full"></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">
+                          Application Submitted
+                        </p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          New crew application from John Doe
+                        </p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          1 day ago
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="hover:bg-muted/30 border-b px-4 py-3 opacity-60 transition-colors">
+                    <div className="flex gap-3">
+                      <div className="mt-1 h-2 w-2 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <p className="text-sm">Event Reminder</p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          River Cleanup starts tomorrow at 9:00 AM
+                        </p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          2 days ago
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="hover:bg-muted/30 px-4 py-3 opacity-60 transition-colors">
+                    <div className="flex gap-3">
+                      <div className="mt-1 h-2 w-2 flex-shrink-0"></div>
+                      <div className="flex-1">
+                        <p className="text-sm">Welcome to LJM</p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          Thank you for joining our community!
+                        </p>
+                        <p className="text-muted-foreground mt-1 text-xs">
+                          3 days ago
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="border-t px-4 py-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-auto w-full p-2 text-xs"
+                  >
+                    View all notifications
+                  </Button>
+                </div>
+              </PopoverContent>
+            </TooltipTrigger>
+          </Popover>
 
           <TooltipContent>Notifications</TooltipContent>
         </Tooltip>
+
         <div className="flex h-fit items-center gap-3 py-2">
           <Avatar>
             <AvatarImage

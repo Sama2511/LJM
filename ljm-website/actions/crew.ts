@@ -75,7 +75,7 @@ export async function RemoveAdminPrivileges(id: string) {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("users")
-    .update({ role: "kindling" })
+    .update({ role: "Kindling" })
     .eq("id", id)
     .select();
   if (error) {

@@ -1,7 +1,17 @@
 "use client";
 
 import { DeleteEvent } from "@/actions/events";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
@@ -105,23 +115,37 @@ export default function EventMngtCard({
         <Suspense fallback={<LoadingEditEvents />}>
           <EditEventForm id={id} />
         </Suspense>
-        <Button
-          asChild
-          onClick={handleDelete}
-          variant={"destructive"}
-          disabled={isDeleting}
-        >
-          {isDeleting ? (
-            <Button className="flex gap-2">
-              <Spinner /> Delete
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <Button asChild variant={"destructive"} disabled={isDeleting}>
+              {isDeleting ? (
+                <Button className="flex gap-2">
+                  <Spinner /> Delete
+                </Button>
+              ) : (
+                <Button className="flex gap-2">
+                  <Trash2 className="h-5 w-5" />
+                  Delete
+                </Button>
+              )}
             </Button>
-          ) : (
-            <Button className="flex gap-2">
-              <Trash2 className="h-5 w-5" />
-              Delete
-            </Button>
-          )}
-        </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete the
+                event.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <Button asChild variant="destructive" onClick={handleDelete}>
+                <AlertDialogAction>Delete</AlertDialogAction>
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </CardFooter>
     </Card>
   );

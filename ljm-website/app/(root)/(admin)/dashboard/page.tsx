@@ -1,10 +1,11 @@
 import React from "react";
 import UserProfile from "@/app/(root)/(users)/components/UserProfile";
+import AdminProfile from "../components/AdminProfile";
 
 export default function page() {
   return (
     <div className="w-full p-6">
-      <UserProfile pageName="Dashboard" />
+      <AdminProfile pageName="Dashboard" />
     </div>
   );
 }
