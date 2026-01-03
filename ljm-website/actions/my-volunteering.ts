@@ -28,7 +28,9 @@ export async function GetMyVolunteering() {
         location,
         starts_at,
         ends_at,
-        image_url
+        image_url,
+        capacity,
+        volunteer_requests(count)
       )
     `)
     .eq("user_id", user.id)
