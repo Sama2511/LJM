@@ -16,6 +16,7 @@ export async function RequestToVolunteer(eventId: string) {
   const { error } = await supabase.from("volunteer_requests").insert({
     event_id: eventId,
     user_id: user.id,
+    status: "approved",
   });
 
   if (error) return { success: false, message: error.message };
