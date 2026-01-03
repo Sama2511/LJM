@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useTransition } from "react";
-import { RequestToVolunteer } from "@/actions/volunteer";
+import { JoinEvent } from "@/actions/volunteer";
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -155,7 +155,7 @@ export default function VolunteerEventCard({
 
   const handleRequest = () => {
     startTransition(async () => {
-      const res = await RequestToVolunteer(id);
+      const res = await JoinEvent(id);
 
       if (res.success) {
         toast.success("You've joined the event!");
@@ -229,11 +229,7 @@ export default function VolunteerEventCard({
 
         <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
           <Button onClick={handleRequest} disabled={hasRequested || isPending}>
-            {hasRequested
-              ? "Joined"
-              : isPending
-                ? "Joining…"
-                : "Volunteer"}
+            {hasRequested ? "Joined" : isPending ? "Joining…" : "Volunteer"}
           </Button>
 
           <Button variant="outline" onClick={() => setDetailsOpen(true)}>
