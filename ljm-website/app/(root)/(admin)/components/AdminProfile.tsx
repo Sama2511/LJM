@@ -42,6 +42,7 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [notificationOpen, setNotificationOpen] = useState(false);
 
   const getInitials = (firstname: string, lastname: string) => {
     return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -84,6 +85,25 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
     loadUser();
   }, []);
 
+  useEffect(() => {
+    const handleScroll = (e: Event) => {
+      if (notificationOpen) {
+        const target = e.target;
+
+        if (
+          target === document ||
+          target === document.documentElement ||
+          target === document.body
+        ) {
+          setNotificationOpen(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, true);
+    return () => window.removeEventListener("scroll", handleScroll, true);
+  }, [notificationOpen]);
+
   if (loading) {
     return (
       <div className="mb-6 flex justify-between">
@@ -122,7 +142,7 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
           <TooltipContent>Settings</TooltipContent>
         </Tooltip>
         <Tooltip>
-          <Popover>
+          <Popover open={notificationOpen} onOpenChange={setNotificationOpen}>
             <TooltipTrigger>
               <PopoverTrigger asChild>
                 <div className="relative">
