@@ -2,7 +2,7 @@
 
 import { createClient } from "@/app/utils/server";
 
-export async function RequestToVolunteer(eventId: string) {
+export async function JoinEvent(eventId: string) {
   const supabase = await createClient();
 
   const {
@@ -49,4 +49,72 @@ export async function GetUserVolunteerRequests(userId: string) {
   }
 
   return { data };
+}
+
+export async function ApproveApplication(formId: string) {
+  const supabase = await createClient();
+
+  const { data: application } = await supabase
+    .from("volunteer_form")
+    .select("user_id")
+    .eq("id", formId)
+    .single();
+
+  const { error } = await supabase
+    .from("volunteer_form")
+    .update({ status: "Approved" })
+    .eq("id", formId);
+
+  if (error) {
+    console.error("Error approving application:", error.message);
+    return { error: error.message };
+  }
+
+  if (application) {
+    await supabase.from("notifications").insert({
+      type: "application_approved",
+      title: "Crew Application Approved",
+      message:
+        "Congratulations! Your crew application has been approved. Welcome to the team!",
+      reference_type: "application",
+      reference_id: formId,
+      user_id: application.user_id,
+    });
+  }
+
+  return { success: true };
+}
+
+export async function RejectApplication(formId: string) {
+  const supabase = await createClient();
+
+  const { data: application } = await supabase
+    .from("volunteer_form")
+    .select("user_id")
+    .eq("id", formId)
+    .single();
+
+  const { error } = await supabase
+    .from("volunteer_form")
+    .update({ status: "Rejected" })
+    .eq("id", formId);
+
+  if (error) {
+    console.error("Error rejecting application:", error.message);
+    return { error: error.message };
+  }
+
+  if (application) {
+    await supabase.from("notifications").insert({
+      type: "application_rejected",
+      title: "Crew Application Update",
+      message:
+        "Thank you for your interest. Unfortunately, your crew application was not approved at this time.",
+      reference_type: "application",
+      reference_id: formId,
+      user_id: application.user_id,
+    });
+  }
+
+  return { success: true };
 }

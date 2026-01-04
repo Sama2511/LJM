@@ -32,6 +32,18 @@ interface User {
   created_at: string;
 }
 
+interface Notification {
+  id: string;
+  type: string;
+  title: string;
+  message: string;
+  reference_type: string | null;
+  reference_id: string | null;
+  user_id: string | null;
+  created_at: string;
+  is_read: boolean;
+}
+
 interface UserProfileProps {
   pageName: string;
 }
@@ -41,9 +53,74 @@ export default function UserProfile({ pageName }: UserProfileProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const getInitials = (firstname: string, lastname: string) => {
     return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
+  };
+
+  const formatTimeAgo = (dateString: string) => {
+    const now = new Date();
+    const date = new Date(dateString);
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+
+    if (seconds < 60) return "Just now";
+    if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+    if (seconds < 604800) return `${Math.floor(seconds / 86400)} days ago`;
+    return `${Math.floor(seconds / 604800)} weeks ago`;
+  };
+
+  const loadNotifications = async (userId: string) => {
+    const supabase = createClient();
+
+    const { data: notificationsData } = await supabase
+      .from("notifications")
+      .select("*")
+      .or(`user_id.eq.${userId},user_id.is.null`)
+      .order("created_at", { ascending: false })
+      .limit(20);
+
+    if (!notificationsData) return;
+
+    const { data: readsData } = await supabase
+      .from("notification_reads")
+      .select("notification_id")
+      .eq("user_id", userId);
+
+    const readNotificationIds = new Set(
+      readsData?.map((r) => r.notification_id) || [],
+    );
+
+    const notificationsWithReadStatus = notificationsData.map((n) => ({
+      ...n,
+      is_read: readNotificationIds.has(n.id),
+    }));
+
+    setNotifications(notificationsWithReadStatus);
+    setUnreadCount(
+      notificationsWithReadStatus.filter((n) => !n.is_read).length,
+    );
+  };
+
+  const markAllAsRead = async () => {
+    if (!user) return;
+
+    const supabase = createClient();
+    const unreadNotifications = notifications.filter((n) => !n.is_read);
+
+    if (unreadNotifications.length === 0) return;
+
+    const readsToInsert = unreadNotifications.map((n) => ({
+      notification_id: n.id,
+      user_id: user.id,
+    }));
+
+    await supabase.from("notification_reads").insert(readsToInsert);
+
+    setNotifications(notifications.map((n) => ({ ...n, is_read: true })));
+    setUnreadCount(0);
   };
 
   useEffect(() => {
@@ -72,6 +149,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
         }
 
         setUser(data);
+        await loadNotifications(authData.user.id);
         setLoading(false);
       } catch (err) {
         console.error("Error loading user:", err);
@@ -145,90 +223,72 @@ export default function UserProfile({ pageName }: UserProfileProps) {
                 <div className="relative">
                   <Bell className="cursor-pointer transition-opacity hover:opacity-70" />
                   {/* Unread badge */}
-                  <span className="bg-destructive absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold text-white">
-                    2
-                  </span>
+                  {unreadCount > 0 && (
+                    <span className="bg-destructive absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold text-white">
+                      {unreadCount}
+                    </span>
+                  )}
                 </div>
               </PopoverTrigger>
               <PopoverContent className="w-80 p-0" align="end">
                 <div className="border-b px-4 py-3">
                   <div className="flex items-center justify-between">
                     <h3 className="font-semibold">Notifications</h3>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-primary h-auto p-0 text-xs"
-                    >
-                      Mark all as read
-                    </Button>
+                    {unreadCount > 0 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-primary h-auto p-0 text-xs"
+                        onClick={markAllAsRead}
+                      >
+                        Mark all as read
+                      </Button>
+                    )}
                   </div>
                 </div>
 
                 <div className="max-h-[400px] overflow-y-auto">
-                  <div className="bg-muted/50 hover:bg-muted border-b px-4 py-3 transition-colors">
-                    <div className="flex gap-3">
-                      <div className="bg-primary mt-1 h-2 w-2 flex-shrink-0 rounded-full"></div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">
-                          Crew Application Approved
-                        </p>
-                        <p className="text-muted-foreground mt-1 text-xs">
-                          Congratulations! Your crew application has been
-                          approved. Welcome to the team!
-                        </p>
-                        <p className="text-muted-foreground mt-1 text-xs">
-                          1 hour ago
-                        </p>
-                      </div>
+                  {notifications.length === 0 ? (
+                    <div className="px-4 py-8 text-center">
+                      <p className="text-muted-foreground text-sm">
+                        No notifications yet
+                      </p>
                     </div>
-                  </div>
-
-                  <div className="bg-muted/50 hover:bg-muted border-b px-4 py-3 transition-colors">
-                    <div className="flex gap-3">
-                      <div className="bg-primary mt-1 h-2 w-2 flex-shrink-0 rounded-full"></div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">
-                          New Event Available
-                        </p>
-                        <p className="text-muted-foreground mt-1 text-xs">
-                          Beach Cleanup event is now open for volunteers
-                        </p>
-                        <p className="text-muted-foreground mt-1 text-xs">
-                          3 hours ago
-                        </p>
+                  ) : (
+                    notifications.map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={`border-b px-4 py-3 transition-colors ${
+                          notification.is_read
+                            ? "hover:bg-muted/30 opacity-60"
+                            : "bg-muted/50 hover:bg-muted"
+                        }`}
+                      >
+                        <div className="flex gap-3">
+                          <div
+                            className={`mt-1 h-2 w-2 flex-shrink-0 rounded-full ${
+                              notification.is_read ? "" : "bg-primary"
+                            }`}
+                          ></div>
+                          <div className="flex-1">
+                            <p
+                              className={`text-sm ${
+                                notification.is_read ? "" : "font-medium"
+                              }`}
+                            >
+                              {notification.title}
+                            </p>
+                            <p className="text-muted-foreground mt-1 text-xs">
+                              {notification.message}
+                            </p>
+                            <p className="text-muted-foreground mt-1 text-xs">
+                              {formatTimeAgo(notification.created_at)}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-
-                  <div className="hover:bg-muted/30 border-b px-4 py-3 opacity-60 transition-colors">
-                    <div className="flex gap-3">
-                      <div className="mt-1 h-2 w-2 flex-shrink-0"></div>
-                      <div className="flex-1">
-                        <p className="text-sm">Event Reminder</p>
-                        <p className="text-muted-foreground mt-1 text-xs">
-                          Park Cleanup starts tomorrow at 9:00 AM
-                        </p>
-                        <p className="text-muted-foreground mt-1 text-xs">
-                          1 day ago
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="hover:bg-muted/30 px-4 py-3 opacity-60 transition-colors">
-                    <div className="flex gap-3">
-                      <div className="mt-1 h-2 w-2 flex-shrink-0"></div>
-                      <div className="flex-1">
-                        <p className="text-sm">Successfully Joined Event</p>
-                        <p className="text-muted-foreground mt-1 text-xs">
-                          You've joined River Cleanup - See you there!
-                        </p>
-                        <p className="text-muted-foreground mt-1 text-xs">
-                          2 days ago
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                    ))
+                  )}
                 </div>
 
                 {/* Footer */}
