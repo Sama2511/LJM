@@ -1,6 +1,9 @@
 import { FetchEvent } from "@/actions/events";
 import UserProfile from "@/app/(root)/(users)/components/UserProfile";
-import { GetUserVolunteerRequests, VolunteerCapacity } from "@/actions/volunteer";
+import {
+  GetUserVolunteerRequests,
+  VolunteerCapacity,
+} from "@/actions/volunteer";
 import { getUser } from "@/app/utils/server";
 import BrowseEventsClient from "@/app/(root)/(users)/components/BrowseEventsClient";
 
@@ -12,7 +15,7 @@ export default async function BrowseEventsPage() {
 
   return (
     <div className="w-full">
-      <div className="mx-auto w-full max-w-6xl px-6 py-8">
+      <div className="max-w-8xl mx-auto w-full px-6 py-8">
         <UserProfile pageName="Browse Events" />
 
         <div className="mt-8">
