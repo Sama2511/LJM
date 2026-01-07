@@ -53,6 +53,8 @@ export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
 
   const { error: insertError } = await supabase.from("volunteer_form").insert({
     id: user.id,
+    phone: formData.phone,
+    emergency_contact: formData.emergencyContact,
     activities: formData.activities,
     inspiration: formData.inspiration,
     skills: formData.skills,

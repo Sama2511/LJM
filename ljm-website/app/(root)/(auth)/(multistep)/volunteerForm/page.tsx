@@ -34,6 +34,8 @@ export default function page() {
   const Form = useForm<z.infer<typeof volunteerForm>>({
     resolver: zodResolver(volunteerForm),
     defaultValues: {
+      phone: "",
+      emergencyContact: "",
       activities: [],
       availability: "",
       inspiration: "",
@@ -266,6 +268,54 @@ export default function page() {
                         )}
                       </Field>
                     </FieldSet>
+                  )}
+                />
+                <Controller
+                  name="phone"
+                  control={Form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
+                        Phone Number*
+                      </FieldLabel>
+                      <Input
+                        {...field}
+                        id="phone"
+                        type="tel"
+                        aria-invalid={fieldState.invalid}
+                        placeholder="Enter phone number"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
+                  )}
+                />
+                <Controller
+                  name="emergencyContact"
+                  control={Form.control}
+                  render={({ field, fieldState }) => (
+                    <Field data-invalid={fieldState.invalid}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
+                        Emergency Contact Number*
+                      </FieldLabel>
+                      <Input
+                        {...field}
+                        id="emergencyContact"
+                        type="tel"
+                        aria-invalid={fieldState.invalid}
+                        placeholder="Enter emergency contact"
+                      />
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
+                    </Field>
                   )}
                 />
               </FieldGroup>

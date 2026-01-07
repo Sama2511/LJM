@@ -37,6 +37,14 @@ export const signUpSchema = z
   });
 
 export const volunteerForm = z.object({
+  phone: z
+    .string()
+    .min(8, { message: "Please enter a valid phone number" })
+    .max(20),
+  emergencyContact: z
+    .string()
+    .min(8, { message: "Please enter a valid emergency contact number" })
+    .max(20),
   activities: z
     .array(
       z.enum([

@@ -35,6 +35,8 @@ const formatDate = (dateString: string) => {
 type Application = {
   id: string;
   created_at: string;
+  phone: string | null;
+  emergency_contact: string | null;
   activities: string;
   interests: string | null;
   skills: string | null;

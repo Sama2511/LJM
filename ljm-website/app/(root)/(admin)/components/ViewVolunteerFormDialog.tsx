@@ -16,6 +16,7 @@ import {
   ClipboardList,
   Heart,
   Lightbulb,
+  Phone,
   Sparkles,
   UserCircle,
 } from "lucide-react";
@@ -24,6 +25,8 @@ import { Button } from "@/components/ui/button";
 type VolunteerFormData = {
   id: string;
   created_at: string;
+  phone: string | null;
+  emergency_contact: string | null;
   activities: string;
   interests: string | null;
   skills: string | null;
@@ -139,6 +142,25 @@ export default function ViewVolunteerFormDialog({
             >
               {formData.status}
             </Badge>
+          </div>
+
+          <Separator />
+
+          <div>
+            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+              <Phone className="h-5 w-5" />
+              Contact Information
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-muted-foreground text-xs">Phone Number</p>
+                <p className="text-sm">{formData.phone || "Not provided"}</p>
+              </div>
+              <div>
+                <p className="text-muted-foreground text-xs">Emergency Contact</p>
+                <p className="text-sm">{formData.emergency_contact || "Not provided"}</p>
+              </div>
+            </div>
           </div>
 
           <Separator />
