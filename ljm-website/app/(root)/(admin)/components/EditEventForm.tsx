@@ -13,7 +13,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { eventForm } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -28,7 +28,7 @@ import {
   SheetFooter,
   SheetClose,
 } from "@/components/ui/sheet";
-import { Pencil } from "lucide-react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 import { createClient } from "@/app/utils/client";
@@ -71,15 +71,30 @@ export default function EditEventForm(id: { id: string }) {
       ends_at: "",
       location: "",
       image_url: "",
-      capacity: 0,
+      roles: [{ role_name: "", capacity: 1 }],
     },
+  });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "roles",
   });
 
   const handleEdit = async () => {
     setIsLoading(true);
+    const supabase = createClient();
     const eventData = await FetchEventForEdit(id.id);
     if (eventData.data) {
-      setSelectedEvent(eventData.data);
+      const { data: roles } = await supabase
+        .from("event_roles")
+        .select("role_name, capacity")
+        .eq("event_id", id.id);
+
+      setSelectedEvent({
+        ...eventData.data,
+        roles:
+          roles && roles.length > 0 ? roles : [{ role_name: "", capacity: 1 }],
+      });
       setImageUrl([
         `https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/event-pics/${eventData.data.image_url}`,
       ]);
@@ -105,7 +120,7 @@ export default function EditEventForm(id: { id: string }) {
         starts_at: selectedEvent.starts_at,
         ends_at: selectedEvent.ends_at,
         location: selectedEvent.location,
-        capacity: selectedEvent.capacity,
+        roles: selectedEvent.roles,
         image_url: selectedEvent.image_url,
       });
     }
@@ -121,7 +136,7 @@ export default function EditEventForm(id: { id: string }) {
         ends_at: "",
         location: "",
         image_url: "",
-        capacity: 0,
+        roles: [{ role_name: "", capacity: 1 }],
       });
       setImageUrl([]);
       setSelectedEvent(null);
@@ -310,32 +325,72 @@ export default function EditEventForm(id: { id: string }) {
                   )}
                 />
               </div>
-              <Controller
-                name="capacity"
-                control={form.control}
-                render={({ field, fieldState }) => (
-                  <Field
-                    data-invalid={fieldState.invalid}
-                    className="w-[100px]"
-                  >
-                    <FieldLabel className="font-semibold" htmlFor={field.name}>
-                      Capacity
-                    </FieldLabel>
-                    <Input
-                      id="capacity"
-                      value={field.value}
-                      onChange={(e) => field.onChange(Number(e.target.value))}
-                      aria-invalid={fieldState.invalid}
-                      type="number"
-                      min={0}
-                      className="bg-popover"
-                    />
-                    {fieldState.invalid && (
-                      <FieldError errors={[fieldState.error]} />
-                    )}
-                  </Field>
+              <Field>
+                <FieldLabel className="font-semibold">Roles</FieldLabel>
+                <div className="space-y-2">
+                  {fields.map((field, index) => (
+                    <div key={field.id} className="flex items-center gap-2">
+                      <Controller
+                        name={`roles.${index}.role_name`}
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                          <Input
+                            {...field}
+                            placeholder="Role name"
+                            className="bg-popover flex-1"
+                            aria-invalid={fieldState.invalid}
+                          />
+                        )}
+                      />
+                      <Controller
+                        name={`roles.${index}.capacity`}
+                        control={form.control}
+                        render={({ field, fieldState }) => (
+                          <Input
+                            type="number"
+                            min={1}
+                            value={field.value}
+                            onChange={(e) =>
+                              field.onChange(Number(e.target.value))
+                            }
+                            placeholder="Capacity"
+                            className="bg-popover w-20"
+                            aria-invalid={fieldState.invalid}
+                          />
+                        )}
+                      />
+                      {fields.length > 1 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => remove(index)}
+                          className="text-destructive hover:text-destructive h-8 w-8"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      )}
+                      {index === fields.length - 1 && (
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => append({ role_name: "", capacity: 1 })}
+                          className="h-8 w-8"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {form.formState.errors.roles && (
+                  <p className="text-destructive text-sm">
+                    {form.formState.errors.roles.message ||
+                      form.formState.errors.roles.root?.message}
+                  </p>
                 )}
-              />
+              </Field>
               <Controller
                 name="image_url"
                 control={form.control}
