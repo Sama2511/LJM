@@ -9,6 +9,14 @@ import z from "zod";
 export async function CreateEvent(formData: z.infer<typeof eventForm>) {
   const supabase = await createClient();
 
+  function calculte_total() {
+    let sum = 0;
+    formData.roles.forEach((role) => {
+      sum += role.capacity;
+    });
+    return sum;
+  }
+
   const { data: newEvent, error } = await supabase
     .from("events")
     .insert({
@@ -19,7 +27,7 @@ export async function CreateEvent(formData: z.infer<typeof eventForm>) {
       ends_at: formData.ends_at,
       location: formData.location,
       image_url: formData.image_url,
-      capacity: formData.capacity,
+      capacity: calculte_total(),
     })
     .select()
     .single();
@@ -27,6 +35,19 @@ export async function CreateEvent(formData: z.infer<typeof eventForm>) {
   if (error) {
     console.log(error);
     return { success: false, error: error.message };
+  }
+
+  const { error: roleError } = await supabase.from("event_roles").insert(
+    formData.roles.map((role) => ({
+      event_id: newEvent.id,
+      role_name: role.role_name,
+      capacity: role.capacity,
+    })),
+  );
+
+  if (roleError) {
+    console.log(roleError);
+    return { success: false, error: roleError.message };
   }
 
   const { error: notifError } = await supabase.from("notifications").insert({
@@ -132,6 +153,14 @@ export async function UpdateEvent(
 ) {
   const supabase = await createClient();
 
+  function calculte_total() {
+    let sum = 0;
+    formData.roles.forEach((role) => {
+      sum += role.capacity;
+    });
+    return sum;
+  }
+
   const { error } = await supabase
     .from("events")
     .update({
@@ -142,13 +171,28 @@ export async function UpdateEvent(
       ends_at: formData.ends_at,
       location: formData.location,
       image_url: formData.image_url,
-      capacity: formData.capacity,
+      capacity: calculte_total(),
     })
     .eq("id", eventId);
 
   if (error) {
     console.log(error);
     return { success: false, error: error.message };
+  }
+
+  await supabase.from("event_roles").delete().eq("event_id", eventId);
+
+  const { error: roleError } = await supabase.from("event_roles").insert(
+    formData.roles.map((role) => ({
+      event_id: eventId,
+      role_name: role.role_name,
+      capacity: role.capacity,
+    })),
+  );
+
+  if (roleError) {
+    console.log(roleError);
+    return { success: false, error: roleError.message };
   }
 
   const { data: volunteers } = await supabase
