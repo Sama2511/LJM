@@ -123,6 +123,8 @@ export default function EventForm() {
                 toast.error("Something went wrong");
                 return;
               }
+            } else {
+              data.image_url = "placeholderImage.png";
             }
             const result = await CreateEvent(data);
             if (result.success) {

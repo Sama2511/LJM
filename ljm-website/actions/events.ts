@@ -88,7 +88,7 @@ export async function DeleteEvent(eventId: string) {
 
   const { data: event } = await supabase
     .from("events")
-    .select("title")
+    .select("title, image_url")
     .eq("id", eventId)
     .single();
 
@@ -118,6 +118,10 @@ export async function DeleteEvent(eventId: string) {
     .update({ reference_id: null })
     .eq("reference_type", "event")
     .eq("reference_id", eventId);
+
+  if (event?.image_url && event.image_url !== "placeholderImage.png") {
+    await supabase.storage.from("event-pics").remove([event.image_url]);
+  }
 
   const { error } = await supabase.from("events").delete().eq("id", eventId);
 
