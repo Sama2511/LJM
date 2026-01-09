@@ -44,11 +44,7 @@ const data = {
       url: "/dashboard/CrewApplication",
       icon: FileUser,
     },
-    {
-      title: "Crew request",
-      url: "/dashboard/requests",
-      icon: CalendarCheck2,
-    },
+
     {
       title: "User Management",
       url: "/dashboard/user-management",

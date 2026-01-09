@@ -72,6 +72,11 @@ export const volunteerForm = z.object({
   certificate: z.array(z.enum(["clearance", "childrenCheck"])),
 });
 
+const eventRole = z.object({
+  role_name: z.string().min(1, { message: "Role name is required" }),
+  capacity: z.number().min(1, { message: "Capacity must be at least 1" }),
+});
+
 export const eventForm = z.object({
   title: z.string().min(3, { message: "This field is mondatory" }),
   description: z.string().min(3, { message: "This field is mondatory" }),
@@ -80,5 +85,5 @@ export const eventForm = z.object({
   ends_at: z.string(),
   location: z.string().min(1, { message: "Location is required" }),
   image_url: z.string(),
-  capacity: z.number().optional(),
+  roles: z.array(eventRole).min(1, { message: "At least one role is required" }),
 });
