@@ -111,16 +111,23 @@ export default function EventMngtCard({
             </p>
             {roles.length > 0 && (
               <div className="group/roles relative">
-                <div className="text-foreground/70 flex cursor-pointer items-center gap-1 text-sm hover:text-foreground">
+                <div className="text-foreground/70 hover:text-foreground flex cursor-pointer items-center gap-1 text-sm">
                   <Users className="h-4 w-4" />
                   {roles.length} {roles.length === 1 ? "role" : "roles"}
                 </div>
                 <div className="bg-popover absolute right-0 bottom-full z-50 mb-2 hidden min-w-[200px] rounded-md border p-3 shadow-lg group-hover/roles:block">
-                  <p className="text-foreground mb-2 text-sm font-semibold">Roles:</p>
+                  <p className="text-foreground mb-2 text-sm font-semibold">
+                    Roles:
+                  </p>
                   {roles.map((role, index) => (
-                    <div key={index} className="text-foreground/80 flex justify-between gap-4 text-sm">
+                    <div
+                      key={index}
+                      className="text-foreground/80 flex justify-between gap-4 text-sm"
+                    >
                       <span>{role.role_name}</span>
-                      <span className="text-foreground/60">{role.capacity}</span>
+                      <span className="text-foreground/60">
+                        {role.capacity}
+                      </span>
                     </div>
                   ))}
                 </div>

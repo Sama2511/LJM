@@ -87,3 +87,9 @@ export const eventForm = z.object({
   image_url: z.string(),
   roles: z.array(eventRole).min(1, { message: "At least one role is required" }),
 });
+
+export const articleForm = z.object({
+  title: z.string().min(3, { message: "Title must be at least 3 characters" }),
+  content: z.string().min(10, { message: "Content must be at least 10 characters" }),
+  image_url: z.string().optional(),
+});
