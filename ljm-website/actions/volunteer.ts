@@ -2,7 +2,7 @@
 
 import { createClient } from "@/app/utils/server";
 
-export async function JoinEvent(eventId: string) {
+export async function JoinEvent(eventId: string, roleId: string) {
   const supabase = await createClient();
 
   const {
@@ -13,15 +13,74 @@ export async function JoinEvent(eventId: string) {
     return { success: false, message: "Not authenticated" };
   }
 
+  const { data: role } = await supabase
+    .from("event_roles")
+    .select("capacity")
+    .eq("id", roleId)
+    .single();
+
+  if (!role) {
+    return { success: false, message: "Role not found" };
+  }
+
+  const { count } = await supabase
+    .from("volunteer_requests")
+    .select("*", { count: "exact", head: true })
+    .eq("role_id", roleId)
+    .eq("status", "approved");
+
+  if (count !== null && count >= role.capacity) {
+    return { success: false, message: "This role is full" };
+  }
+
   const { error } = await supabase.from("volunteer_requests").insert({
     event_id: eventId,
     user_id: user.id,
+    role_id: roleId,
     status: "approved",
   });
 
   if (error) return { success: false, message: error.message };
 
   return { success: true };
+}
+
+export async function GetEventRolesWithCapacity(eventId: string) {
+  const supabase = await createClient();
+
+  const { data: roles, error: rolesError } = await supabase
+    .from("event_roles")
+    .select("id, role_name, capacity")
+    .eq("event_id", eventId);
+
+  if (rolesError) {
+    return { error: rolesError.message };
+  }
+
+  const { data: counts, error: countsError } = await supabase
+    .from("volunteer_requests")
+    .select("role_id")
+    .eq("event_id", eventId)
+    .eq("status", "approved");
+
+  if (countsError) {
+    return { error: countsError.message };
+  }
+
+  const roleCounts: Record<string, number> = {};
+  counts?.forEach((req) => {
+    if (req.role_id) {
+      roleCounts[req.role_id] = (roleCounts[req.role_id] || 0) + 1;
+    }
+  });
+
+  const rolesWithCapacity = roles?.map((role) => ({
+    ...role,
+    filled: roleCounts[role.id] || 0,
+    available: role.capacity - (roleCounts[role.id] || 0),
+  }));
+
+  return { data: rolesWithCapacity };
 }
 
 export async function VolunteerCapacity() {
