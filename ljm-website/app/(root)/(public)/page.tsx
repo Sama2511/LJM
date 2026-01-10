@@ -35,7 +35,7 @@ export default function Home() {
           <div className="mt-6 flex justify-center gap-4 @[630]:mt-8 @[630]:flex-col @[700]:flex-row @[700]:justify-start @[800]:w-full">
             <Button asChild>
               <Link
-                href="/"
+                href="/donation"
                 className="flex items-center justify-center border-2 border-[#6d9d79] py-5 text-[18px] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
               >
                 Donate Now
