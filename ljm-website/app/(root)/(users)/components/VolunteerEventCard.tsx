@@ -14,6 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import EventDetailsSheet from "@/app/(root)/(users)/components/EventDetailsSheet";
 
 interface Role {
   id: string;
@@ -54,6 +55,7 @@ export default function VolunteerEventCard({
 }: VolunteerEventCardProps) {
   const [isPending, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [roles, setRoles] = useState<Role[]>([]);
   const [loadingRoles, setLoadingRoles] = useState(false);
   const router = useRouter();
@@ -149,15 +151,25 @@ export default function VolunteerEventCard({
       {/* FOOTER */}
       <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
         {!hideJoinButton && (
-          <Button onClick={handleOpenRoleDialog} disabled={hasRequested || isPending}>
+          <Button
+            onClick={handleOpenRoleDialog}
+            disabled={hasRequested || isPending}
+          >
             {hasRequested ? "Joined" : isPending ? "Joining…" : "Volunteer"}
           </Button>
         )}
 
-        <Button variant="outline">Details</Button>
+        <Button variant="outline" onClick={() => setIsDetailsOpen(true)}>
+          Details
+        </Button>
       </CardFooter>
 
-      {/* Role Selection Dialog */}
+      <EventDetailsSheet
+        eventId={id}
+        open={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
+      />
+
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
@@ -165,9 +177,13 @@ export default function VolunteerEventCard({
           </DialogHeader>
           <div className="space-y-3 py-4">
             {loadingRoles ? (
-              <p className="text-muted-foreground text-center">Loading roles...</p>
+              <p className="text-muted-foreground text-center">
+                Loading roles...
+              </p>
             ) : roles.length === 0 ? (
-              <p className="text-muted-foreground text-center">No roles available</p>
+              <p className="text-muted-foreground text-center">
+                No roles available
+              </p>
             ) : (
               roles.map((role) => (
                 <div
@@ -185,7 +201,11 @@ export default function VolunteerEventCard({
                     onClick={() => handleSelectRole(role.id)}
                     disabled={role.available <= 0 || isPending}
                   >
-                    {role.available <= 0 ? "Full" : isPending ? "Joining..." : "Join"}
+                    {role.available <= 0
+                      ? "Full"
+                      : isPending
+                        ? "Joining..."
+                        : "Join"}
                   </Button>
                 </div>
               ))

@@ -148,7 +148,46 @@ export async function FetchEventForEdit(id: string) {
     return { error: error.message };
   }
 
-  return { data };
+  // Get current volunteer count for this event
+  const { count } = await supabase
+    .from("volunteer_requests")
+    .select("*", { count: "exact", head: true })
+    .eq("event_id", id)
+    .eq("status", "approved");
+
+  // Get roles for this event
+  const { data: roles } = await supabase
+    .from("event_roles")
+    .select("id, role_name, capacity")
+    .eq("event_id", id);
+
+  // Get volunteer counts per role
+  const { data: roleCounts } = await supabase
+    .from("volunteer_requests")
+    .select("role_id")
+    .eq("event_id", id)
+    .eq("status", "approved");
+
+  const roleCountMap: Record<string, number> = {};
+  roleCounts?.forEach((req) => {
+    if (req.role_id) {
+      roleCountMap[req.role_id] = (roleCountMap[req.role_id] || 0) + 1;
+    }
+  });
+
+  const rolesWithCapacity = roles?.map((role) => ({
+    ...role,
+    filled: roleCountMap[role.id] || 0,
+    available: role.capacity - (roleCountMap[role.id] || 0),
+  }));
+
+  return {
+    data: {
+      ...data,
+      current_capacity: count || 0,
+      roles: rolesWithCapacity || [],
+    },
+  };
 }
 
 export async function UpdateEvent(

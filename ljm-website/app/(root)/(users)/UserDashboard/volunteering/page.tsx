@@ -1,6 +1,6 @@
 import { GetMyVolunteering } from "@/actions/my-volunteering";
-import MyVolunteeringClient from "@/app/(root)/(users)/UserDashboard/MyVolunteeringClient";
 import UserProfile from "@/app/(root)/(users)/components/UserProfile";
+import MyVolunteeringClient from "../../components/MyVolunteeringClient";
 
 export default async function MyVolunteeringPage() {
   const { data } = await GetMyVolunteering();
