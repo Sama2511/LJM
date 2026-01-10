@@ -61,7 +61,7 @@ export default function Page() {
         {/* SECTION 3 */}
         <div className="border-muted-foreground mb-12 flex w-10/12 flex-col items-center justify-between gap-10 lg:flex-row lg:gap-0 lg:border-r-4 lg:border-b-4 lg:pt-10 lg:pb-10">
           <img
-            src="/Rectangle120.png"
+            src="/cafe_test.jpeg"
             alt="Death Cafes"
             className="h-[400px] w-full rounded-xl object-cover shadow-lg lg:w-1/2"
           />
