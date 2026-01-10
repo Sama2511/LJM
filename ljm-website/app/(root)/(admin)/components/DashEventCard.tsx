@@ -15,11 +15,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Spinner } from "@/components/ui/spinner";
-import { Calendar, Clock, MapPin, Trash2 } from "lucide-react";
+import { Calendar, Clock, MapPin, Trash2, Users } from "lucide-react";
 import { Suspense, useState } from "react";
 import EditEventForm from "./EditEventForm";
 import LoadingEditEvents from "./LoadingEditEvents";
 import Image from "next/image";
+
+type Role = {
+  role_name: string;
+  capacity: number;
+};
 
 type Props = {
   id: string;
@@ -31,6 +36,7 @@ type Props = {
   capacity: number;
   maxCapacity: number;
   image?: string;
+  roles?: Role[];
 };
 
 export default function EventMngtCard({
@@ -43,6 +49,7 @@ export default function EventMngtCard({
   capacity,
   maxCapacity,
   image,
+  roles = [],
 }: Props) {
   const percentage = (capacity / maxCapacity) * 100;
   const [isDeleting, setIsDeleting] = useState(false);
@@ -98,9 +105,28 @@ export default function EventMngtCard({
         </div>
 
         <div>
-          <p className="text-foreground mb-2 text-sm">
-            Capacity: {capacity}/{maxCapacity}
-          </p>
+          <div className="mb-2 flex items-center justify-between">
+            <p className="text-foreground text-sm">
+              Capacity: {capacity}/{maxCapacity}
+            </p>
+            {roles.length > 0 && (
+              <div className="group/roles relative">
+                <div className="text-foreground/70 flex cursor-pointer items-center gap-1 text-sm hover:text-foreground">
+                  <Users className="h-4 w-4" />
+                  {roles.length} {roles.length === 1 ? "role" : "roles"}
+                </div>
+                <div className="bg-popover absolute right-0 bottom-full z-50 mb-2 hidden min-w-[200px] rounded-md border p-3 shadow-lg group-hover/roles:block">
+                  <p className="text-foreground mb-2 text-sm font-semibold">Roles:</p>
+                  {roles.map((role, index) => (
+                    <div key={index} className="text-foreground/80 flex justify-between gap-4 text-sm">
+                      <span>{role.role_name}</span>
+                      <span className="text-foreground/60">{role.capacity}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           <div className="bg-secondary h-2 w-full overflow-hidden rounded-full">
             <div
