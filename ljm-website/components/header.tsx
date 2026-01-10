@@ -31,9 +31,11 @@ export default function Header() {
 
           <div className="flex items-center gap-5">
             <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-[2px]">
+              <Link href="/donation">
               <Button className="border-primary bg-primary rounded-lg border px-4 text-center text-[16px] font-medium @[600]:px-10 @[600]:text-[22px]">
                 Donate
               </Button>
+              </Link>
             </div>
 
             <div
