@@ -9,7 +9,39 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const validatedData = formSchema.parse(body);
+    console.log("Form submission received:", body);
+
+    const { captchaToken, ...formData } = body;
+
+    if (!captchaToken) {
+      return NextResponse.json(
+        { error: "Captcha token is missing" },
+        { status: 400 }
+      );
+    }
+
+    const secret = process.env.RECAPTCHA_SECRET_KEY!;
+    const verifyRes = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `secret=${secret}&response=${captchaToken}`,
+      }
+    );
+
+    const verifyData = await verifyRes.json();
+
+    console.log("reCAPTCHA verification response:", verifyData);
+
+    if (!verifyData.success) {
+      return NextResponse.json(
+        { error: "Captcha verification failed" },
+        { status: 400 }
+      );
+    }
+
+    const validatedData = formSchema.parse(formData);
 
     const { data, error } = await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",

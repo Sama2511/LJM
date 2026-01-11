@@ -15,66 +15,103 @@ export default function Header() {
   };
 
   return (
-    <nav className="font-chillax @container sticky top-0 z-50 bg-[#4d7555] p-4 text-white">
-      <div className="flex items-center justify-between gap-5 @[600]:flex-row @[1000]:mx-auto @[1000]:w-full @[1000]:max-w-[90%] @[1200]:max-w-[80%]">
-        <Link href="/">
+    <nav className="font-chillax @container sticky top-0 z-50 bg-[#f6f2e9] px-4 py-1.5 text-white">
+      {/* Top Row: Logo, Nav Links, Search & Donate */}
+      <div className="flex items-center justify-between gap-4 @[750]:mx-auto @[1000]:w-full @[1000]:max-w-[90%] @[1200]:max-w-[80%]">
+        
+        {/* Logo */}
+        <Link href="/" className="flex-shrink-0">
           <Image
-            src="/logo.png"
-            alt=""
-            height={300}
-            width={300}
-            className="w-[280px] @[600]:w-[300px] @[1100]:w-[350px]"
+            src="/kindlewood_logo.png"
+            alt="Kindlewood Logo"
+            width={384}
+            height={64}
+            className="w-[250px] @[600]:w-[280px] @[900]:w-[320px] @[1200]:w-[360px]"
           />
         </Link>
-        <div className="flex gap-5">
+
+        {/* Navigation Links - Center */}
+        <ul className="hidden flex-1 justify-center gap-2 font-semibold text-[#1a300d] @[900]:flex @[900]:text-[15px] @[1100]:gap-3 @[1100]:text-[14px] @[1300]:text-[15px]">
+          <li className="cursor-pointer hover:text-[#ffb731]">
+            <Link href="/">Home</Link>
+          </li>
+          |
+          <li className="cursor-pointer hover:text-[#ffb731]">
+            <Link href="/about">About Us</Link>
+          </li>
+          |
+          <li className="cursor-pointer hover:text-[#ffb731]">
+            <Link href="/services">Services</Link>
+          </li>
+          |
+          <li className="cursor-pointer hover:text-[#ffb731]">
+            <Link href="/events">Events</Link>
+          </li>
+          |
+          <li className="cursor-pointer hover:text-[#ffb731]">
+            <Link href="/crew">Crew</Link>
+          </li>
+          |
+          <li className="cursor-pointer hover:text-[#ffb731]">
+            <Link href="/articles">Articles</Link>
+          </li>
+          |
+          <li className="cursor-pointer hover:text-[#ffb731]">
+            <Link href="/contact">Contact us</Link>
+          </li>
+        </ul>
+
+        {/* Right Side: Search & Donate */}
+        <div className="flex items-center gap-2">
           <SearchBar />
 
-          <div className="flex items-center gap-5">
-            <div className="animate-rotate-border from-primary to-primary w-full max-w-sm cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-[2px]">
-              <Button className="border-primary bg-primary rounded-lg border px-4 text-center text-[16px] font-medium @[600]:px-10 @[600]:text-[22px]">
-                Donate
-              </Button>
-            </div>
+          <div className="animate-rotate-border from-[#ffb731] to-[#ffb731] cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-[2px]">
+            <Button className="border-primary bg-[#ff8200] rounded-lg border px-4 text-center text-[14px] font-medium @[600]:px-6 @[600]:text-[16px]">
+              Donate
+            </Button>
+          </div>
 
-            <div
-              onClick={handleNav}
-              className="flex cursor-pointer items-center justify-end @[600]:hidden"
-            >
-              <Menu width={30} height={30} className="text-gray-400" />
-            </div>
+          <div
+            onClick={handleNav}
+            className="flex cursor-pointer items-center justify-end @[900]:hidden"
+          >
+            <Menu width={28} height={28} className="text-gray-400" />
           </div>
         </div>
       </div>
-      <ul className="hidden justify-center gap-2 pt-2 font-semibold text-[#f8f5f0] @[600]:flex @[600]:text-[14px] @[800]:gap-3 @[800]:text-[14px] @[1100]:gap-4 @[1100]:text-[16px]">
-        <li className="cursor-pointer hover:text-green-200">
-          <Link href="/"> Home</Link>
+
+      {/* Mobile Navigation - Below on smaller screens */}
+      <ul className="flex justify-center gap-2 pt-3 font-semibold text-[#ff8200] @[900]:hidden text-[13px]">
+        <li className="cursor-pointer hover:text-black">
+          <Link href="/">Home</Link>
         </li>
         |
-        <li className="cursor-pointer hover:text-green-200">
-          <Link href="/about"> About Us</Link>
+        <li className="cursor-pointer hover:text-black">
+          <Link href="/about">About Us</Link>
         </li>
         |
-        <li className="cursor-pointer hover:text-green-200">
-          <Link href="/services"> Services</Link>
+        <li className="cursor-pointer hover:text-black">
+          <Link href="/services">Services</Link>
         </li>
         |
-        <li className="cursor-pointer hover:text-green-200">
-          <Link href="/events"> Events </Link>
+        <li className="cursor-pointer hover:text-black">
+          <Link href="/events">Events</Link>
         </li>
         |
-        <li className="cursor-pointer hover:text-green-200">
-          <Link href="/crew"> Crew </Link>
+        <li className="cursor-pointer hover:text-black">
+          <Link href="/crew">Crew</Link>
         </li>
         |
-        <li className="cursor-pointer hover:text-green-200">
-          <Link href="/articles"> Articles</Link>
+        <li className="cursor-pointer hover:text-black">
+          <Link href="/articles">Articles</Link>
         </li>
         |
-        <li className="cursor-pointer hover:text-green-200">
-          <Link href="/contact"> Contact us</Link>
+        <li className="cursor-pointer hover:text-black">
+          <Link href="/contact">Contact us</Link>
         </li>
       </ul>
 
+      {/* Mobile Drawer */}
       <div
         className={
           isOpen
@@ -99,37 +136,37 @@ export default function Header() {
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="/about"> About Us</Link>
+            <Link href="/about">About Us</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="/services"> Services</Link>
+            <Link href="/services">Services</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="/events"> Events </Link>
+            <Link href="/events">Events</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href=""> Crew </Link>
+            <Link href="/crew">Crew</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="/articles"> Articles</Link>
+            <Link href="/articles">Articles</Link>
           </li>
           <li
             onClick={handleNav}
             className="cursor-pointer hover:text-green-200"
           >
-            <Link href="/contact"> Contact Us</Link>
+            <Link href="/contact">Contact Us</Link>
           </li>
         </ul>
       </div>
