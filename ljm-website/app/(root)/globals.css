@@ -12,10 +12,10 @@
   --foreground: oklch(0.3 0.0358 30.2042);
 
   /* UPDATED BUTTON & CARD COLORS */
-  --card: #ffd699; /* muted orange */
-  --card-foreground: #000000; /* black font for readability */
-  --primary: #ffd699; /* muted button background */
-  --primary-foreground: #000000;
+  --card: #f6f2e9;
+  --card-foreground: #1a1a1a;
+  --primary: #ff8200;
+  --primary-foreground: #ffffff;
 
   --popover: oklch(0.9711 0.0074 80.7211);
   --popover-foreground: oklch(0.3 0.0358 30.2042);
