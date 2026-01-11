@@ -6,11 +6,14 @@ import {
   GetUserVolunteerRequests,
   VolunteerCapacity,
 } from "@/actions/volunteer";
-import { getUser } from "@/app/utils/server";
+import { createClient } from "@/app/utils/server";
 
 export default async function EventList() {
+  const supabase = await createClient();
   const eventsData = await FetchEvent();
   const capacityData = await VolunteerCapacity();
+
+  const { data: rolesData } = await supabase.from("event_roles").select("*");
 
   await new Promise((resolve) => setTimeout(resolve, 2000));
   const formatDate = (dateString: string) => {
@@ -59,6 +62,9 @@ export default async function EventList() {
                 ?.capacity || 0
             }
             id={event.id}
+            roles={
+              rolesData?.filter((role) => role.event_id === event.id) || []
+            }
           />
         ))}
       </div>

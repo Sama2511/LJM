@@ -21,6 +21,10 @@ export async function GetMyVolunteering() {
       id,
       status,
       created_at,
+      role_id,
+      event_roles (
+        role_name
+      ),
       events (
         id,
         title,
@@ -34,7 +38,7 @@ export async function GetMyVolunteering() {
       )
     `)
     .eq("user_id", user.id)
-      .neq("status", "cancelled")
+    .neq("status", "cancelled")
     .order("created_at", { ascending: false });
 
   if (error) {

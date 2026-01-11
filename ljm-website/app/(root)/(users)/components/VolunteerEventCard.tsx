@@ -2,13 +2,27 @@
 
 import Image from "next/image";
 import { useState, useTransition } from "react";
-import { JoinEvent } from "@/actions/volunteer";
-import { Calendar, Clock, MapPin, Users } from "lucide-react";
+import { JoinEvent, GetEventRolesWithCapacity } from "@/actions/volunteer";
+import { Calendar, Clock, MapPin } from "lucide-react";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import EventDetailsSheet from "@/app/(root)/(users)/components/EventDetailsSheet";
 
+interface Role {
+  id: string;
+  role_name: string;
+  capacity: number;
+  filled: number;
+  available: number;
+}
 
 interface VolunteerEventCardProps {
   id: string;
@@ -40,16 +54,31 @@ export default function VolunteerEventCard({
   hideJoinButton = false,
 }: VolunteerEventCardProps) {
   const [isPending, startTransition] = useTransition();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [roles, setRoles] = useState<Role[]>([]);
+  const [loadingRoles, setLoadingRoles] = useState(false);
   const router = useRouter();
 
   const percentage = (capacity / maxCapacity) * 100;
 
-  const handleRequest = () => {
+  const handleOpenRoleDialog = async () => {
+    setLoadingRoles(true);
+    setIsDialogOpen(true);
+    const res = await GetEventRolesWithCapacity(id);
+    if (res.data) {
+      setRoles(res.data);
+    }
+    setLoadingRoles(false);
+  };
+
+  const handleSelectRole = (roleId: string) => {
     startTransition(async () => {
-      const res = await JoinEvent(id);
+      const res = await JoinEvent(id, roleId);
 
       if (res.success) {
         toast.success("You've joined the event!");
+        setIsDialogOpen(false);
         router.refresh();
       } else {
         toast.error(res.message || "Something went wrong");
@@ -122,13 +151,68 @@ export default function VolunteerEventCard({
       {/* FOOTER */}
       <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
         {!hideJoinButton && (
-          <Button onClick={handleRequest} disabled={hasRequested || isPending}>
+          <Button
+            onClick={handleOpenRoleDialog}
+            disabled={hasRequested || isPending}
+          >
             {hasRequested ? "Joined" : isPending ? "Joining…" : "Volunteer"}
           </Button>
         )}
 
-        <Button variant="outline">Details</Button>
+        <Button variant="outline" onClick={() => setIsDetailsOpen(true)}>
+          Details
+        </Button>
       </CardFooter>
+
+      <EventDetailsSheet
+        eventId={id}
+        open={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
+      />
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Select a Role</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-4">
+            {loadingRoles ? (
+              <p className="text-muted-foreground text-center">
+                Loading roles...
+              </p>
+            ) : roles.length === 0 ? (
+              <p className="text-muted-foreground text-center">
+                No roles available
+              </p>
+            ) : (
+              roles.map((role) => (
+                <div
+                  key={role.id}
+                  className="flex items-center justify-between rounded-lg border p-3"
+                >
+                  <div>
+                    <p className="font-medium">{role.role_name}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {role.filled}/{role.capacity} spots filled
+                    </p>
+                  </div>
+                  <Button
+                    size="sm"
+                    onClick={() => handleSelectRole(role.id)}
+                    disabled={role.available <= 0 || isPending}
+                  >
+                    {role.available <= 0
+                      ? "Full"
+                      : isPending
+                        ? "Joining..."
+                        : "Join"}
+                  </Button>
+                </div>
+              ))
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

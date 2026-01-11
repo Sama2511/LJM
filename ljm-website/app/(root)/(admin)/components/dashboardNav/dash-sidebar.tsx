@@ -9,6 +9,8 @@ import {
   ShipWheelIcon,
   UserCog,
   LogOut,
+  Newspaper,
+  Files,
 } from "lucide-react";
 
 import { NavMain } from "@/app/(root)/(admin)/components/dashboardNav/nav-main";
@@ -49,6 +51,16 @@ const data = {
       title: "User Management",
       url: "/dashboard/user-management",
       icon: UserCog,
+    },
+    {
+      title: "Article Management",
+      url: "/dashboard/ArticleManagement",
+      icon: Newspaper,
+    },
+    {
+      title: "Document Management",
+      url: "/dashboard/DocumentManagement",
+      icon: Files,
     },
   ],
 };

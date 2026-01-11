@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import Image from "next/image";
 import ProfileCard from "@/components/ProfileCard";
+import DocumentsSection from "@/components/DocumentsSection";
 
 export default function AboutUspage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -216,9 +217,10 @@ export default function AboutUspage() {
         </div>
       </section>
       <section className="py-10">
-        <h1 className="font-chillax text-center text-xl font-bold text-[#157A4E] sm:text-2xl lg:text-4xl">
+        <h1 className="font-chillax mb-8 text-center text-xl font-bold text-[#157A4E] sm:text-2xl lg:text-4xl">
           Annual Report & Financial Statements
         </h1>
+        <DocumentsSection />
       </section>
     </div>
   );

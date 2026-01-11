@@ -1,12 +1,11 @@
 import ArticleCard from "@/components/ArticleCard";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import { FetchArticles } from "@/actions/articles";
 
-export default function page() {
+export default async function ArticlesPage() {
+  const { data: articles, error } = await FetchArticles();
+
   return (
-    <div className="font-chillax @container flex h-screen flex-col items-center">
+    <div className="font-chillax @container flex min-h-screen flex-col items-center pb-20">
       <div className="mb-20 flex flex-col items-center">
         <h1 className="text-foreground mt-10 text-4xl font-medium sm:text-6xl lg:text-7xl">
           Articles
@@ -17,12 +16,23 @@ export default function page() {
           times.
         </h2>
       </div>
+
+      {error && <p className="text-destructive">Failed to load articles</p>}
+
+      {articles && articles.length === 0 && (
+        <p className="text-muted-foreground">No articles available yet.</p>
+      )}
+
       <section className="grid max-w-[90%] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
-        <ArticleCard />
-        <ArticleCard />
-        <ArticleCard />
-        <ArticleCard />
-        <ArticleCard />
+        {articles?.map((article) => (
+          <ArticleCard
+            key={article.id}
+            title={article.title}
+            content={article.content}
+            image_url={`https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/article-pics/${article.image_url}`}
+            created_at={article.created_at}
+          />
+        ))}
       </section>
     </div>
   );

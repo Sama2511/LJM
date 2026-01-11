@@ -13,6 +13,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 import EventDetailsDrawer from "@/app/(root)/(users)/components/EventDetailsSheet";
 import { cancelVolunteering } from "@/actions/my-volunteering";
@@ -25,17 +35,25 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
   const [pastPage, setPastPage] = useState(1);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [loadingId, setLoadingId] = useState<string | null>(null);
+  const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
+  const [cancelRequestId, setCancelRequestId] = useState<string | null>(null);
 
   const now = new Date();
 
   const ongoing = useMemo(
-    () => data.filter((i) => new Date(`${i.events.date}T${i.events.ends_at}`) >= now),
-    [data]
+    () =>
+      data.filter(
+        (i) => new Date(`${i.events.date}T${i.events.ends_at}`) >= now,
+      ),
+    [data],
   );
 
   const past = useMemo(
-    () => data.filter((i) => new Date(`${i.events.date}T${i.events.ends_at}`) < now),
-    [data]
+    () =>
+      data.filter(
+        (i) => new Date(`${i.events.date}T${i.events.ends_at}`) < now,
+      ),
+    [data],
   );
 
   const paginate = (items: any[], currentPage: number) => {
@@ -47,30 +65,27 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
     return Math.ceil(items.length / ITEMS_PER_PAGE);
   };
 
-  async function handleCancel(requestId: string) {
-    toast("Cancel this event?", {
-      action: {
-        label: "Yes, cancel",
-        onClick: async () => {
-          setLoadingId(requestId);
+  function openCancelDialog(requestId: string) {
+    setCancelRequestId(requestId);
+    setCancelDialogOpen(true);
+  }
 
-          const res = await cancelVolunteering(requestId);
+  async function confirmCancel() {
+    if (!cancelRequestId) return;
 
-          if (res?.error) {
-            toast.error("Failed to cancel event");
-          } else {
-            toast.success("You have cancelled the event");
-          }
+    setLoadingId(cancelRequestId);
+    setCancelDialogOpen(false);
 
-          setLoadingId(null);
-        },
-      },
-    
-      cancel: {
-        label: "No",
-        onClick: () => {},
-      },
-    });
+    const res = await cancelVolunteering(cancelRequestId);
+
+    if (res?.error) {
+      toast.error("Failed to cancel event");
+    } else {
+      toast.success("You have cancelled the event");
+    }
+
+    setLoadingId(null);
+    setCancelRequestId(null);
   }
 
   const Table = ({
@@ -95,12 +110,13 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
         {/* ширина колонок */}
         <table className="w-full table-fixed border-collapse text-sm">
           <thead>
-            <tr className="border-b text-left text-muted-foreground">
-              <th className="p-4 w-[220px]">Event</th>
+            <tr className="text-muted-foreground border-b text-left">
+              <th className="w-[220px] p-4">Event</th>
+              <th className="w-[120px]">Role</th>
               <th className="w-[120px]">Date</th>
-              <th className="w-[150px]">Time</th>
+              <th className="w-[130px]">Time</th>
               <th className="w-[120px]">Location</th>
-              {showCapacity && <th className="w-[180px]">Capacity</th>}
+              {showCapacity && <th className="w-[150px]">Capacity</th>}
               <th className="w-[120px]" />
             </tr>
           </thead>
@@ -122,10 +138,15 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
                         height={56}
                         className="rounded-lg object-cover"
                       />
-                      <span className="font-medium truncate">{item.events.title}</span>
+                      <span className="truncate font-medium">
+                        {item.events.title}
+                      </span>
                     </div>
                   </td>
 
+                  <td className="truncate">
+                    {item.event_roles?.role_name || "—"}
+                  </td>
                   <td className="truncate">{item.events.date}</td>
                   <td className="truncate">
                     {item.events.starts_at} – {item.events.ends_at}
@@ -134,7 +155,7 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
 
                   {showCapacity && (
                     <td>
-                      <div className="text-xs mb-1">
+                      <div className="mb-1 text-xs">
                         {joined}/{max}
                       </div>
 
@@ -163,7 +184,7 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
                           size="sm"
                           variant="destructive"
                           disabled={loadingId === item.id}
-                          onClick={() => handleCancel(item.id)}
+                          onClick={() => openCancelDialog(item.id)}
                         >
                           {loadingId === item.id ? "Cancelling..." : "Cancel"}
                         </Button>
@@ -213,7 +234,11 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
         </TabsContent>
 
         <TabsContent value="past">
-          <Table items={paginatedItems} showCancel={false} showCapacity={false} />
+          <Table
+            items={paginatedItems}
+            showCancel={false}
+            showCapacity={false}
+          />
         </TabsContent>
       </Tabs>
 
@@ -223,11 +248,15 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
             <PaginationItem>
               <PaginationPrevious
                 onClick={handlePrevious}
-                className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                className={
+                  currentPage === 1
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
+                }
               />
             </PaginationItem>
             <PaginationItem>
-              <span className="text-sm text-muted-foreground px-4">
+              <span className="text-muted-foreground px-4 text-sm">
                 Page {currentPage} of {totalPages}
               </span>
             </PaginationItem>
@@ -235,7 +264,9 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
               <PaginationNext
                 onClick={handleNext}
                 className={
-                  currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"
+                  currentPage === totalPages
+                    ? "pointer-events-none opacity-50"
+                    : "cursor-pointer"
                 }
               />
             </PaginationItem>
@@ -250,6 +281,26 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
           eventId={selectedEvent.id}
         />
       )}
+
+      <AlertDialog open={cancelDialogOpen} onOpenChange={setCancelDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Cancel Volunteering</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to cancel your registration for this event?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>No, keep it</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-destructive"
+              onClick={confirmCancel}
+            >
+              Yes, Cancel
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

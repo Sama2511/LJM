@@ -8,7 +8,6 @@ import {
   SheetTitle,
   SheetClose,
 } from "@/components/ui/sheet";
-import EventDetailsSheet from "@/app/(root)/(users)/components/EventDetailsSheet";
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -101,10 +100,10 @@ export default function EventDetails({ eventId, open, onOpenChange }: Props) {
 
               <p className="text-sm text-[#3E5F44] mb-2 flex items-center gap-2">
                 <Users className="h-4 w-4" />
-                {eventData.current_capacity}/{eventData.capacity}
+                {eventData.current_capacity}/{eventData.capacity} total spots filled
               </p>
 
-              <div className="bg-secondary h-2 w-full rounded-full overflow-hidden">
+              <div className="bg-secondary h-2 w-full rounded-full overflow-hidden mb-4">
                 <div
                   className="h-full bg-[#3E5F44] rounded-full"
                   style={{
@@ -114,6 +113,19 @@ export default function EventDetails({ eventId, open, onOpenChange }: Props) {
                   }}
                 />
               </div>
+
+              {/* Roles breakdown */}
+              {eventData.roles && eventData.roles.length > 0 && (
+                <div className="space-y-2">
+                  <p className="text-sm font-medium text-[#3E5F44]">Roles:</p>
+                  {eventData.roles.map((role: any) => (
+                    <div key={role.id} className="flex justify-between text-sm text-[#3E5F44]/80">
+                      <span>{role.role_name}</span>
+                      <span>{role.filled}/{role.capacity}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* CLOSE BUTTON */}

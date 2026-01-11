@@ -45,11 +45,6 @@ const data = {
       icon: HeartHandshake,
     },
     {
-      title: "Volunteer Level",
-      url: "/UserDashboard/volunteer-levels",
-      icon: Star,
-    },
-    {
       title: "My Profile",
       url: "/UserDashboard/profile",
       icon: User,
