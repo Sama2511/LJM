@@ -93,7 +93,7 @@ export function EventCard({
       <CardFooter className="flex justify-between gap-3 px-6 pb-6">
         {/* ✅ VOLUNTEER — ТОЛЬКО для upcoming */}
         {!isPast && (
-          <Button className="bg-[#3E5F44] text-white hover:bg-[#2c4633]">
+          <Button className="bg-[#ff8200] text-white hover:bg-[#ff9b33]">
             Volunteer
           </Button>
         )}

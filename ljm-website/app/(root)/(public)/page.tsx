@@ -94,7 +94,7 @@ export default function Home() {
       </section>
       <section className="mt-40 bg-[#e6dac7] p-10">
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <h1 className="text-center font-serif text-3xl font-bold text-[#3E5F44]">
+          <h1 className="text-center font-serif text-3xl text-black">
             Subscribe to Our Newsletter
           </h1>
           <div className="flex w-full max-w-sm flex-col items-center gap-2 md:flex-row">

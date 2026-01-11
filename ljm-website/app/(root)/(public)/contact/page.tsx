@@ -47,8 +47,8 @@ export default async function page() {
       <section className="m-auto max-w-[900px] gap-20 md:flex md:gap-5 lg:gap-30">
         <ContactForm />
         <Card className="bg-muted m-auto my-10 mt-30 h-fit w-fit border-1 p-10">
-          <h2 className="text-xl font-semibold text-[#157A4E]">Chat with us</h2>
-          <ul className="mb-10 space-y-3">
+          <h2 className="text-xl font-semibold text-[#ff8200]">Chat with us</h2>
+          <ul className="mb-10 space-y-3 text-black">
             <li className="flex gap-3">
               <Phone />
               {settings.contact_phone || "+91 0000 0000"}
@@ -67,8 +67,8 @@ export default async function page() {
               {settings.contact_hours || "Mon – Fri: 9:00 am – 5:00 pm"}
             </li>
           </ul>
-          <h2 className="text-xl font-semibold text-[#157A4E]">
-            Connect with LJM Hospice
+          <h2 className="text-xl font-semibold text-[#ff8200]">
+            Connect with Kindlewood
           </h2>
           <div className="flex justify-center gap-5">
             {settings.social_linkedin && (
@@ -98,7 +98,7 @@ export default async function page() {
                 rel="noopener noreferrer"
                 className="transition-transform hover:scale-110"
               >
-                <FaInstagram size={30} />
+                <FaInstagram size={30} color="#c90076" />
               </a>
             )}
             {settings.social_youtube && (
