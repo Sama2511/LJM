@@ -21,7 +21,7 @@ export default function Page() {
             className="h-[400px] w-full rounded-xl object-cover shadow-lg lg:w-1/2"
           />
           <div className="lg:w-1/2 lg:pr-10 lg:pl-10">
-            <h3 className="mb-4 text-3xl font-bold text-green-800">
+            <h3 className="mb-4 text-3xl font-bold text-[#ff8200]">
               Advanced Care Planning
             </h3>
             <p className="text-foreground text-lg leading-relaxed">
@@ -39,7 +39,7 @@ export default function Page() {
         {/* SECTION 2 */}
         <div className="border-muted-foreground mb-12 flex w-10/12 flex-col items-center justify-between gap-10 lg:mb-0 lg:flex-row lg:gap-0 lg:border-b-4 lg:border-l-4 lg:pt-10 lg:pb-10">
           <div className="lg:w-1/2 lg:pr-10 lg:pl-10">
-            <h3 className="mb-4 text-3xl font-bold text-green-800">
+            <h3 className="mb-4 text-3xl font-bold text-[#ff8200]">
               Compassionate Communities
             </h3>
             <p className="text-foreground text-lg leading-relaxed">
@@ -66,7 +66,7 @@ export default function Page() {
             className="h-[400px] w-full rounded-xl object-cover shadow-lg lg:w-1/2"
           />
           <div className="lg:w-1/2 lg:pl-10">
-            <h3 className="mb-4 text-3xl font-bold text-green-800">
+            <h3 className="mb-4 text-3xl font-bold text-[#ff8200]">
               Death Cafes
             </h3>
             <p className="text-foreground text-lg leading-relaxed">

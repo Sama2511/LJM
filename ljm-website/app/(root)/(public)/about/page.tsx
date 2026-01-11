@@ -14,7 +14,7 @@ export default function AboutUspage() {
       <section className="@container mt-10 flex justify-center p-5">
         <div className="gap- grid w-full max-w-[350px] gap-2 font-[700] @[700px]:max-w-[850px] @[700px]:grid-cols-2">
           <div className="w-full space-y-3 rounded-3xl bg-[#e2ddb4] p-5 text-center @[700px]:col-span-2">
-            <h1 className="font-chillax text-3xl font-semibold text-[#3E5F44]">
+            <h1 className="font-chillax text-3xl font-semibold text-[#ff8200]">
               Our origin story
             </h1>
             <div
@@ -64,8 +64,8 @@ export default function AboutUspage() {
             />
           </div>
 
-          <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-[#A2AF9B] p-5 text-center">
-            <h1 className="font-chillax text-3xl font-semibold text-[#3E5F44]">
+          <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-[#ffd699] p-5 text-center">
+            <h1 className="font-chillax text-3xl font-semibold text-[#ff8200]">
               Our Vision
             </h1>
             <p className="font-light">
@@ -78,7 +78,7 @@ export default function AboutUspage() {
           </div>
 
           <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-[#D3DAD9] p-5 text-center">
-            <h1 className="font-chillax text-3xl font-semibold text-[#3E5F44]">
+            <h1 className="font-chillax text-3xl font-semibold text-[#ff8200]">
               Our mission
             </h1>
             <p className="font-light">
@@ -98,8 +98,10 @@ export default function AboutUspage() {
             />
           </div>
 
-          <div className="w-full space-y-3 rounded-3xl bg-[#D6DAC8] p-5 text-center @[700px]:col-span-2">
-            <h1 className="font-chillax text-3xl font-semibold text-[#3E5F44]">About Us</h1>
+          <div className="w-full space-y-3 rounded-3xl bg-[#ffd699] p-5 text-center @[700px]:col-span-2">
+            <h1 className="font-chillax text-3xl font-semibold text-[#ff8200]">
+              About Us
+            </h1>
             <p className="font-light">
               LJM Memorial Hospice was established in 2018 by Kate McLaughlin.
               Kate wanted to find a way to give back to the WA community after
@@ -128,7 +130,7 @@ export default function AboutUspage() {
           <div className="mx-auto grid max-w-5xl grid-cols-1 md:grid-cols-2">
             {/* Item 1 */}
             <div className="border-b border-gray-300 p-6 md:border-r md:border-b">
-              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#3E5F44]">
+              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#ff8200]">
                 Connection
               </h3>
               <p className="text-foreground font-light">
@@ -140,7 +142,7 @@ export default function AboutUspage() {
 
             {/* Item 2 */}
             <div className="border-b border-gray-300 p-6 md:border-b">
-              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#3E5F44]">
+              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#ff8200]">
                 Choice{" "}
               </h3>
               <p className="text-foreground font-light">
@@ -153,7 +155,7 @@ export default function AboutUspage() {
 
             {/* Item 3 */}
             <div className="border-b border-gray-300 p-6 md:border-r md:border-b-0">
-              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#3E5F44]">
+              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#ff8200]">
                 Community
               </h3>
               <p className="text-foreground font-light">
@@ -165,7 +167,7 @@ export default function AboutUspage() {
 
             {/* Item 4 */}
             <div className="p-6">
-              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#3E5F44]">
+              <h3 className="font-chillax mb-3 text-2xl font-semibold text-[#ff8200]">
                 Dignity{" "}
               </h3>
               <p className="text-foreground font-light">
@@ -185,39 +187,44 @@ export default function AboutUspage() {
         <div className="container mx-auto py-16"></div>
       </div>
       <section className="@container mx-auto max-w-[95%] px-4 py-12">
-        <h1 className="text-foreground font-chillax mb-12 text-center text-5xl font-bold sm:text-6xl lg:text-7xl">
+      <h1 className="text-foreground font-chillax text-5xl font-medium sm:text-6xl lg:text-7xl text-center mb-8">
           Meet Our Team
         </h1>
         <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-5">
           <ProfileCard
-            member="Member's name"
-            role="member's role"
+            member="Kathleen McLaughlin"
+            role="CEO"
+            imageUrl="/kate.jpg"
+          />
+          <ProfileCard
+            member="Nicola Hodgson"
+            role="Chair"
             imageUrl=""
           />
           <ProfileCard
-            member="Member's name"
-            role="member's role"
+            member="Steven Windsor"
+            role="Vice"
+            imageUrl="/steven.jpg"
+          />
+          <ProfileCard
+            member="Sheena Spedding"
+            role="Treasurer"
             imageUrl=""
           />
           <ProfileCard
-            member="Member's name"
-            role="member's role"
-            imageUrl=""
+            member="Caroline Yates"
+            role="Board Member"
+            imageUrl="/caroline.jpg"
           />
           <ProfileCard
-            member="Member's name"
-            role="member's role"
-            imageUrl=""
-          />
-          <ProfileCard
-            member="Member's name"
-            role="member's role"
+            member="Iain Reid"
+            role="Board Member"
             imageUrl=""
           />
         </div>
       </section>
       <section className="py-10">
-        <h1 className="font-chillax mb-8 text-center text-xl font-bold text-[#157A4E] sm:text-2xl lg:text-4xl">
+      <h1 className="text-foreground font-chillax text-5xl font-medium sm:text-6xl lg:text-5xl text-center mb-8">
           Annual Report & Financial Statements
         </h1>
         <DocumentsSection />
