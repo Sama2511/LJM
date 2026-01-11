@@ -67,7 +67,7 @@ export default function ContactForm() {
   }
 
   return (
-    <Card className="bg-[#f6f2e9] text-black m-auto mt-20 w-full sm:max-w-md shadow-md">
+    <Card className="bg-muted m-auto mt-20 w-full sm:max-w-md">
       <CardContent>
         <form id="contact-form" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
@@ -76,7 +76,10 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold text-black" htmlFor={field.name}>
+                  <FieldLabel
+                    className="font-semibold text-black"
+                    htmlFor={field.name}
+                  >
                     First Name
                   </FieldLabel>
                   <Input
@@ -98,7 +101,10 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold text-black" htmlFor="lastname">
+                  <FieldLabel
+                    className="font-semibold text-black"
+                    htmlFor="lastname"
+                  >
                     Last Name
                   </FieldLabel>
                   <Input
@@ -120,7 +126,10 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold text-black" htmlFor="email">
+                  <FieldLabel
+                    className="font-semibold text-black"
+                    htmlFor="email"
+                  >
                     Email
                   </FieldLabel>
                   <Input
@@ -143,7 +152,10 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold text-black" htmlFor="message">
+                  <FieldLabel
+                    className="font-semibold text-black"
+                    htmlFor="message"
+                  >
                     Message
                   </FieldLabel>
                   <InputGroup>
@@ -156,7 +168,7 @@ export default function ContactForm() {
                       aria-invalid={fieldState.invalid}
                     />
                     <InputGroupAddon align="block-end">
-                      <InputGroupText className="tabular-nums text-[#ff8200]">
+                      <InputGroupText className="text-[#ff8200] tabular-nums">
                         {field.value.length}/500 characters
                       </InputGroupText>
                     </InputGroupAddon>
