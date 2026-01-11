@@ -148,20 +148,17 @@ export async function FetchEventForEdit(id: string) {
     return { error: error.message };
   }
 
-  // Get current volunteer count for this event
   const { count } = await supabase
     .from("volunteer_requests")
     .select("*", { count: "exact", head: true })
     .eq("event_id", id)
     .eq("status", "approved");
 
-  // Get roles for this event
   const { data: roles } = await supabase
     .from("event_roles")
     .select("id, role_name, capacity")
     .eq("event_id", id);
 
-  // Get volunteer counts per role
   const { data: roleCounts } = await supabase
     .from("volunteer_requests")
     .select("role_id")

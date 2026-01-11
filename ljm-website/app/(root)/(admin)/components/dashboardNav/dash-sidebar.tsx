@@ -62,6 +62,11 @@ const data = {
       url: "/dashboard/DocumentManagement",
       icon: Files,
     },
+    {
+      title: "Settings",
+      url: "/dashboard/settings",
+      icon: Settings,
+    },
   ],
 };
 
