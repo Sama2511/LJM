@@ -18,7 +18,6 @@ export default function Header() {
     <nav className="font-chillax @container sticky top-0 z-50 bg-[#f6f2e9] px-4 py-1.5 text-white">
       {/* Top Row: Logo, Nav Links, Search & Donate */}
       <div className="flex items-center justify-between gap-4 @[750]:mx-auto @[1000]:w-full @[1000]:max-w-[90%] @[1200]:max-w-[80%]">
-        
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
@@ -65,8 +64,8 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <SearchBar />
 
-          <div className="animate-rotate-border from-[#ffb731] to-[#ffb731] cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-[2px]">
-            <Button className="border-primary bg-[#ff8200] rounded-lg border px-4 text-center text-[14px] font-medium @[600]:px-6 @[600]:text-[16px]">
+          <div className="animate-rotate-border cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-[#ffb731] from-80% via-white via-90% to-[#ffb731] to-100% p-[2px]">
+            <Button className="border-primary rounded-lg border bg-[#ff8200] px-4 text-center text-[14px] font-medium @[600]:px-6 @[600]:text-[16px]">
               Donate
             </Button>
           </div>
@@ -81,7 +80,7 @@ export default function Header() {
       </div>
 
       {/* Mobile Navigation - Below on smaller screens */}
-      <ul className="flex justify-center gap-2 pt-3 font-semibold text-[#ff8200] @[900]:hidden text-[13px]">
+      <ul className="flex justify-center gap-2 pt-3 text-[13px] font-semibold text-[#ff8200] @[900]:hidden">
         <li className="cursor-pointer hover:text-black">
           <Link href="/">Home</Link>
         </li>

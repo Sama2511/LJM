@@ -17,13 +17,13 @@ export default function ProfileCard({ member, role, imageUrl }: profile) {
             height={150}
             src={imageUrl}
             alt={member}
-            className="border-1 border-green-300"
+            className="border-1 border-[#ffb731]"
           />
         ) : (
           <Image
             width={150}
             height={150}
-            className="border-1 border-green-300"
+            className="border-1 border-[#ffb731]"
             src="/AvatarDummy.png"
             alt={member}
           />

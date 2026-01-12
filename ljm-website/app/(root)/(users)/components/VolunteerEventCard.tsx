@@ -171,7 +171,7 @@ export default function VolunteerEventCard({
       />
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent>
+        <DialogContent className="max-w-xl">
           <DialogHeader>
             <DialogTitle>Select a Role</DialogTitle>
           </DialogHeader>
