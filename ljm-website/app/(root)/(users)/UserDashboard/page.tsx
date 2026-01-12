@@ -1,5 +1,4 @@
 import UserProfile from "../components/UserProfile";
-import ArticleCard from "@/components/ArticleCard";
 import { createClient, getUser } from "@/app/utils/server";
 
 export default async function UserDashboardPage() {
@@ -79,21 +78,8 @@ export default async function UserDashboardPage() {
       unlocked: roleCount >= 2,
       hint: "Unlocked after volunteering in different roles",
     },
-    {
-      title: "Profile Ready",
-      unlocked: formCompleted,
-      hint: "Unlocked after completing your volunteer profile",
-    },
+    
   ];
-
-  // -----------------------------
-  // Community Stories (Articles)
-  // -----------------------------
-  const { data: articles } = await supabase
-    .from("articles")
-    .select("id, title, content, image_url, created_at")
-    .order("created_at", { ascending: false })
-    .limit(3);
 
   return (
     <div className="w-full p-6">
@@ -173,7 +159,6 @@ export default async function UserDashboardPage() {
                 {a.title}
               </span>
 
-              {/* Tooltip */}
               <span className="relative group ml-1">
                 <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border text-xs font-medium text-muted-foreground cursor-help">
                   ?
@@ -186,51 +171,6 @@ export default async function UserDashboardPage() {
             </li>
           ))}
         </ul>
-      </section>
-
-      {/* Community Stories */}
-      <section className="mt-12">
-        <h2 className="text-lg font-semibold mb-1">
-          Community Stories
-        </h2>
-        <p className="text-sm text-muted-foreground mb-4">
-          Moments and experiences shared by our volunteers and community members.
-        </p>
-
-        {articles && articles.length > 0 ? (
-          <>
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {articles.map((article) => (
-                <ArticleCard
-                  key={article.id}
-                  title={article.title}
-                  content={article.content}
-                  image_url={
-  article.image_url &&
-  (article.image_url.startsWith("http") ||
-    article.image_url.startsWith("/"))
-    ? article.image_url
-    : "/dummy-image-square8.png"
-}
-                  created_at={article.created_at}
-                />
-              ))}
-            </div>
-
-            <div className="mt-6">
-              <a
-                href="/articles"
-                className="text-sm font-medium underline underline-offset-4"
-              >
-                View all stories
-              </a>
-            </div>
-          </>
-        ) : (
-          <p className="text-sm text-muted-foreground">
-            No stories available yet.
-          </p>
-        )}
       </section>
     </div>
   );
