@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import "tailwindcss"; 
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -10,12 +10,15 @@
   --step-size: 32px;
   --background: oklch(0.9711 0.0074 80.7211);
   --foreground: oklch(0.3 0.0358 30.2042);
-  --card: oklch(0.9711 0.0074 80.7211);
-  --card-foreground: oklch(0.3 0.0358 30.2042);
+
+  /* UPDATED BUTTON & CARD COLORS */
+  --card: #ff8200;
+  --card-foreground: #ffffff;
+  --primary: #ff8200;
+  --primary-foreground: #ffffff;
+
   --popover: oklch(0.9711 0.0074 80.7211);
   --popover-foreground: oklch(0.3 0.0358 30.2042);
-  --primary: oklch(0.6149 0.0819 151.7723);
-  --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.9571 0.021 147.636);
   --secondary-foreground: oklch(0.4254 0.1159 144.3078);
   --muted: oklch(0.937 0.0142 74.4218);
@@ -40,11 +43,13 @@
   --sidebar-accent-foreground: oklch(0.4254 0.1159 144.3078);
   --sidebar-border: oklch(0.8805 0.0208 74.6428);
   --sidebar-ring: oklch(0.5234 0.1347 144.1672);
+
   --font-sans: var(--font-chillax), Geist, ui-sans-serif, sans-serif, system-ui;
   --font-serif: Abhaya Libre, ui-serif, serif;
   --font-mono: Source Code Pro, monospace;
   --font-chillax: var(--font-chillax);
   --font-poppins: var(--font-poppins);
+
   --radius: 0.4rem;
   --shadow-x: 0;
   --shadow-y: 1px;
@@ -54,16 +59,13 @@
   --shadow-color: oklch(0 0 0);
   --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm:
-    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
   --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow-md:
-    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
-  --shadow-lg:
-    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
-  --shadow-xl:
-    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+  --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+  --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+  --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 }
@@ -71,12 +73,15 @@
 .dark {
   --background: oklch(0.2683 0.0279 150.7681);
   --foreground: oklch(0.9423 0.0097 72.6595);
-  --card: oklch(0.3327 0.0271 146.9867);
-  --card-foreground: oklch(0.9423 0.0097 72.6595);
+
+  /* UPDATED BUTTON & CARD COLORS */
+  --card: #ff8200;
+  --card-foreground: #ffffff;
+  --primary: #ff8200;
+  --primary-foreground: #ffffff;
+
   --popover: oklch(0.3327 0.0271 146.9867);
   --popover-foreground: oklch(0.9423 0.0097 72.6595);
-  --primary: oklch(0.6731 0.1624 144.2083);
-  --primary-foreground: oklch(0.2157 0.0453 145.7256);
   --secondary: oklch(0.3942 0.0265 142.9926);
   --secondary-foreground: oklch(0.897 0.0166 142.5518);
   --muted: oklch(0.2926 0.0212 147.7496);
@@ -101,29 +106,6 @@
   --sidebar-accent-foreground: oklch(0.9423 0.0097 72.6595);
   --sidebar-border: oklch(0.3942 0.0265 142.9926);
   --sidebar-ring: oklch(0.6731 0.1624 144.2083);
-  --font-sans: var(--font-chillax), Geist, ui-sans-serif, sans-serif, system-ui;
-  --font-serif: Abhaya Libre, ui-serif, serif;
-  --font-mono: Source Code Pro, monospace;
-  --font-poppins: var(--font-poppins);
-  --radius: 0.4rem;
-  --shadow-x: 0;
-  --shadow-y: 1px;
-  --shadow-blur: 3px;
-  --shadow-spread: 0px;
-  --shadow-opacity: 0.1;
-  --shadow-color: oklch(0 0 0);
-  --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
-  --shadow-sm:
-    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
-  --shadow-md:
-    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
-  --shadow-lg:
-    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
-  --shadow-xl:
-    0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
-  --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 }
 
 @theme inline {
@@ -189,6 +171,7 @@
     @apply bg-background text-foreground;
   }
 }
+
 @property --border-angle {
   syntax: "<angle>";
   inherits: false;
