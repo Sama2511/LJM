@@ -1,11 +1,18 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Image from "next/image";
 import { toast } from "sonner";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import {
   Pagination,
   PaginationContent,
@@ -88,7 +95,7 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
     setCancelRequestId(null);
   }
 
-  const Table = ({
+  const VolunteeringTable = ({
     items,
     showCancel,
     showCapacity,
@@ -106,70 +113,67 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
     }
 
     return (
-      <div className="overflow-x-auto">
-        {/* ширина колонок */}
-        <table className="w-full table-fixed border-collapse text-sm">
-          <thead>
-            <tr className="text-muted-foreground border-b text-left">
-              <th className="w-[220px] p-4">Event</th>
-              <th className="w-[120px]">Role</th>
-              <th className="w-[120px]">Date</th>
-              <th className="w-[130px]">Time</th>
-              <th className="w-[120px]">Location</th>
-              {showCapacity && <th className="w-[150px]">Capacity</th>}
-              <th className="w-[120px]" />
-            </tr>
-          </thead>
+      <div className="bg-card rounded-lg border shadow-sm">
+        <Table>
+          <TableHeader>
+            <TableRow className="bg-muted">
+              <TableHead>Event</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Time</TableHead>
+              <TableHead>Location</TableHead>
+              {showCapacity && <TableHead>Capacity</TableHead>}
+              <TableHead className="text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
 
-          <tbody>
+          <TableBody>
             {items.map((item) => {
               const joined = item.events.volunteer_requests?.[0]?.count ?? 0;
               const max = item.events.capacity ?? 0;
               const percent = max > 0 ? Math.min((joined / max) * 100, 100) : 0;
 
               return (
-                <tr key={item.id} className="border-b align-middle">
-                  <td className="p-4">
-                    <div className="flex items-center gap-4">
-                      <Image
-                        src={`https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/event-pics/${item.events.image_url}`}
-                        alt=""
-                        width={56}
-                        height={56}
-                        className="rounded-lg object-cover"
-                      />
-                      <span className="truncate font-medium">
-                        {item.events.title}
-                      </span>
-                    </div>
-                  </td>
+                <TableRow key={item.id}>
+                  <TableCell>
+                    <span className="font-medium">{item.events.title}</span>
+                  </TableCell>
 
-                  <td className="truncate">
-                    {item.event_roles?.role_name || "—"}
-                  </td>
-                  <td className="truncate">{item.events.date}</td>
-                  <td className="truncate">
-                    {item.events.starts_at} – {item.events.ends_at}
-                  </td>
-                  <td className="truncate">{item.events.location}</td>
+                  <TableCell>
+                    <span className="text-muted-foreground">
+                      {item.event_roles?.role_name || "—"}
+                    </span>
+                  </TableCell>
+
+                  <TableCell>
+                    <span className="text-sm">{item.events.date}</span>
+                  </TableCell>
+
+                  <TableCell>
+                    <span className="text-sm">
+                      {item.events.starts_at} – {item.events.ends_at}
+                    </span>
+                  </TableCell>
+
+                  <TableCell>
+                    <span className="text-sm">{item.events.location}</span>
+                  </TableCell>
 
                   {showCapacity && (
-                    <td>
-                      <div className="mb-1 text-xs">
+                    <TableCell>
+                      <div className="mb-1 text-xs text-muted-foreground">
                         {joined}/{max}
                       </div>
-
-                      {/* просто коротше — max-w */}
-                      <div className="h-2 max-w-[120px] rounded-full bg-secondary/30">
+                      <div className="h-2 max-w-[120px] rounded-full bg-muted">
                         <div
-                          className="h-2 rounded-full bg-primary"
+                          className="bg-primary h-2 rounded-full"
                           style={{ width: `${percent}%` }}
                         />
                       </div>
-                    </td>
+                    </TableCell>
                   )}
 
-                  <td className="p-4">
+                  <TableCell className="text-right">
                     <div className="flex justify-end gap-2">
                       <Button
                         size="sm"
@@ -190,12 +194,12 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
                         </Button>
                       )}
                     </div>
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     );
   };
@@ -230,11 +234,11 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
         </TabsList>
 
         <TabsContent value="ongoing">
-          <Table items={paginatedItems} showCancel showCapacity />
+          <VolunteeringTable items={paginatedItems} showCancel showCapacity />
         </TabsContent>
 
         <TabsContent value="past">
-          <Table
+          <VolunteeringTable
             items={paginatedItems}
             showCancel={false}
             showCapacity={false}
