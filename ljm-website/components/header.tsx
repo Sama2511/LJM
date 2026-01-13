@@ -4,150 +4,102 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Button } from "./ui/button";
-import { Menu, Search } from "lucide-react";
-import { X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import SearchBar from "./SearchBar";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const handleNav = () => {
-    setIsOpen(!isOpen);
-  };
+  const pathname = usePathname();
+  const handleNav = () => setIsOpen(!isOpen);
+
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Services", href: "/services" },
+    { name: "Events", href: "/events" },
+    { name: "Crew", href: "/crew" },
+    { name: "Articles", href: "/articles" },
+    { name: "Contact", href: "/contact" },
+  ];
 
   return (
-    <nav className="font-chillax bg-background @container sticky top-0 z-50 px-4 py-1.5 text-white">
-      {/* Top Row: Logo, Nav Links, Search & Donate */}
-      <div className="flex items-center justify-between gap-4 @[750]:mx-auto @[1000]:w-full @[1000]:max-w-[90%] @[1200]:max-w-[80%]">
+    <header className="sticky top-4 z-50 px-4">
+      {/* Container card */}
+      <div className="mx-auto flex max-w-[1100px] items-center justify-between gap-4 rounded-3xl border border-[#ff8200] bg-[#f6f2e9] px-6 py-4 shadow-md">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
             src="/kindlewood_logo.png"
             alt="Kindlewood Logo"
-            width={384}
-            height={64}
-            className="w-[250px] @[600]:w-[280px] @[900]:w-[320px] @[1200]:w-[360px]"
+            width={350}
+            height={55}
+            className="w-[220px] @[600]:w-[250px] @[900]:w-[280px] @[1200]:w-[320px]"
           />
         </Link>
 
-        {/* Navigation Links - Center */}
-        <ul className="text-foreground hidden flex-1 justify-center gap-2 font-semibold @[900]:flex @[900]:text-[15px] @[1100]:gap-3 @[1100]:text-[14px] @[1300]:text-[15px]">
-          <li className="hover:text-accent cursor-pointer">
-            <Link href="/">Home</Link>
-          </li>
-          |
-          <li className="hover:text-accent cursor-pointer">
-            <Link href="/about">About</Link>
-          </li>
-          |
-          <li className="hover:text-accent cursor-pointer">
-            <Link href="/services">Services</Link>
-          </li>
-          |
-          <li className="hover:text-accent cursor-pointer">
-            <Link href="/events">Events</Link>
-          </li>
-          |
-          <li className="hover:text-accent cursor-pointer">
-            <Link href="/crew">Crew</Link>
-          </li>
-          |
-          <li className="hover:text-accent cursor-pointer">
-            <Link href="/articles">Articles</Link>
-          </li>
-          |
-          <li className="hover:text-accent cursor-pointer">
-            <Link href="/contact">Contact us</Link>
-          </li>
-        </ul>
+        {/* Desktop Navigation */}
+        <nav className="hidden items-center gap-3 md:flex">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition ${isActive ? "bg-[#ff8200] text-white" : "text-[#3b3b3b] hover:bg-[#ffe4cc]"} `}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </nav>
 
-        {/* Right Side: Search & Donate */}
+        {/* Right side: Search & Donate */}
         <div className="flex items-center gap-2">
           <SearchBar />
 
-          <div className="animate-rotate-border from-accent to-accent cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-white via-90% to-100% p-[2px]">
-            <Button className="border-primary bg-primary rounded-lg border px-4 text-center text-[14px] font-medium @[600]:px-6 @[600]:text-[16px]">
-              Donate
-            </Button>
-          </div>
+          <Button className="rounded-full bg-[#ff8200] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#ff9b3a]">
+            Donate
+          </Button>
 
+          {/* Mobile menu toggle */}
           <div
             onClick={handleNav}
-            className="flex cursor-pointer items-center justify-end @[900]:hidden"
+            className="flex cursor-pointer items-center justify-end md:hidden"
           >
-            <Menu width={28} height={28} className="text-muted-foreground" />
+            <Menu width={28} height={28} className="text-gray-400" />
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation - Below on smaller screens */}
-      <ul className="text-primary flex justify-center gap-2 pt-3 text-[13px] font-semibold @[900]:hidden">
-        <li className="hover:text-foreground cursor-pointer">
-          <Link href="/">Home</Link>
-        </li>
-        |
-        <li className="hover:text-foreground cursor-pointer">
-          <Link href="/about">About</Link>
-        </li>
-        |
-        <li className="hover:text-foreground cursor-pointer">
-          <Link href="/services">Services</Link>
-        </li>
-        |
-        <li className="hover:text-foreground cursor-pointer">
-          <Link href="/events">Events</Link>
-        </li>
-        |
-        <li className="hover:text-foreground cursor-pointer">
-          <Link href="/crew">Crew</Link>
-        </li>
-        |
-        <li className="hover:text-foreground cursor-pointer">
-          <Link href="/articles">Articles</Link>
-        </li>
-        |
-        <li className="hover:text-foreground cursor-pointer">
-          <Link href="/contact">Contact</Link>
-        </li>
-      </ul>
-
       {/* Mobile Drawer */}
       <div
-        className={
-          isOpen
-            ? "fixed top-0 left-0 z-10 h-screen w-[65%] bg-black p-10 duration-500 ease-in sm:hidden"
-            : "fixed top-0 left-[-100%] z-10 h-screen w-full p-10 duration-500 ease-in"
-        }
+        className={`fixed top-0 left-0 z-10 h-screen w-[65%] bg-[#f6f2e9] p-6 transition-transform duration-500 ease-in-out ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        } md:hidden`}
       >
-        <div className="flex w-full items-center justify-end">
+        <div className="mb-6 flex w-full items-center justify-end">
           <div onClick={handleNav} className="cursor-pointer">
             <X />
           </div>
         </div>
 
-        <ul className="flex flex-col gap-5 pt-10">
-          <li onClick={handleNav} className="hover:text-accent cursor-pointer">
-            <Link href="/">Home</Link>
-          </li>
-          <li onClick={handleNav} className="hover:text-accent cursor-pointer">
-            <Link href="/about">About Us</Link>
-          </li>
-          <li onClick={handleNav} className="hover:text-accent cursor-pointer">
-            <Link href="/services">Services</Link>
-          </li>
-          <li onClick={handleNav} className="hover:text-accent cursor-pointer">
-            <Link href="/events">Events</Link>
-          </li>
-          <li onClick={handleNav} className="hover:text-accent cursor-pointer">
-            <Link href="/crew">Crew</Link>
-          </li>
-          <li onClick={handleNav} className="hover:text-accent cursor-pointer">
-            <Link href="/articles">Articles</Link>
-          </li>
-          <li onClick={handleNav} className="hover:text-accent cursor-pointer">
-            <Link href="/contact">Contact</Link>
-          </li>
-        </ul>
+        <nav className="flex flex-col gap-4">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={handleNav}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition ${isActive ? "bg-[#ff8200] text-white" : "text-[#3b3b3b] hover:bg-[#ffe4cc]"} `}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
+        </nav>
       </div>
-    </nav>
+    </header>
   );
 }
