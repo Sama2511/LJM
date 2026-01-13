@@ -50,7 +50,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
 
   return (
     <>
-      <div className="w-full px-6 md:px-10">
+      <div className="h-screen w-full px-6 md:px-10">
         {/* ✅ HEADER (как на твоём “правильном” скрине) */}
         <div className="mb-10 flex flex-col items-center">
           <h1 className="text-foreground font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
@@ -88,7 +88,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
                 </p>
               </div>
             ) : (
-              <div className="flex gap-6 overflow-x-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
+              <div className="[&::-webkit-scrollbar-thumb]:bg-muted-foreground [&::-webkit-scrollbar-track]:bg-muted flex gap-6 overflow-x-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl">
                 {upcomingEvents.map((event) => (
                   <EventCard
                     key={event.id}
@@ -124,7 +124,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
                 </p>
               </div>
             ) : (
-              <div className="flex gap-6 overflow-x-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
+              <div className="[&::-webkit-scrollbar-thumb]:bg-muted-foreground [&::-webkit-scrollbar-track]:bg-muted flex gap-6 overflow-x-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl">
                 {pastEvents.map((event) => (
                   <EventCard
                     key={event.id}

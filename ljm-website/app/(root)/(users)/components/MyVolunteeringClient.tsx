@@ -160,9 +160,9 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
                       </div>
 
                       {/* просто коротше — max-w */}
-                      <div className="h-2 max-w-[120px] rounded-full bg-green-100">
+                      <div className="h-2 max-w-[120px] rounded-full bg-secondary/30">
                         <div
-                          className="h-2 rounded-full bg-green-600"
+                          className="h-2 rounded-full bg-primary"
                           style={{ width: `${percent}%` }}
                         />
                       </div>

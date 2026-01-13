@@ -17,13 +17,13 @@ export default function ProfileCard({ member, role, imageUrl }: profile) {
             height={150}
             src={imageUrl}
             alt={member}
-            className="border-1 border-[#ffb731]"
+            className="border-1 border-accent"
           />
         ) : (
           <Image
             width={150}
             height={150}
-            className="border-1 border-[#ffb731]"
+            className="border-1 border-accent"
             src="/AvatarDummy.png"
             alt={member}
           />
@@ -31,8 +31,8 @@ export default function ProfileCard({ member, role, imageUrl }: profile) {
       </div>
 
       <div className="pt-4">
-        <h3 className="text-[15px] font-semibold text-gray-900">{member}</h3>
-        <p className="text-[12px] text-gray-700">{role}</p>
+        <h3 className="text-[15px] font-semibold text-foreground">{member}</h3>
+        <p className="text-[12px] text-muted-foreground">{role}</p>
       </div>
     </div>
   );

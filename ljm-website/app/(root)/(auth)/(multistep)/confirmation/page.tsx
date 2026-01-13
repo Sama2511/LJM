@@ -26,7 +26,7 @@ export default async function page() {
         <Card>
           <CardHeader className="text-center">
             <CardTitle
-              className="text-4xl text-[#157A4E]"
+              className="text-4xl text-foreground"
               style={{ fontSize: "clamp(1.75rem, 0.5rem + 3vw, 3rem)" }}
             >
               your application has been submitted
@@ -37,7 +37,7 @@ export default async function page() {
             </p>
           </CardHeader>
           <CardContent className="flex justify-center">
-            <p className="rounded-full bg-[#483F2C] px-3 py-2 text-[#FFD659]">
+            <p className="rounded-full bg-foreground px-3 py-2 text-accent">
               Pending review
             </p>
           </CardContent>

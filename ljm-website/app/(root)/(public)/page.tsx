@@ -40,7 +40,7 @@ export default function Home() {
               <Button asChild>
                 <Link
                   href="/donation"
-                  className="flex items-center justify-center border-2 border-[#ffb731] py-5 text-[18px] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
+                  className="flex items-center justify-center border-2 border-accent py-5 text-[18px] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
                 >
                   Donate Now
                 </Link>
@@ -64,13 +64,13 @@ export default function Home() {
       </section>
 
       <div
-        className="font-ch h-50 bg-gradient-to-b from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
+        className="from-background via-background to-muted h-50 bg-gradient-to-b"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>
       </div>
 
-      <section className="bg-[#ebe0cd]">
+      <section className="bg-muted">
         <div className="flex flex-col items-center gap-20">
           <h1 className="text-foreground font-chillax text-5xl font-medium sm:text-6xl lg:text-7xl">
             Our Services
@@ -79,7 +79,7 @@ export default function Home() {
         </div>
       </section>
       <div
-        className="h-50 bg-gradient-to-t from-[#F8F5F0] via-[#F8F5F0] to-[#ebe0cd]"
+        className="from-background via-background to-muted h-50 bg-gradient-to-t"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>
@@ -92,7 +92,7 @@ export default function Home() {
           <UpcomingEvents />
         </Suspense>
       </section>
-      <section className="mt-40 bg-[#e6dac7] p-10">
+      <section className="mt-40 bg-muted p-10">
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <h1 className="text-center font-serif text-3xl text-black">
             Subscribe to Our Newsletter
@@ -101,7 +101,7 @@ export default function Home() {
             <Input
               type="email"
               placeholder="Email"
-              className="w-70 bg-[#f8f5f0]"
+              className="w-70 bg-background"
             />
             <Button type="submit" variant="outline" className="w-70 md:w-30">
               Subscribe

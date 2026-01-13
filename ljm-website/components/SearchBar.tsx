@@ -104,7 +104,7 @@ export default function SearchBar() {
   return (
     <div className="relative w-full max-w-lg mx-auto">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
         <Input
           type="text"
           value={query}
@@ -116,7 +116,7 @@ export default function SearchBar() {
 
       {/* Inline results dropdown */}
       {query && (
-        <div className="absolute z-50 w-full bg-white shadow-lg rounded-b-md mt-1 max-h-96 overflow-y-auto">
+        <div className="absolute z-50 w-full bg-background shadow-lg rounded-b-md mt-1 max-h-96 overflow-y-auto">
           {isLoading && (
             <div className="flex justify-center py-5">
               <Loader2 className="animate-spin" size={24} />
@@ -124,7 +124,7 @@ export default function SearchBar() {
           )}
 
           {!isLoading && results.length === 0 && (
-            <div className="p-5 text-center text-gray-500">
+            <div className="p-5 text-center text-muted-foreground">
               No results found for "{query}"
             </div>
           )}
@@ -134,14 +134,14 @@ export default function SearchBar() {
               {results.map((res) => (
                 <li
                   key={res.id}
-                  className="p-4 border-b last:border-b-0 hover:bg-gray-50 cursor-pointer"
+                  className="p-4 border-b last:border-b-0 hover:bg-muted cursor-pointer"
                   onClick={() => handleItemClick(res)}
                 >
                   <p className="font-semibold">{res.title}</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-muted-foreground">
                     {res.description ? res.description.slice(0, 100) : "No description"}...
                   </p>
-                  <p className="text-xs text-gray-400">{res.type}</p>
+                  <p className="text-xs text-muted-foreground/70">{res.type}</p>
                 </li>
               ))}
             </ul>

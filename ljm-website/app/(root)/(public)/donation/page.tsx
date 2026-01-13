@@ -35,14 +35,13 @@ export default function DonatePage() {
   ];
 
   return (
-    <div className="bg-[#F8F5F0] min-h-screen py-10">
-      <div className="max-w-3xl mx-auto px-4">
-
-        <h1 className="text-center text-3xl font-bold font-chillax text-[#3D7048] mb-10">
+    <div className="bg-background min-h-screen py-10">
+      <div className="mx-auto max-w-3xl px-4">
+        <h1 className="font-chillax text-foreground mb-10 text-center text-3xl font-bold">
           Make a difference Today
         </h1>
 
-        <p className="text-left text-[18px] font-semibold text-gray-700 mb-4">
+        <p className="text-muted-foreground mb-4 text-left text-[18px] font-semibold">
           Select your donation amount
         </p>
 
@@ -59,17 +58,17 @@ export default function DonatePage() {
             />
           ))}
         </div>
-        <div className="flex w-full gap-3 mt-4">
+        <div className="mt-4 flex w-full gap-3">
           <div className="flex-2">
             <input
               type="number"
               placeholder="Custom Amount"
-              className="w-full h-[50px] p-3 border rounded-xl"
+              className="h-[50px] w-full rounded-xl border p-3"
             />
           </div>
 
           <div className="flex-1">
-            <select className="w-full h-[50px] p-3 border rounded-xl">
+            <select className="h-[50px] w-full rounded-xl border p-3">
               <option>Frequency</option>
               <option>One-Time</option>
               <option>Monthly</option>
@@ -80,7 +79,7 @@ export default function DonatePage() {
 
         {/* Donate Button */}
         <Link href="/donation/details/">
-          <button className="mt-6 w-1/3 bg-[#3D7048] text-white text-lg font-semibold py-4 rounded-lg shadow hover:bg-[#2f5a3a] transition">
+          <button className="bg-primary text-primary-foreground hover:bg-primary/90 mt-6 w-1/3 rounded-lg py-4 text-lg font-semibold shadow transition">
             Donate
           </button>
         </Link>
@@ -90,21 +89,18 @@ export default function DonatePage() {
 }
 
 /* Donation Card Component */
-function DonationCard({ amount, title, desc, selected, onClick }) {
+function DonationCard({ amount, title, desc, selected, onClick }: any) {
   return (
     <div
       onClick={onClick}
-      className={`
-        w-full rounded-xl border p-4 flex gap-4 items-start cursor-pointer transition
-        ${selected ? "bg-gray-300" : "bg-[#F8F5F0] hover:bg-gray-100"}
-      `}
+      className={`flex w-full cursor-pointer items-start gap-4 rounded-xl border p-4 transition ${selected ? "bg-accent" : "bg-background hover:bg-muted"} `}
     >
-      <div className="text-[#3D7048] text-xl font-bold min-w-[60px]">
+      <div className="text-primary min-w-[60px] text-xl font-bold">
         ${amount}
       </div>
       <div>
-        <p className="font-semibold text-gray-900">{title}</p>
-        <p className="text-gray-600 text-sm">{desc}</p>
+        <p className="text-foreground font-semibold">{title}</p>
+        <p className="text-muted-foreground text-sm">{desc}</p>
       </div>
     </div>
   );

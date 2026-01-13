@@ -66,11 +66,11 @@ export default function PublicEventDetailsSheet({
               />
             </div>
 
-            <h2 className="text-2xl font-semibold text-[#3E5F44]">
+            <h2 className="text-2xl font-semibold text-foreground">
               {eventData.title}
             </h2>
 
-            <div className="space-y-3 text-[#3E5F44]">
+            <div className="space-y-3 text-foreground">
               <p className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" /> {eventData.date}
               </p>
@@ -84,16 +84,16 @@ export default function PublicEventDetailsSheet({
             </div>
 
             <div>
-              <h3 className="mb-1 text-lg font-semibold text-[#3E5F44]">
+              <h3 className="mb-1 text-lg font-semibold text-foreground">
                 Description
               </h3>
-              <p className="text-[#3E5F44]/80 leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 {eventData.description}
               </p>
             </div>
 
             <SheetClose asChild>
-              <Button className="w-full bg-[#3E5F44] text-white hover:bg-[#2c4633]">
+              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                 Close
               </Button>
             </SheetClose>

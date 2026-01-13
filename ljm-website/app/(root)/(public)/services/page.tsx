@@ -3,12 +3,12 @@ import React from "react";
 export default function Page() {
   return (
     <>
-      <div className="font-chillax flex w-full flex-col items-center text-gray-900">
+      <div className="font-chillax flex w-full flex-col items-center text-foreground">
         <div className="mt-15 mb-30 text-center">
           <h1 className="text-foreground font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
             Services
           </h1>
-          <h2 className="mt-4 text-xl text-gray-600">
+          <h2 className="mt-4 text-xl text-muted-foreground">
             Community-Led Care for Life's Final Chapter
           </h2>
         </div>
@@ -21,7 +21,7 @@ export default function Page() {
             className="h-[400px] w-full rounded-xl object-cover shadow-lg lg:w-1/2"
           />
           <div className="lg:w-1/2 lg:pr-10 lg:pl-10">
-            <h3 className="mb-4 text-3xl font-bold text-[#ff8200]">
+            <h3 className="mb-4 text-3xl font-bold text-primary">
               Advanced Care Planning
             </h3>
             <p className="text-foreground text-lg leading-relaxed">
@@ -39,7 +39,7 @@ export default function Page() {
         {/* SECTION 2 */}
         <div className="border-muted-foreground mb-12 flex w-10/12 flex-col items-center justify-between gap-10 lg:mb-0 lg:flex-row lg:gap-0 lg:border-b-4 lg:border-l-4 lg:pt-10 lg:pb-10">
           <div className="lg:w-1/2 lg:pr-10 lg:pl-10">
-            <h3 className="mb-4 text-3xl font-bold text-[#ff8200]">
+            <h3 className="mb-4 text-3xl font-bold text-primary">
               Compassionate Communities
             </h3>
             <p className="text-foreground text-lg leading-relaxed">
@@ -66,7 +66,7 @@ export default function Page() {
             className="h-[400px] w-full rounded-xl object-cover shadow-lg lg:w-1/2"
           />
           <div className="lg:w-1/2 lg:pl-10">
-            <h3 className="mb-4 text-3xl font-bold text-[#ff8200]">
+            <h3 className="mb-4 text-3xl font-bold text-primary">
               Death Cafes
             </h3>
             <p className="text-foreground text-lg leading-relaxed">
