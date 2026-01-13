@@ -19,6 +19,7 @@ import { Calendar, Clock, MapPin, Trash2, Users } from "lucide-react";
 import { Suspense, useState } from "react";
 import EditEventForm from "./EditEventForm";
 import LoadingEditEvents from "./LoadingEditEvents";
+import ManageVolunteersDialog from "./ManageVolunteersDialog";
 import Image from "next/image";
 
 type Role = {
@@ -144,11 +145,12 @@ export default function EventMngtCard({
         </div>
       </CardContent>
 
-      <CardFooter className="flex items-center justify-between px-6 pt-2 pb-6 font-semibold">
-        <Suspense fallback={<LoadingEditEvents />}>
-          <EditEventForm id={id} />
-        </Suspense>
-        <AlertDialog>
+      <CardFooter className="flex flex-col gap-3 px-6 pt-2 pb-6 font-semibold">
+        <div className="flex w-full items-center justify-between">
+          <Suspense fallback={<LoadingEditEvents />}>
+            <EditEventForm id={id} />
+          </Suspense>
+          <AlertDialog>
           <AlertDialogTrigger>
             <Button asChild variant={"destructive"} disabled={isDeleting}>
               {isDeleting ? (
@@ -179,6 +181,14 @@ export default function EventMngtCard({
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+        </div>
+
+        {/* Manage Volunteers Button */}
+        <ManageVolunteersDialog
+          eventId={id}
+          eventTitle={title}
+          volunteerCount={capacity}
+        />
       </CardFooter>
     </Card>
   );
