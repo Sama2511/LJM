@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -67,7 +67,7 @@ export default function ContactForm() {
   }
 
   return (
-    <Card className="bg-[#f6f2e9] text-black m-auto mt-20 w-full sm:max-w-md shadow-md">
+    <Card className="bg-muted m-auto mt-20 w-full sm:max-w-md">
       <CardContent>
         <form id="contact-form" onSubmit={form.handleSubmit(onSubmit)}>
           <FieldGroup>
@@ -76,7 +76,7 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold text-black" htmlFor={field.name}>
+                  <FieldLabel className="font-semibold" htmlFor={field.name}>
                     First Name
                   </FieldLabel>
                   <Input
@@ -85,7 +85,6 @@ export default function ContactForm() {
                     aria-invalid={fieldState.invalid}
                     placeholder="First Name"
                     autoComplete="given-name"
-                    className="text-black placeholder-black"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -98,7 +97,7 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold text-black" htmlFor="lastname">
+                  <FieldLabel className="font-semibold" htmlFor="lastname">
                     Last Name
                   </FieldLabel>
                   <Input
@@ -107,7 +106,6 @@ export default function ContactForm() {
                     aria-invalid={fieldState.invalid}
                     placeholder="Last Name"
                     autoComplete="family-name"
-                    className="text-black placeholder-black"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -120,7 +118,7 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold text-black" htmlFor="email">
+                  <FieldLabel className="font-semibold" htmlFor="email">
                     Email
                   </FieldLabel>
                   <Input
@@ -130,7 +128,6 @@ export default function ContactForm() {
                     aria-invalid={fieldState.invalid}
                     placeholder="example@email.com"
                     autoComplete="email"
-                    className="text-black placeholder-black"
                   />
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
@@ -143,7 +140,7 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold text-black" htmlFor="message">
+                  <FieldLabel className="font-semibold" htmlFor="message">
                     Message
                   </FieldLabel>
                   <InputGroup>
@@ -152,11 +149,11 @@ export default function ContactForm() {
                       id="message"
                       placeholder="Leave us a message..."
                       rows={6}
-                      className="min-h-24 resize-none text-black placeholder-black"
+                      className="min-h-24 resize-none"
                       aria-invalid={fieldState.invalid}
                     />
                     <InputGroupAddon align="block-end">
-                      <InputGroupText className="tabular-nums text-[#ff8200]">
+                      <InputGroupText className="tabular-nums">
                         {field.value.length}/500 characters
                       </InputGroupText>
                     </InputGroupAddon>
@@ -181,7 +178,6 @@ export default function ContactForm() {
             type="submit"
             form="contact-form"
             disabled={form.formState.isSubmitting}
-            className="bg-[#ff8200]"
           >
             {form.formState.isSubmitting ? (
               <>

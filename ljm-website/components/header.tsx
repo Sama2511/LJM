@@ -10,7 +10,7 @@ import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const pathname = usePathname(); // get current path
+  const pathname = usePathname();
   const handleNav = () => setIsOpen(!isOpen);
 
   const navLinks = [
@@ -26,7 +26,7 @@ export default function Header() {
   return (
     <header className="sticky top-4 z-50 px-4">
       {/* Container card */}
-      <div className="max-w-[1400px] mx-auto bg-[#f6f2e9] rounded-3xl border border-[#ff8200] shadow-md px-6 py-4 flex items-center justify-between gap-4">
+      <div className="max-w-[1100px] mx-auto bg-[#f6f2e9] rounded-3xl border border-[#ff8200] shadow-md px-6 py-4 flex items-center justify-between gap-4">
         
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
@@ -35,7 +35,7 @@ export default function Header() {
             alt="Kindlewood Logo"
             width={350}
             height={55}
-            className="w-[250px] @[600]:w-[280px] @[900]:w-[320px] @[1200]:w-[360px]"
+            className="w-[220px] @[600]:w-[250px] @[900]:w-[280px] @[1200]:w-[320px]"
           />
         </Link>
 

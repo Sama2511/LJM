@@ -16,7 +16,7 @@ export default function Home() {
       <section className="@container mt-5">
         <div className="flex flex-col @[1000]:flex-row @[1000]:items-center">
           {/* Left side - Text content */}
-          <div className="relative flex w-full flex-col items-center text-center @[630]:items-start @[630]:pt-8 @[630]:pl-7 @[700]:pl-15 @[1000]:pl-20 @[1000]:w-1/2 @[1600]:pl-50">
+          <div className="relative flex w-full flex-col items-center text-center @[630]:items-start @[630]:pt-8 @[630]:pl-7 @[700]:pl-15 @[1000]:w-1/2 @[1000]:pl-20 @[1600]:pl-50">
             <div className="relative mt-10 w-full">
               <Image
                 src="/newMobilePic.png"
@@ -26,7 +26,7 @@ export default function Home() {
                 className="w-full object-cover @[1000]:hidden"
               />
               <h1
-                className="sm:text-foreground font-chillax absolute top-6 left-6 max-w-[70%] text-left leading-tight font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[550]:max-w-[80%] @[1000]:static @[1000]:max-w-[100%] @[1000]:drop-shadow-[0px] @[800]:pt-[10px] @[1000]:pt-[30px] @[1200]:pt-[50px] @[1400]:pt-[2rem]"
+                className="sm:text-foreground font-chillax absolute top-6 left-6 max-w-[70%] text-left leading-tight font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[550]:max-w-[80%] @[800]:pt-[10px] @[1000]:static @[1000]:max-w-[100%] @[1000]:pt-[30px] @[1000]:drop-shadow-[0px] @[1200]:pt-[50px] @[1400]:pt-[2rem]"
                 style={{ fontSize: "clamp(1.375rem, 0.5rem + 3vw, 3.438rem)" }}
               >
                 Support With Compassion at Life's Most Sacred Moments
@@ -48,7 +48,7 @@ export default function Home() {
               <Button asChild variant="outline">
                 <Link
                   href="/"
-                  className="flex items-center justify-center border-2 py-[19px] text-[18px] font-bold @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
+                  className="bg-background flex items-center justify-center border-2 py-[19px] text-[18px] font-bold text-black @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
                 >
                   Join The Crew
                 </Link>
