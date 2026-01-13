@@ -135,7 +135,7 @@ export default function EventMngtCard({
             )}
           </div>
 
-          <div className="bg-secondary h-2 w-full overflow-hidden rounded-full">
+          <div className="bg-background h-2 w-full overflow-hidden rounded-full">
             <div
               className="bg-primary h-full rounded-full"
               style={{ width: `${percentage}%` }}

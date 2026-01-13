@@ -115,7 +115,7 @@ export default function ViewVolunteerFormDialog({
       <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-2xl">
-            <UserCircle className="h-6 w-6 text-[#3E5F44]" />
+            <UserCircle className="h-6 w-6 text-foreground" />
             Crew Application
           </DialogTitle>
           <DialogDescription>
@@ -136,7 +136,7 @@ export default function ViewVolunteerFormDialog({
                 formData.status === "approved"
                   ? "bg-primary"
                   : formData.status === "pending"
-                    ? "rounded-xl bg-yellow-500 px-4 py-2 text-sm"
+                    ? "rounded-xl bg-accent px-4 py-2 text-sm"
                     : ""
               }
             >
@@ -147,7 +147,7 @@ export default function ViewVolunteerFormDialog({
           <Separator />
 
           <div>
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+            <h3 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
               <Phone className="h-5 w-5" />
               Contact Information
             </h3>
@@ -166,7 +166,7 @@ export default function ViewVolunteerFormDialog({
           <Separator />
 
           <div>
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+            <h3 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
               <ClipboardList className="h-5 w-5" />
               Activities of Interest
             </h3>
@@ -186,7 +186,7 @@ export default function ViewVolunteerFormDialog({
           <Separator />
 
           <div>
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+            <h3 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
               <CheckCircle2 className="h-5 w-5" />
               Certificates
             </h3>
@@ -206,7 +206,7 @@ export default function ViewVolunteerFormDialog({
           <Separator />
 
           <div>
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+            <h3 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
               <Lightbulb className="h-5 w-5" />
               Inspiration
             </h3>
@@ -216,7 +216,7 @@ export default function ViewVolunteerFormDialog({
           <Separator />
 
           <div>
-            <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+            <h3 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
               <CalendarDays className="h-5 w-5" />
               Availability
             </h3>
@@ -227,7 +227,7 @@ export default function ViewVolunteerFormDialog({
             <>
               <Separator />
               <div>
-                <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+                <h3 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
                   <Heart className="h-5 w-5" />
                   Interests
                 </h3>
@@ -240,7 +240,7 @@ export default function ViewVolunteerFormDialog({
             <>
               <Separator />
               <div>
-                <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+                <h3 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
                   <Sparkles className="h-5 w-5" />
                   Skills
                 </h3>
@@ -253,7 +253,7 @@ export default function ViewVolunteerFormDialog({
             <>
               <Separator />
               <div>
-                <h3 className="mb-3 flex items-center gap-2 font-semibold text-[#3E5F44]">
+                <h3 className="mb-3 flex items-center gap-2 font-semibold text-foreground">
                   <UserCircle className="h-5 w-5" />
                   Story
                 </h3>

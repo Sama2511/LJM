@@ -62,12 +62,12 @@ export default function EventDetails({ eventId, open, onOpenChange }: Props) {
             </div>
 
             {/* TITLE */}
-            <h2 className="text-2xl font-semibold text-[#3E5F44]">
+            <h2 className="text-2xl font-semibold text-foreground">
               {eventData.title}
             </h2>
 
             {/* DATE & TIME INFO */}
-            <div className="space-y-3 text-[#3E5F44]">
+            <div className="space-y-3 text-foreground">
               <p className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" /> {eventData.date}
               </p>
@@ -84,28 +84,28 @@ export default function EventDetails({ eventId, open, onOpenChange }: Props) {
 
             {/* DESCRIPTION */}
             <div>
-              <h3 className="text-lg font-semibold text-[#3E5F44] mb-1">
+              <h3 className="text-lg font-semibold text-foreground mb-1">
                 Description
               </h3>
-              <p className="text-[#3E5F44]/80 leading-relaxed">
+              <p className="text-foreground/80 leading-relaxed">
                 {eventData.description}
               </p>
             </div>
 
             {/* CAPACITY */}
             <div>
-              <h3 className="text-lg font-semibold text-[#3E5F44] mb-1">
+              <h3 className="text-lg font-semibold text-foreground mb-1">
                 Capacity
               </h3>
 
-              <p className="text-sm text-[#3E5F44] mb-2 flex items-center gap-2">
+              <p className="text-sm text-foreground mb-2 flex items-center gap-2">
                 <Users className="h-4 w-4" />
                 {eventData.current_capacity}/{eventData.capacity} total spots filled
               </p>
 
               <div className="bg-secondary h-2 w-full rounded-full overflow-hidden mb-4">
                 <div
-                  className="h-full bg-[#3E5F44] rounded-full"
+                  className="h-full bg-primary rounded-full"
                   style={{
                     width: `${
                       (eventData.current_capacity / eventData.capacity) * 100
@@ -117,9 +117,9 @@ export default function EventDetails({ eventId, open, onOpenChange }: Props) {
               {/* Roles breakdown */}
               {eventData.roles && eventData.roles.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-[#3E5F44]">Roles:</p>
+                  <p className="text-sm font-medium text-foreground">Roles:</p>
                   {eventData.roles.map((role: any) => (
-                    <div key={role.id} className="flex justify-between text-sm text-[#3E5F44]/80">
+                    <div key={role.id} className="flex justify-between text-sm text-foreground/80">
                       <span>{role.role_name}</span>
                       <span>{role.filled}/{role.capacity}</span>
                     </div>
@@ -130,7 +130,7 @@ export default function EventDetails({ eventId, open, onOpenChange }: Props) {
 
             {/* CLOSE BUTTON */}
             <SheetClose asChild>
-              <Button className="w-full bg-[#3E5F44] hover:bg-[#2c4633] text-white">
+              <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
                 Close
               </Button>
             </SheetClose>

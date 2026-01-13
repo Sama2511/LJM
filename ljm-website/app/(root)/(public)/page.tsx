@@ -49,7 +49,7 @@ export default function Home() {
               <Button asChild>
                 <Link
                   href="/donation"
-                  className="flex items-center justify-center border-2 border-[#ffb731] py-4 text-[18px] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
+                  className="flex items-center justify-center border-2 border-accent py-5 text-[18px] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
                 >
                   Donate Now
                 </Link>
@@ -72,18 +72,28 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Our Services */}
-      <section className="bg-[#ebe0cd] mt-12">
-        <div className="flex flex-col items-center gap-12">
+      <div
+        className="from-background via-background to-muted h-50 bg-gradient-to-b"
+        aria-hidden="true"
+      >
+        <div className="container mx-auto py-16"></div>
+      </div>
+
+      <section className="bg-muted">
+        <div className="flex flex-col items-center gap-20">
           <h1 className="text-foreground font-chillax text-5xl font-medium sm:text-6xl lg:text-7xl">
             Our Services
           </h1>
           <MyCarouselServices />
         </div>
       </section>
-
-      {/* Upcoming Events */}
-      <section className="flex w-full flex-col items-center gap-12 mt-10">
+      <div
+        className="from-background via-background to-muted h-50 bg-gradient-to-t"
+        aria-hidden="true"
+      >
+        <div className="container mx-auto py-16"></div>
+      </div>
+      <section className="flex w-full flex-col items-center gap-20">
         <h1 className="text-foreground font-chillax max-w-[70%] text-center text-5xl leading-tight font-medium sm:text-6xl lg:text-7xl">
           Upcoming Events
         </h1>
@@ -91,9 +101,7 @@ export default function Home() {
           <UpcomingEvents />
         </Suspense>
       </section>
-
-      {/* Newsletter Section */}
-      <section className="mt-12 bg-[#e6dac7] p-8">
+      <section className="mt-40 bg-muted p-10">
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <h1 className="text-center font-serif text-3xl text-black">
             Subscribe to Our Newsletter
@@ -102,7 +110,7 @@ export default function Home() {
             <Input
               type="email"
               placeholder="Email"
-              className="w-70 bg-[#f8f5f0]"
+              className="w-70 bg-background"
             />
             <Button type="submit" variant="outline" className="w-70 md:w-30">
               Subscribe

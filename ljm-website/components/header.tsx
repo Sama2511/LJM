@@ -26,8 +26,7 @@ export default function Header() {
   return (
     <header className="sticky top-4 z-50 px-4">
       {/* Container card */}
-      <div className="max-w-[1100px] mx-auto bg-[#f6f2e9] rounded-3xl border border-[#ff8200] shadow-md px-6 py-4 flex items-center justify-between gap-4">
-        
+      <div className="mx-auto flex max-w-[1100px] items-center justify-between gap-4 rounded-3xl border border-[#ff8200] bg-[#f6f2e9] px-6 py-4 shadow-md">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
@@ -40,16 +39,14 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-3">
+        <nav className="hidden items-center gap-3 md:flex">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition
-                  ${isActive ? "bg-[#ff8200] text-white" : "text-[#3b3b3b] hover:bg-[#ffe4cc]"}
-                `}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition ${isActive ? "bg-[#ff8200] text-white" : "text-[#3b3b3b] hover:bg-[#ffe4cc]"} `}
               >
                 {link.name}
               </Link>
@@ -61,12 +58,15 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <SearchBar />
 
-          <Button className="px-4 py-2 rounded-full bg-[#ff8200] text-white text-sm font-medium hover:bg-[#ff9b3a] transition">
+          <Button className="rounded-full bg-[#ff8200] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#ff9b3a]">
             Donate
           </Button>
 
           {/* Mobile menu toggle */}
-          <div onClick={handleNav} className="flex cursor-pointer items-center justify-end md:hidden">
+          <div
+            onClick={handleNav}
+            className="flex cursor-pointer items-center justify-end md:hidden"
+          >
             <Menu width={28} height={28} className="text-gray-400" />
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function Header() {
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:hidden`}
       >
-        <div className="flex w-full items-center justify-end mb-6">
+        <div className="mb-6 flex w-full items-center justify-end">
           <div onClick={handleNav} className="cursor-pointer">
             <X />
           </div>
@@ -92,9 +92,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={handleNav}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition
-                  ${isActive ? "bg-[#ff8200] text-white" : "text-[#3b3b3b] hover:bg-[#ffe4cc]"}
-                `}
+                className={`rounded-full px-4 py-2 text-sm font-medium transition ${isActive ? "bg-[#ff8200] text-white" : "text-[#3b3b3b] hover:bg-[#ffe4cc]"} `}
               >
                 {link.name}
               </Link>

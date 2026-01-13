@@ -4,10 +4,10 @@ type Props = {
 
 export default function StatusBadge({ status }: Props) {
   const styles: Record<string, string> = {
-    pending: "bg-yellow-100 text-yellow-800",
-    approved: "bg-green-100 text-green-800",
-    rejected: "bg-red-100 text-red-800",
-    cancelled: "bg-gray-100 text-gray-800",
+    pending: "bg-accent/20 text-accent-foreground",
+    approved: "bg-secondary/30 text-secondary-foreground",
+    rejected: "bg-destructive/20 text-destructive",
+    cancelled: "bg-muted text-muted-foreground",
   };
 
   return (

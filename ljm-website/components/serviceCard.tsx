@@ -20,7 +20,7 @@ interface ServiceCardProps {
 
 function ServiceCard({ icon: Icon, title, description }: ServiceCardProps) {
   return (
-    <Card className="grid h-full grid-rows-[1fr_10px_1fr] overflow-hidden border-none bg-gradient-to-b from-[#ff8200] from-30% to-[#f6f2e9] text-black">
+    <Card className="from-chart-2 to-chart-2/5 text-foreground grid h-full grid-rows-[1fr_10px_1fr] overflow-hidden border-none bg-gradient-to-b from-20%">
       <CardHeader className="flex flex-col items-center text-center">
         <Icon className="h-16 w-16" />
         <h2 className="mt-4 px-5 text-2xl font-bold">{title}</h2>

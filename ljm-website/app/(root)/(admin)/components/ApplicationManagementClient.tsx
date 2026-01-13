@@ -105,7 +105,7 @@ export default function ApplicationManagementClient({
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src={application.users.avatar_url} />
-            <AvatarFallback className="bg-primary text-white">
+            <AvatarFallback className="bg-accent-foreground text-white">
               {getInitials(
                 application.users.firstname,
                 application.users.lastname,
@@ -130,26 +130,7 @@ export default function ApplicationManagementClient({
         <p className="text-sm">{formatDate(application.created_at)}</p>
       </TableCell>
 
-      <TableCell>
-        <Badge
-          variant={
-            application.status === "Approved"
-              ? "default"
-              : application.status === "Pending"
-                ? "secondary"
-                : "destructive"
-          }
-          className={
-            application.status === "Approved"
-              ? "bg-primary"
-              : application.status === "Pending"
-                ? "bg-yellow-500"
-                : "bg-destructive"
-          }
-        >
-          {application.status}
-        </Badge>
-      </TableCell>
+      <TableCell className="font-bold">{application.status}</TableCell>
 
       <TableCell className="text-right">
         <div className="flex justify-end gap-2">
@@ -164,7 +145,7 @@ export default function ApplicationManagementClient({
           </Button>
           {application.status === "Pending" && (
             <>
-              <Button size="sm" className="gap-2">
+              <Button size="sm" variant="secondary" className="gap-2">
                 <CheckCircle className="h-4 w-4" />
                 Accept
               </Button>

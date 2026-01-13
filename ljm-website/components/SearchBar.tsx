@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 // Initialize Supabase
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 );
 
 interface SearchResult {
@@ -83,10 +83,7 @@ export default function SearchBar() {
   // handle click outside to close input
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(e.target as Node)
-      ) {
+      if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
         setIsOpen(false);
       }
     };
@@ -111,7 +108,7 @@ export default function SearchBar() {
             setIsOpen(true);
             setTimeout(() => inputRef.current?.focus(), 100);
           }}
-          className="p-2 rounded-full hover:bg-[#ffe4cc] transition"
+          className="rounded-full p-2 transition hover:bg-[#ffe4cc]"
         >
           <Search size={20} className="text-[#3b3b3b]" />
         </button>
@@ -125,18 +122,18 @@ export default function SearchBar() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search the site..."
-            className="pl-3 pr-8 py-2 rounded-full"
+            className="rounded-full py-2 pr-8 pl-3"
           />
           <button
             onClick={() => setIsOpen(false)}
-            className="absolute right-2 top-1/2 -translate-y-1/2"
+            className="absolute top-1/2 right-2 -translate-y-1/2"
           >
             <X size={16} className="text-gray-500" />
           </button>
 
           {/* Results dropdown */}
           {query && (
-            <div className="absolute z-50 w-full bg-white shadow-lg rounded-b-md mt-1 max-h-96 overflow-y-auto">
+            <div className="absolute z-50 mt-1 max-h-96 w-full overflow-y-auto rounded-b-md bg-white shadow-lg">
               {isLoading && (
                 <div className="flex justify-center py-5">
                   <Loader2 className="animate-spin" size={24} />
@@ -154,7 +151,7 @@ export default function SearchBar() {
                   {results.map((res) => (
                     <li
                       key={res.id}
-                      className="p-4 border-b last:border-b-0 hover:bg-gray-50 cursor-pointer"
+                      className="cursor-pointer border-b p-4 last:border-b-0 hover:bg-gray-50"
                       onClick={() => handleItemClick(res)}
                     >
                       <p className="font-semibold">{res.title}</p>

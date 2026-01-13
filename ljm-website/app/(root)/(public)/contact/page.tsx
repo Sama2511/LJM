@@ -47,8 +47,8 @@ export default async function page() {
       <section className="m-auto max-w-[900px] gap-20 md:flex md:gap-5 lg:gap-30">
         <ContactForm />
         <Card className="bg-muted m-auto my-10 mt-30 h-fit w-fit border-1 p-10">
-          <h2 className="text-xl font-semibold text-[#ff8200]">Chat with us</h2>
-          <ul className="mb-10 space-y-3 text-black">
+          <h2 className="text-xl font-semibold text-primary">Chat with us</h2>
+          <ul className="mb-10 space-y-3 text-foreground">
             <li className="flex gap-3">
               <Phone />
               {settings.contact_phone || "+91 0000 0000"}
@@ -67,7 +67,7 @@ export default async function page() {
               {settings.contact_hours || "Mon – Fri: 9:00 am – 5:00 pm"}
             </li>
           </ul>
-          <h2 className="text-xl font-semibold text-[#ff8200]">
+          <h2 className="text-xl font-semibold text-primary">
             Connect with Kindlewood
           </h2>
           <div className="flex justify-center gap-5">

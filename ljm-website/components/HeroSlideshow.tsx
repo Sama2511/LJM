@@ -39,7 +39,7 @@ export default function HeroSlideshow() {
     <div className="w-full max-w-[350px] @[1200]:max-w-[450px] @[1400]:max-w-[550px] p-5">
       <div className="relative group">
         <div className="relative overflow-hidden rounded-2xl shadow-2xl">
-          <div className="bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 rounded-2xl p-1">
+          <div className="bg-gradient-to-br from-primary via-primary to-accent rounded-2xl p-1">
             <div className="bg-white rounded-2xl overflow-hidden">
               <div className="relative w-full aspect-square">
                 {slides.map((slide, index) => (
@@ -67,14 +67,14 @@ export default function HeroSlideshow() {
           <>
             <button
               onClick={previousSlide}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background text-foreground rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
               aria-label="Previous slide"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background text-foreground rounded-full p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20"
               aria-label="Next slide"
             >
               <ChevronRight className="w-5 h-5" />
@@ -87,8 +87,8 @@ export default function HeroSlideshow() {
                   onClick={() => goToSlide(index)}
                   className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                     index === currentSlide
-                      ? 'bg-orange-500 w-7'
-                      : 'bg-gray-300 hover:bg-gray-400'
+                      ? 'bg-primary w-7'
+                      : 'bg-muted hover:bg-muted-foreground/30'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -97,8 +97,8 @@ export default function HeroSlideshow() {
           </>
         )}
 
-        <div className="absolute -top-2 -left-2 w-6 h-6 border-t-3 border-l-3 border-orange-500 rounded-tl-lg z-20"></div>
-        <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-3 border-r-3 border-orange-500 rounded-br-lg z-20"></div>
+        <div className="absolute -top-2 -left-2 w-6 h-6 border-t-3 border-l-3 border-primary rounded-tl-lg z-20"></div>
+        <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-3 border-r-3 border-primary rounded-br-lg z-20"></div>
       </div>
     </div>
   );
