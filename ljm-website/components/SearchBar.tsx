@@ -4,11 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { Search, Loader2, X } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-// Initialize Supabase
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
 interface SearchResult {
@@ -22,12 +23,11 @@ export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false); // controls input visibility
+  const [isOpen, setIsOpen] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
-  const navLinks = ["Event", "Page"];
-
-  // Fetch results from Supabase
   const fetchResults = async (searchTerm: string) => {
     if (!searchTerm.trim()) {
       setResults([]);
@@ -35,6 +35,7 @@ export default function SearchBar() {
     }
 
     setIsLoading(true);
+    setHasSearched(true);
 
     try {
       const { data: eventsData } = await supabase
@@ -47,7 +48,7 @@ export default function SearchBar() {
         .select("id, title, content")
         .or(`title.ilike.%${searchTerm}%,content.ilike.%${searchTerm}%`);
 
-      const combinedResults: SearchResult[] = [
+      const combined: SearchResult[] = [
         ...(eventsData || []).map((r) => ({
           ...r,
           description: r.description || "",
@@ -61,7 +62,7 @@ export default function SearchBar() {
         })),
       ];
 
-      setResults(combinedResults);
+      setResults(combined);
     } catch (err) {
       console.error("Search failed:", err);
       setResults([]);
@@ -70,38 +71,39 @@ export default function SearchBar() {
     }
   };
 
-  // Live search with debounce
+  // 🔥 Live search on typing (debounce for API efficiency)
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const delay = setTimeout(() => {
       if (query.trim()) fetchResults(query);
-      else setResults([]);
-    }, 400);
-
-    return () => clearTimeout(timer);
+    }, 300);
+    return () => clearTimeout(delay);
   }, [query]);
 
-  // handle click outside to close input
+  const handleItemClick = (item: SearchResult) => {
+    setIsOpen(false);
+    setQuery("");
+    setResults([]);
+    setHasSearched(false);
+
+    if (item.type === "Event") router.push(`/events`);
+    if (item.type === "Page") router.push(`/`);
+  };
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (inputRef.current && !inputRef.current.contains(e.target as Node)) {
         setIsOpen(false);
+        setQuery("");
+        setResults([]);
+        setHasSearched(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleItemClick = (item: SearchResult) => {
-    if (item.type === "Event") {
-      window.location.href = `/events/${item.id}`;
-    } else if (item.type === "Page") {
-      window.location.href = `/pages/${item.id}`;
-    }
-  };
-
   return (
     <div className="relative">
-      {/* Search Icon */}
       {!isOpen && (
         <button
           onClick={() => {
@@ -114,29 +116,35 @@ export default function SearchBar() {
         </button>
       )}
 
-      {/* Input box when open */}
       {isOpen && (
-        <div ref={inputRef} className="relative w-64">
-          <Input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search the site..."
-            className="rounded-full py-2 pr-8 pl-3"
-          />
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute top-1/2 right-2 -translate-y-1/2"
-          >
-            <X size={16} className="text-gray-500" />
-          </button>
+        <div ref={inputRef} className="relative w-35">
+          <div className="flex gap-2">
+            <Input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search..."
+              className="rounded-full py-2 pr-3 pl-3 flex-1"
+            />
 
-          {/* Results dropdown */}
-          {query && (
-            <div className="absolute z-50 mt-1 max-h-96 w-full overflow-y-auto rounded-b-md bg-white shadow-lg">
+            <button
+              onClick={() => {
+                setIsOpen(false);
+                setQuery("");
+                setResults([]);
+                setHasSearched(false);
+              }}
+              className="p-2 hover:bg-gray-100 rounded-full"
+            >
+              <X size={16} className="text-gray-500" />
+            </button>
+          </div>
+
+          {hasSearched && (
+            <div className="absolute z-50 mt-1 max-h-96 w-full overflow-y-auto rounded-md bg-white shadow-lg">
               {isLoading && (
                 <div className="flex justify-center py-5">
-                  <Loader2 className="animate-spin" size={24} />
+                  <Loader2 className="animate-spin" size={20} />
                 </div>
               )}
 
@@ -151,15 +159,12 @@ export default function SearchBar() {
                   {results.map((res) => (
                     <li
                       key={res.id}
-                      className="cursor-pointer border-b p-4 last:border-b-0 hover:bg-gray-50"
                       onClick={() => handleItemClick(res)}
+                      className="cursor-pointer border-b p-4 last:border-b-0 hover:bg-gray-50"
                     >
                       <p className="font-semibold">{res.title}</p>
                       <p className="text-sm text-gray-600">
-                        {res.description
-                          ? res.description.slice(0, 100)
-                          : "No description"}
-                        ...
+                        {res.description ? res.description.slice(0, 100) : "No description"}...
                       </p>
                       <p className="text-xs text-gray-400">{res.type}</p>
                     </li>
