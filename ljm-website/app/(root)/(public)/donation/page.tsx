@@ -1,106 +1,69 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useEffect } from "react";
+import Script from "next/script";
 
 export default function DonatePage() {
-  const [selected, setSelected] = useState(10); // default selected option
+  useEffect(() => {
+    const initResizer = () => {
+      if (typeof window !== "undefined" && (window as any).iFrameResize) {
+        (window as any).iFrameResize(
+          {
+            checkOrigin: false,
+            onScroll: function () {
+              const element = document.getElementById("cause10462");
+              if (element) {
+                const offsetBonus = element.getAttribute("data-offset-bonus");
+                if (offsetBonus !== null) {
+                  const offset =
+                    element.getBoundingClientRect().top -
+                    document.body.getBoundingClientRect().top;
+                  window.scrollTo({
+                    top: offset - Number(offsetBonus),
+                    behavior: "smooth",
+                  });
+                  return false;
+                }
+              }
+            },
+          },
+          "#cause10462",
+        );
+      }
+    };
 
-  const donationOptions = [
-    {
-      amount: 10,
-      title: "A Cuppa and a Chat",
-      desc: "Helps host local death cafes to start gentle, vital conversations",
-    },
-    {
-      amount: 25,
-      title: "A Moment of Peace",
-      desc: "Supports safe, welcoming spaces for community reflection and learning",
-    },
-    {
-      amount: 50,
-      title: "Dignity in Every Detail",
-      desc: "Fund resources and guides to support caring for loved ones at homes",
-    },
-    {
-      amount: 100,
-      title: "You Are Not Alone",
-      desc: "Connects Carers with trained doulas and local support networks",
-    },
-    {
-      amount: 500,
-      title: "Build the Vision",
-      desc: "Drives the mission to establish community hospice in yanchep and two rocks",
-    },
-  ];
+    // Try to initialize after a short delay to ensure script is loaded
+    const timer = setTimeout(initResizer, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="bg-background min-h-screen py-10">
-      <div className="mx-auto max-w-3xl px-4">
-        <h1 className="font-chillax text-foreground mb-10 text-center text-3xl font-bold">
-          Make a difference Today
+      <Script
+        src="https://www.givenow.com.au/js/iframe-resizer/iframeResizer.min.js?version=4.3.2.1"
+        strategy="afterInteractive"
+      />
+
+      <div className="mx-auto max-w-4xl px-4 pt-10">
+        <h1 className="font-chillax text-foreground mb-6 text-center text-3xl font-bold">
+          Make a Difference Today
         </h1>
 
-        <p className="text-muted-foreground mb-4 text-left text-[18px] font-semibold">
-          Select your donation amount
-        </p>
-
-        {/* Donation Cards */}
-        <div className="flex flex-col gap-4">
-          {donationOptions.map((opt) => (
-            <DonationCard
-              key={opt.amount}
-              amount={opt.amount}
-              title={opt.title}
-              desc={opt.desc}
-              selected={selected === opt.amount}
-              onClick={() => setSelected(opt.amount)}
-            />
-          ))}
+        <div style={{ padding: "1px" }}>
+          <iframe
+            id="cause10462"
+            className="gn-iframe"
+            src="https://www.givenow.com.au/embed/Y2F1c2VpZD0xMDQ2MiZkb21haW49aHR0cHM6Ly9sam1tZW1vcmlhbGhvc3BpY2UuY29tJnRva2VuPTEwNDYyOjNiZWQyMjFlNmY1MGFhMw=="
+            style={{
+              width: "1px",
+              minWidth: "100%",
+              border: 0,
+              height: "882px",
+            }}
+            data-offset-bonus="0"
+            title="Donation Form"
+          />
         </div>
-        <div className="mt-4 flex w-full gap-3">
-          <div className="flex-2">
-            <input
-              type="number"
-              placeholder="Custom Amount"
-              className="h-[50px] w-full rounded-xl border p-3"
-            />
-          </div>
-
-          <div className="flex-1">
-            <select className="h-[50px] w-full rounded-xl border p-3">
-              <option>Frequency</option>
-              <option>One-Time</option>
-              <option>Monthly</option>
-              <option>Quarterly</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Donate Button */}
-        <Link href="/donation/details/">
-          <button className="bg-primary text-primary-foreground hover:bg-primary/90 mt-6 w-1/3 rounded-lg py-4 text-lg font-semibold shadow transition">
-            Donate
-          </button>
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-/* Donation Card Component */
-function DonationCard({ amount, title, desc, selected, onClick }: any) {
-  return (
-    <div
-      onClick={onClick}
-      className={`flex w-full cursor-pointer items-start gap-4 rounded-xl border p-4 transition ${selected ? "bg-accent" : "bg-background hover:bg-muted"} `}
-    >
-      <div className="text-primary min-w-[60px] text-xl font-bold">
-        ${amount}
-      </div>
-      <div>
-        <p className="text-foreground font-semibold">{title}</p>
-        <p className="text-muted-foreground text-sm">{desc}</p>
       </div>
     </div>
   );
