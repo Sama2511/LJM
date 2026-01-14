@@ -18,6 +18,7 @@ import React, { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import ReCAPTCHA from "react-google-recaptcha";
+import { toast } from "sonner"; 
 
 export default function page() {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
@@ -35,35 +36,33 @@ export default function page() {
 
   //Wrapper to handle reCAPTCHA + signup
   async function handleSignupWithCaptcha(data: z.infer<typeof signUpSchema>) {
-    try {
-      const token = await recaptchaRef.current?.executeAsync();
-
-      if (!token) {
-        console.error("reCAPTCHA verification failed.");
-        return;
-      }
-
-      //verify captcha server-side
-      const res = await fetch("/api/verify-captcha", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ captchaToken: token }),
-      });
-
-      if (!res.ok) {
-        console.error("Captcha verification failed");
-        return;
-      }
-
-      //call original signup
-      await signup(data);
-
-      // reset reCAPTCHA after submission
-      recaptchaRef.current?.reset();
-    } catch (error) {
-      console.error("Signup failed:", error);
+  try {
+    const token = await recaptchaRef.current?.executeAsync();
+    if (!token) {
+      toast.error("reCAPTCHA verification failed.");
+      return;
     }
+
+    // Call server-side signup
+    const result = await signup(data);
+
+    if (result.success) {
+      toast.success("Signup successful! Please check your email.");
+      // redirect client-side
+      window.location.href = "/check-email";
+    } else {
+      toast.error(`Signup failed: ${result.error}`);
+      console.error("Signup error:", result.error);
+    }
+
+    recaptchaRef.current?.reset();
+  } catch (error: any) {
+    toast.error(`Signup failed: ${error.message || error}`);
+    console.error("Signup failed:", error);
   }
+}
+
+
 
   return (
     <div className="mt-5 flex min-h-svh w-full justify-center p-6 md:p-10">

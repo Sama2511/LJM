@@ -9,13 +9,12 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-
     console.log("Form submission received:", body);
 
     const { captchaToken, formType, ...formData } = body;
 
     if (!captchaToken) {
-      return NextResponse.json({ error: "Captcha token is missing" }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Captcha token is missing" }, { status: 400 });
     }
 
     // Verify reCAPTCHA
@@ -33,7 +32,12 @@ export async function POST(req: NextRequest) {
     console.log("reCAPTCHA verification response:", verifyData);
 
     if (!verifyData.success) {
-      return NextResponse.json({ error: "Captcha verification failed" }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Captcha verification failed", captchaScore: verifyData.score }, { status: 400 });
+    }
+
+    // Optional: enforce a minimum score
+    if (verifyData.score && verifyData.score < 0.5) {
+      return NextResponse.json({ success: false, error: "Captcha score too low", captchaScore: verifyData.score }, { status: 400 });
     }
 
     let validatedData;
@@ -67,21 +71,22 @@ export async function POST(req: NextRequest) {
         });
 
         if (error) {
-          return NextResponse.json({ error }, { status: 500 });
+          console.error("Resend email error:", error);
+          return NextResponse.json({ success: false, error }, { status: 500 });
         }
 
         console.log("Contact form email sent successfully:", validatedData);
         break;
 
       default:
-        return NextResponse.json({ error: "Unknown form type" }, { status: 400 });
+        return NextResponse.json({ success: false, error: "Unknown form type" }, { status: 400 });
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, captchaScore: verifyData.score });
   } catch (error: any) {
     console.error("Form submission error:", error);
     return NextResponse.json(
-      { error: error.message || "Something went wrong" },
+      { success: false, error: error.message || "Something went wrong" },
       { status: 400 }
     );
   }

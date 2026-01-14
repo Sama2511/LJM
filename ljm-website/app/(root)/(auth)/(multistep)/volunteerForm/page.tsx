@@ -50,24 +50,32 @@ export default function page() {
 
   // Wrapper function for invisible reCAPTCHA + volunteerSubmit
   async function handleVolunteerSubmit(data: z.infer<typeof volunteerForm>) {
-    try {
-      const token = await recaptchaRef.current?.executeAsync();
-      if (!token) {
-        toast.error("reCAPTCHA verification failed.");
-        return;
-      }
+  try {
+    const token = await recaptchaRef.current?.executeAsync();
+    if (!token) {
+      toast.error("reCAPTCHA verification failed.");
+      return;
+    }
 
-      // Call original volunteerSubmit function
-      await volunteerSubmit(data);
+    const result = await volunteerSubmit(data);
 
+    if (result.success) {
       toast.success("Thank you! Your volunteer application has been submitted.");
       Form.reset();
       recaptchaRef.current?.reset();
-    } catch (error: any) {
-      toast.error(`Submission failed: ${error.message || error}`);
-      console.error("Volunteer form submission failed:", error);
+      window.location.href = "/confirmation"; // <-- redirect on success
+    } else {
+      // Frontend redirect to error page
+      console.error("Volunteer form submission failed:", result.error);
+      window.location.href = "/error"; // <-- redirect on error
     }
+  } catch (error: any) {
+    toast.error(`Submission failed: ${error.message || error}`);
+    console.error("Volunteer form submission failed:", error);
+    window.location.href = "/error"; // <-- redirect on error
   }
+}
+
 
   return (
     <div className="mt-5 flex w-full justify-center p-6 md:p-10">

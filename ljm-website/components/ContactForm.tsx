@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -37,6 +37,7 @@ export default function ContactForm() {
     },
   });
 
+  // Handle form submission with invisible reCAPTCHA
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
       const token = await recaptchaRef.current?.executeAsync();
@@ -47,22 +48,23 @@ export default function ContactForm() {
 
       const response = await fetch("/api/send", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...data, captchaToken: token }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, captchaToken: token, formType: "contact" }),
       });
 
-      if (!response.ok) {
-        toast.error("Something went wrong");
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        toast.error(result.error || "Something went wrong");
         return;
       }
 
-      toast.success("Your message has been sent");
+      toast.success("Your message has been sent!");
       form.reset();
       recaptchaRef.current?.reset();
     } catch (error: any) {
-      toast.error(`Something went wrong: ${error.message || error}`);
+      toast.error(`Submission failed: ${error.message || error}`);
+      console.error("Contact form submission failed:", error);
     }
   }
 
@@ -76,7 +78,7 @@ export default function ContactForm() {
               control={form.control}
               render={({ field, fieldState }) => (
                 <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel className="font-semibold" htmlFor={field.name}>
+                  <FieldLabel className="font-semibold" htmlFor="firstname">
                     First Name
                   </FieldLabel>
                   <Input
@@ -86,9 +88,7 @@ export default function ContactForm() {
                     placeholder="First Name"
                     autoComplete="given-name"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
@@ -107,9 +107,7 @@ export default function ContactForm() {
                     placeholder="Last Name"
                     autoComplete="family-name"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
@@ -129,9 +127,7 @@ export default function ContactForm() {
                     placeholder="example@email.com"
                     autoComplete="email"
                   />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
@@ -158,12 +154,12 @@ export default function ContactForm() {
                       </InputGroupText>
                     </InputGroupAddon>
                   </InputGroup>
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
+                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                 </Field>
               )}
             />
+
+            {/* Invisible reCAPTCHA */}
             <ReCAPTCHA
               ref={recaptchaRef}
               sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
@@ -174,19 +170,13 @@ export default function ContactForm() {
       </CardContent>
       <CardFooter>
         <Field orientation="responsive">
-          <Button
-            type="submit"
-            form="contact-form"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? (
-              <>
-                <Loader2 className="animate-spin" /> <p>Sending</p>
-              </>
-            ) : (
-              "Send Message"
-            )}
-          </Button>
+        <Button
+          type="submit"
+          form="contact-form"
+          disabled={form.formState.isSubmitting}
+        >
+          {form.formState.isSubmitting ? <Loader2 className="animate-spin" /> : "Send Message"}
+        </Button>
         </Field>
       </CardFooter>
     </Card>

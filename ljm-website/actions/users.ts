@@ -10,26 +10,26 @@ export async function signup(formData: z.infer<typeof signUpSchema>) {
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signUp({
-    email: formData.email as string,
-    password: formData.password as string,
+    email: formData.email,
+    password: formData.password,
     options: {
       data: {
         firstname: formData.firstname,
         lastname: formData.lastname,
-        email: formData.email,  
+        email: formData.email,
       },
     },
   });
 
   if (error) {
-    redirect("/error");
+    console.error("Signup failed:", error.message); // for console log
+    return { success: false, error: error.message }; // return error to frontend
   }
-  if (!error) {
-    console.log("user auth created with metadata");
-    revalidatePath("/", "layout");
-    redirect("/check-email");
-  }
+
+  console.log("User auth created with metadata");
+  return { success: true }; // return success to frontend
 }
+
 
 export async function logout() {
   const supabase = await createClient();
@@ -46,9 +46,9 @@ export async function logout() {
 export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
   const supabase = await createClient();
   const user = await getUser();
-  console.log(user?.id);
+
   if (!user) {
-    redirect("/error");
+    return { success: false, error: "User not logged in" }; // <-- replace redirect
   }
 
   const { error: insertError } = await supabase.from("volunteer_form").insert({
@@ -66,10 +66,8 @@ export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
 
   if (insertError) {
     console.error("Insert error:", insertError.message);
-    redirect("/error");
+    return { success: false, error: insertError.message }; // <-- replace redirect
   }
-
-  console.log("Volunteer form submitted successfully");
 
   const { data, error: updateError } = await supabase
     .from("users")
@@ -77,14 +75,15 @@ export async function volunteerSubmit(formData: z.infer<typeof volunteerForm>) {
     .eq("id", user.id)
     .select();
 
-  console.log(`form completed was modified to true: ${data}`);
   if (updateError) {
     console.error("Update error:", updateError.message);
-    redirect("/error");
+    return { success: false, error: updateError.message }; // <-- replace redirect
   }
 
-  redirect("/confirmation");
+  return { success: true }; // everything okay
 }
+
+
 export default async function userStatus() {
   const supabase = await createClient();
   const user = await getUser();
