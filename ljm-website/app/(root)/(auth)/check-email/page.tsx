@@ -8,7 +8,7 @@ export default function page() {
       <div className="w-full max-w-sm">
         <Card className="max-w-[350px] text-center">
           <CardHeader className="space-y-2">
-            <Mail className="m-auto" size={40} color="#3e5f44" />
+            <Mail className="m-auto text-foreground" size={40} />
             <h1 className="text-xl font-semibold">Check your email</h1>
             <p>
               We've sent a verification link to your email address. Click the

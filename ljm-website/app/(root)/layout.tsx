@@ -61,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="">
       <body className={`font-sans ${chillax.variable} ${poppins.variable}`}>
         {children}
         <Toaster />

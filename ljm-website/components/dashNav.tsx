@@ -25,14 +25,14 @@ export default function DashNav() {
         <div className=""></div>
         {/* //progress */}
         <ol className="relative z-[3] flex list-none justify-between gap-10 [counter-reset:step-number]">
-          <li className="flex flex-1 flex-col items-center gap-1.5 before:flex before:h-[var(--step-size)] before:w-[var(--step-size)] before:items-center before:justify-center before:rounded-full before:border-1 before:bg-[#3e5f44] before:text-white before:content-[counter(step-number)] before:[counter-increment:step-number]">
+          <li className="flex flex-1 flex-col items-center gap-1.5 before:flex before:h-[var(--step-size)] before:w-[var(--step-size)] before:items-center before:justify-center before:rounded-full before:border-1 before:bg-foreground before:text-white before:content-[counter(step-number)] before:[counter-increment:step-number]">
             Sign Up
           </li>
           <li
             className={clsx(
               "flex flex-1 flex-col items-center gap-1.5 before:flex before:h-[var(--step-size)] before:w-[var(--step-size)] before:items-center before:justify-center before:rounded-full before:border-1 before:content-[counter(step-number)] before:[counter-increment:step-number]",
               volunteerTab || confirmationTab
-                ? "before:bg-[#3e5f44] before:text-white"
+                ? "before:bg-foreground before:text-white"
                 : "before:bg-background",
             )}
           >
@@ -42,7 +42,7 @@ export default function DashNav() {
             className={clsx(
               "flex flex-1 flex-col items-center gap-1.5 before:flex before:h-[var(--step-size)] before:w-[var(--step-size)] before:items-center before:justify-center before:rounded-full before:border-1 before:content-[counter(step-number)] before:[counter-increment:step-number]",
               confirmationTab
-                ? "before:bg-[#3e5f44] before:text-white"
+                ? "before:bg-foreground before:text-white"
                 : "before:bg-background",
             )}
           >

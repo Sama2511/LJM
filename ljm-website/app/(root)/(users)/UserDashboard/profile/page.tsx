@@ -249,7 +249,7 @@ export default function ProfilePage() {
                   src={userData.avatar_url}
                   alt={`${userData.firstname} ${userData.lastname}`}
                 />
-                <AvatarFallback className="bg-[#3E5F44] text-2xl text-white">
+                <AvatarFallback className="bg-foreground text-2xl text-background">
                   {getInitials(userData.firstname, userData.lastname)}
                 </AvatarFallback>
               </Avatar>
@@ -392,7 +392,7 @@ export default function ProfilePage() {
             <Button
               onClick={saveChanges}
               disabled={saving}
-              className="w-full bg-[#3E5F44] hover:bg-[#2d4432]"
+              className="w-full bg-foreground text-background hover:bg-foreground/90"
             >
               {saving ? (
                 <p className="flex items-center gap-1">

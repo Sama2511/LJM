@@ -149,7 +149,7 @@ export default function EditEventForm(id: { id: string }) {
   return (
     <Sheet open={isopen} onOpenChange={setOpen}>
       <SheetTrigger asChild onClick={() => handleEdit()}>
-        <Button variant={"outline"}>
+        <Button variant={"outline"} className="text-black">
           <Pencil className="h-5 w-5" />
           Edit
         </Button>

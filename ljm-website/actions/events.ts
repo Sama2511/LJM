@@ -148,20 +148,17 @@ export async function FetchEventForEdit(id: string) {
     return { error: error.message };
   }
 
-  // Get current volunteer count for this event
   const { count } = await supabase
     .from("volunteer_requests")
     .select("*", { count: "exact", head: true })
     .eq("event_id", id)
     .eq("status", "approved");
 
-  // Get roles for this event
   const { data: roles } = await supabase
     .from("event_roles")
     .select("id, role_name, capacity")
     .eq("event_id", id);
 
-  // Get volunteer counts per role
   const { data: roleCounts } = await supabase
     .from("volunteer_requests")
     .select("role_id")
@@ -223,19 +220,39 @@ export async function UpdateEvent(
     return { success: false, error: error.message };
   }
 
-  await supabase.from("event_roles").delete().eq("event_id", eventId);
+  const { data: existingRoles } = await supabase
+    .from("event_roles")
+    .select("id, role_name")
+    .eq("event_id", eventId);
 
-  const { error: roleError } = await supabase.from("event_roles").insert(
-    formData.roles.map((role) => ({
-      event_id: eventId,
-      role_name: role.role_name,
-      capacity: role.capacity,
-    })),
-  );
+  const newRoleNames = formData.roles.map((r) => r.role_name);
 
-  if (roleError) {
-    console.log(roleError);
-    return { success: false, error: roleError.message };
+  const rolesToDelete =
+    existingRoles?.filter((r) => !newRoleNames.includes(r.role_name)) || [];
+
+  for (const role of rolesToDelete) {
+    await supabase.from("volunteer_requests").delete().eq("role_id", role.id);
+
+    await supabase.from("event_roles").delete().eq("id", role.id);
+  }
+
+  for (const role of formData.roles) {
+    const existingRole = existingRoles?.find(
+      (r) => r.role_name === role.role_name,
+    );
+
+    if (existingRole) {
+      await supabase
+        .from("event_roles")
+        .update({ capacity: role.capacity })
+        .eq("id", existingRole.id);
+    } else {
+      await supabase.from("event_roles").insert({
+        event_id: eventId,
+        role_name: role.role_name,
+        capacity: role.capacity,
+      });
+    }
   }
 
   const { data: volunteers } = await supabase

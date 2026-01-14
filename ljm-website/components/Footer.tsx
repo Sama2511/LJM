@@ -4,13 +4,14 @@ import Link from "next/link";
 import { Facebook, Instagram, Twitter, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+
 function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <footer className="bg-[#3e5f44] text-white">
+    <footer className="bg-sidebar text-sidebar-foreground">
       <div className="container mx-auto px-6 py-12">
         <div className="flex flex-col gap-5 sm:flex-row sm:justify-between">
           {/* leftSide */}
@@ -19,7 +20,7 @@ function Footer() {
               <div className="mb-2 flex items-center gap-3">
                 <Link href="/">
                   <Image
-                    src="/logo.png"
+                    src="/kindlewood_logo.png"
                     alt=""
                     height={300}
                     width={300}
@@ -27,7 +28,7 @@ function Footer() {
                   />
                 </Link>
               </div>
-              <p className="text-md text-gray-200">
+              <p className="text-md text-sidebar-foreground/70">
                 Supporting communities with compassion
               </p>
             </div>
@@ -42,7 +43,7 @@ function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit our Facebook page"
-                  className="transition-colors hover:text-green-200"
+                  className="transition-colors hover:text-sidebar-accent"
                 >
                   <Facebook className="h-6 w-6" />
                 </a>
@@ -51,7 +52,7 @@ function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit our Instagram page"
-                  className="transition-colors hover:text-green-200"
+                  className="transition-colors hover:text-sidebar-accent"
                 >
                   <Instagram className="h-6 w-6" />
                 </a>
@@ -60,7 +61,7 @@ function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit our Twitter page"
-                  className="transition-colors hover:text-green-200"
+                  className="transition-colors hover:text-sidebar-accent"
                 >
                   <Twitter className="h-6 w-6" />
                 </a>
@@ -71,78 +72,45 @@ function Footer() {
               onClick={scrollToTop}
               variant="outline"
               size="sm"
-              className="flex items-center gap-2 bg-white text-[#3e5f44] hover:bg-gray-100"
+              className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
               aria-label="Scroll to top"
             >
               Back to Top
               <ArrowUp className="h-4 w-4" />
             </Button>
           </div>
-          {/* 
-          <div className="hidden lg:block">
-            <h3 className="mb-4 text-xl font-bold">Get Involved</h3>
-            <p className="mb-4 text-gray-200">
-              Join our community and make a difference in people's lives during
-              their most sacred moments.
-            </p>
-            <Link href="/volunteer">
-              <Button
-                variant="outline"
-                className="bg-white text-[#3e5f44] hover:bg-gray-100"
-              >
-                Volunteer Now
-              </Button>
-            </Link>
-          </div> */}
+
           <div className="w-fit">
-            <h3 className="mb-4 text-xl font-bold">Site Map</h3>
+            <h3 className="mb-4 text-xl text-sidebar-accent">Site Map</h3>
             <nav aria-label="Footer navigation">
               <ul className="flex-col space-y-2">
                 <li>
-                  <Link
-                    href="/"
-                    className="transition-colors hover:text-green-200"
-                  >
+                  <Link href="/" className="transition-colors hover:text-sidebar-accent">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/about"
-                    className="transition-colors hover:text-green-200"
-                  >
+                  <Link href="/about" className="transition-colors hover:text-sidebar-accent">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/services"
-                    className="transition-colors hover:text-green-200"
-                  >
+                  <Link href="/services" className="transition-colors hover:text-sidebar-accent">
                     Our Services
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/events"
-                    className="transition-colors hover:text-green-200"
-                  >
+                  <Link href="/events" className="transition-colors hover:text-sidebar-accent">
                     Events
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/contact"
-                    className="transition-colors hover:text-green-200"
-                  >
+                  <Link href="/contact" className="transition-colors hover:text-sidebar-accent">
                     Contact
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    href="/donate"
-                    className="transition-colors hover:text-green-200"
-                  >
+                  <Link href="/donate" className="transition-colors hover:text-sidebar-accent">
                     Donate
                   </Link>
                 </li>
@@ -151,9 +119,9 @@ function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-white/20 pt-6 text-center text-sm text-gray-300">
+        <div className="mt-8 border-t border-sidebar-border pt-6 text-center text-sm text-sidebar-foreground/70">
           <p>
-            &copy; {new Date().getFullYear()} Liam James McLaughlin. All rights
+            &copy; {new Date().getFullYear()} Kindlewood. All rights
             reserved.
           </p>
         </div>

@@ -26,19 +26,20 @@ export async function UpcomingEvents() {
     <>
       {(!upcoming || upcoming.length === 0) && (
         <div className="flex flex-col items-center justify-center px-5 py-20">
-          <Calendar size={50} className="mb-5" />
-          <h2 className="font-chillax mb-2 text-2xl font-semibold text-gray-800">
+          <Calendar size={50} className="mb-5 text-primary" />
+          <h2 className="font-chillax mb-2 text-2xl font-semibold text-foreground">
             No Upcoming Events
           </h2>
         </div>
       )}
 
-      <div className="grid max-w-[95%] grid-flow-col gap-4 overflow-auto pt-5 pb-8 
-        [&::-webkit-scrollbar]:h-2 
-        [&::-webkit-scrollbar-thumb]:rounded-2xl 
-        [&::-webkit-scrollbar-thumb]:bg-[#62605d] 
-        [&::-webkit-scrollbar-track]:rounded-2xl 
-        [&::-webkit-scrollbar-track]:bg-[#e2dfda]"
+      <div
+        className="grid max-w-[95%] grid-flow-col gap-4 overflow-auto pt-5 pb-8
+          [&::-webkit-scrollbar]:h-2
+          [&::-webkit-scrollbar-thumb]:rounded-2xl
+          [&::-webkit-scrollbar-thumb]:bg-primary
+          [&::-webkit-scrollbar-track]:rounded-2xl
+          [&::-webkit-scrollbar-track]:bg-accent/30"
       >
         {upcoming?.map((event) => (
           <EventCard

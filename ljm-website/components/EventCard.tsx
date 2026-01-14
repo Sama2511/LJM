@@ -35,7 +35,7 @@ export function EventCard({
       className={`group relative max-w-[335px] min-w-[335px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300
       ${
         isPast
-          ? "bg-[#E2DFDA]"
+          ? "bg-muted"
           : "bg-muted hover:-translate-y-2 hover:shadow-xl"
       }`}
     >
@@ -93,7 +93,7 @@ export function EventCard({
       <CardFooter className="flex justify-between gap-3 px-6 pb-6">
         {/* ✅ VOLUNTEER — ТОЛЬКО для upcoming */}
         {!isPast && (
-          <Button className="bg-[#3E5F44] text-white hover:bg-[#2c4633]">
+          <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
             Volunteer
           </Button>
         )}
