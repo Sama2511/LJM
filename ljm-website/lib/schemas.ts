@@ -36,6 +36,11 @@ export const signUpSchema = z
     path: ["repeatPassword"],
   });
 
+  export const signUpServerSchema = signUpSchema.extend({
+  captchaToken: z.string(),
+});
+
+
 export const volunteerForm = z.object({
   phone: z
     .string()
