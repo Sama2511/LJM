@@ -199,7 +199,7 @@ export default function AboutUspage() {
           <ProfileCard
             member="Nicola Hodgson"
             role="Chair"
-            imageUrl=""
+            imageUrl="/nicola.jpeg"
           />
           <ProfileCard
             member="Steven Windsor"
@@ -209,7 +209,7 @@ export default function AboutUspage() {
           <ProfileCard
             member="Sheena Spedding"
             role="Treasurer"
-            imageUrl=""
+            imageUrl="/Sheena.jpeg"
           />
           <ProfileCard
             member="Caroline Yates"
@@ -219,7 +219,7 @@ export default function AboutUspage() {
           <ProfileCard
             member="Iain Reid"
             role="Board Member"
-            imageUrl=""
+            imageUrl="/IainReid.jpeg"
           />
         </div>
       </section>

@@ -19,6 +19,22 @@ interface SearchResult {
   type: string;
 }
 
+// Static pages that aren't in the database
+const staticPages = [
+  { 
+    id: "services", 
+    title: "Services", 
+    description: "Explore our professional services and offerings", 
+    type: "Page" 
+  },
+  { 
+    id: "crew", 
+    title: "Crew", 
+    description: "Meet our talented team members", 
+    type: "Page" 
+  },
+];
+
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -27,6 +43,12 @@ export default function SearchBar() {
   const [hasSearched, setHasSearched] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const handleEnterKey = () => {
+    if (results.length > 0) {
+      handleItemClick(results[0]);
+    }
+  };
 
   const fetchResults = async (searchTerm: string) => {
     if (!searchTerm.trim()) {
@@ -38,6 +60,13 @@ export default function SearchBar() {
     setHasSearched(true);
 
     try {
+      // Search static pages
+      const filteredStatic = staticPages.filter(page => 
+        page.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        page.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+
+      // Search database tables
       const { data: eventsData } = await supabase
         .from("events")
         .select("id, title, description")
@@ -49,6 +78,7 @@ export default function SearchBar() {
         .or(`title.ilike.%${searchTerm}%,content.ilike.%${searchTerm}%`);
 
       const combined: SearchResult[] = [
+        ...filteredStatic,
         ...(eventsData || []).map((r) => ({
           ...r,
           description: r.description || "",
@@ -85,8 +115,19 @@ export default function SearchBar() {
     setResults([]);
     setHasSearched(false);
 
-    if (item.type === "Event") router.push(`/events`);
-    if (item.type === "Page") router.push(`/`);
+    if (item.type === "Event") {
+      router.push(`/events`);
+    } else if (item.type === "Page") {
+      // Check if it's a static page
+      if (item.id === "services") {
+        router.push(`/services`);
+      } else if (item.id === "crew") {
+        router.push(`/crew`);
+      } else {
+        // Regular page from database
+        router.push(`/`);
+      }
+    }
   };
 
   useEffect(() => {
@@ -123,6 +164,11 @@ export default function SearchBar() {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleEnterKey();
+                }
+              }}
               placeholder="Search..."
               className="rounded-full py-2 pr-3 pl-3 flex-1"
             />
@@ -163,10 +209,6 @@ export default function SearchBar() {
                       className="cursor-pointer border-b p-4 last:border-b-0 hover:bg-gray-50"
                     >
                       <p className="font-semibold">{res.title}</p>
-                      <p className="text-sm text-gray-600">
-                        {res.description ? res.description.slice(0, 100) : "No description"}...
-                      </p>
-                      <p className="text-xs text-gray-400">{res.type}</p>
                     </li>
                   ))}
                 </ul>

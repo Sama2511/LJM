@@ -9,7 +9,9 @@ export default function PublicLayout({
   return (
     <>
       <Header />
-      {children}
+      <div className="pt-32">
+        {children}
+      </div>
       <Footer />
     </>
   );

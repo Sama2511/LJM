@@ -10,20 +10,18 @@ type profile = {
 export default function ProfileCard({ member, role, imageUrl }: profile) {
   return (
     <div className="grid w-auto items-center justify-center overflow-hidden rounded-lg text-left">
-      <div className="">
+      <div className="relative h-[150px] w-[150px]">
         {imageUrl ? (
           <Image
-            width={150}
-            height={150}
+            fill
             src={imageUrl}
             alt={member}
-            className="border-1 border-accent"
+            className="border-1 border-accent object-cover rounded-lg"
           />
         ) : (
           <Image
-            width={150}
-            height={150}
-            className="border-1 border-accent"
+            fill
+            className="border-1 border-accent object-cover rounded-lg"
             src="/AvatarDummy.png"
             alt={member}
           />
