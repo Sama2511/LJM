@@ -16,7 +16,7 @@ export async function signup(formData: z.infer<typeof signUpSchema>) {
       data: {
         firstname: formData.firstname,
         lastname: formData.lastname,
-        email: formData.email,
+        email: formData.email,  
       },
     },
   });

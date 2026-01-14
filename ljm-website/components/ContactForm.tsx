@@ -38,33 +38,35 @@
     });
 
     async function onSubmit(data: z.infer<typeof formSchema>) {
-      try {
-        const token = await recaptchaRef.current?.executeAsync();
-        if (!token) {
-          toast.error("reCAPTCHA verification failed.");
-          return;
-        }
-
-        const response = await fetch("/api/send", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...data, captchaToken: token }),
-        });
-
-        if (!response.ok) {
-          toast.error("Something went wrong");
-          return;
-        }
-
-        toast.success("Your message has been sent");
-        form.reset();
-        recaptchaRef.current?.reset();
-      } catch (error: any) {
-        toast.error(`Something went wrong: ${error.message || error}`);
-      }
+      async function onSubmit(data: z.infer<typeof formSchema>) {
+  try {
+    const token = await recaptchaRef.current?.executeAsync();
+    if (!token) {
+      toast.error("reCAPTCHA verification failed.");
+      return;
     }
+
+    const response = await fetch("/api/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...data, captchaToken: token, formType: "contact" }),
+    });
+
+    const result = await response.json();
+    console.log("Contact form response:", result);
+
+    if (result.success) {
+      toast.success("Your message has been sent");
+      form.reset();
+      recaptchaRef.current?.reset();
+    } else {
+      toast.error(result.error || "Something went wrong");
+    }
+  } catch (error: any) {
+    toast.error(`Something went wrong: ${error.message || error}`);
+  }
+}
+
 
     return (
       <Card className="bg-muted m-auto mt-20 w-full sm:max-w-md">
@@ -192,4 +194,5 @@
         </CardFooter>
       </Card>
     );
+  }
   }
