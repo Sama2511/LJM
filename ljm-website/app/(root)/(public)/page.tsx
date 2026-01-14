@@ -21,15 +21,14 @@ export default function Home() {
             
             {/* Mobile Image */}
             <div className="w-full @[1000]:hidden">
-              <Image
-                src="/newMobilePic.png"
-                alt="Home page image"
-                width={450}
-                height={450}
-                className="w-full object-cover"
-              />
-            </div>
-
+            <Image
+              src="/newMobilePic2.jpg"
+              alt="Home page image"
+              width={450}
+              height={450}
+              className="w-full object-cover rounded-lg border-2 border-[#ff8200]"
+            />
+          </div>
             {/* Hero Text */}
             <h1
               className="sm:text-foreground font-chillax mt-4 max-w-[70%] text-left leading-tight font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[550]:max-w-[80%] @[800]:mt-2 @[1000]:max-w-[100%] @[1000]:mt-6 @[1000]:drop-shadow-[0px] @[1200]:mt-10 @[1400]:mt-12"

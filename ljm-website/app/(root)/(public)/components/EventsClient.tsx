@@ -50,17 +50,17 @@ export default function EventsClient({ events }: { events: Event[] }) {
 
   return (
     <>
-      <div className="h-screen w-full px-6 md:px-10">
-        {/* ✅ HEADER (как на твоём “правильном” скрине) */}
-        <div className="mb-10 flex flex-col items-center">
-          <h1 className="text-foreground font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
-            Events
-          </h1>
+      <div className="font-chillax flex w-full flex-col items-center text-foreground">
+      <div className="mt-15 mb-30 text-center">
+        <h1 className="text-foreground mt-10 text-4xl font-medium sm:text-6xl lg:text-7xl">
+          Events
+        </h1>
           <p className="text-muted-foreground mt-5 max-w-[90%] text-center text-xl">
             Join us in making a difference. Explore volunteer opportunities and
             celebrate the memories we've created together.
           </p>
         </div>
+       
 
         {/* ✅ TABS */}
         <Tabs defaultValue="upcoming" className="w-full">

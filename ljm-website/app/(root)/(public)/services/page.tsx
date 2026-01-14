@@ -5,9 +5,9 @@ export default function Page() {
     <>
       <div className="font-chillax flex w-full flex-col items-center text-foreground">
         <div className="mt-15 mb-30 text-center">
-          <h1 className="text-foreground font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
-            Services
-          </h1>
+          <h1 className="text-foreground mt-10 text-4xl font-medium sm:text-6xl lg:text-7xl">
+          Services
+        </h1>
           <h2 className="mt-4 text-xl text-muted-foreground">
             Community-Led Care for Life's Final Chapter
           </h2>
