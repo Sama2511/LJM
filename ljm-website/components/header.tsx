@@ -26,11 +26,11 @@ export default function Header() {
   return (
     <header className="sticky top-4 z-50 px-4">
       {/* Container card */}
-      <div className="mx-auto flex max-w-[1100px] items-center justify-between gap-4 rounded-3xl border border-[#ff8200] bg-[#f6f2e9] px-6 py-4 shadow-md">
+      <div className="border-muted bg-background mx-auto flex max-w-[1100px] items-center justify-between gap-4 rounded-2xl border px-6 py-3 shadow-md">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0">
           <Image
-            src="/kindlewood_logo.png"
+            src="/KindlewoodNewLogo.png"
             alt="Kindlewood Logo"
             width={350}
             height={55}
@@ -39,14 +39,14 @@ export default function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-3 md:flex">
+        <nav className="hidden items-center gap-1 text-xl md:flex">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${isActive ? "bg-[#ff8200] text-white" : "text-[#3b3b3b] hover:bg-[#ffe4cc]"} `}
+                className={`px-4 py-2 text-[15px] font-medium transition ${isActive ? "text-primary border-primary border-b-2" : "text-foreground hover:text-primary"} `}
               >
                 {link.name}
               </Link>
@@ -58,23 +58,25 @@ export default function Header() {
         <div className="flex items-center gap-2">
           <SearchBar />
 
-          <Button className="rounded-full bg-[#ff8200] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#ff9b3a]">
-            Donate
-          </Button>
+          <div className="animate-rotate-border from-accent to-accent via-accent-foreground cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-90% to-100% p-0.5">
+            <Button className="border-primary bg-primary text-accent-foreground rounded-lg border px-4 text-center text-[18px] font-semibold @[600]:px-6 @[600]:text-[14px]">
+              Donate
+            </Button>
+          </div>
 
           {/* Mobile menu toggle */}
           <div
             onClick={handleNav}
             className="flex cursor-pointer items-center justify-end md:hidden"
           >
-            <Menu width={28} height={28} className="text-gray-400" />
+            <Menu width={28} height={28} className="text-muted-foreground" />
           </div>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       <div
-        className={`fixed top-0 left-0 z-10 h-screen w-[65%] bg-[#f6f2e9] p-6 transition-transform duration-500 ease-in-out ${
+        className={`bg-background fixed top-0 left-0 z-10 h-screen w-[65%] p-6 transition-transform duration-500 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         } md:hidden`}
       >
@@ -92,7 +94,7 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 onClick={handleNav}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${isActive ? "bg-[#ff8200] text-white" : "text-[#3b3b3b] hover:bg-[#ffe4cc]"} `}
+                className={`px-4 py-2 text-sm font-medium transition ${isActive ? "text-primary border-primary border-b-2" : "text-foreground hover:text-primary"} `}
               >
                 {link.name}
               </Link>
