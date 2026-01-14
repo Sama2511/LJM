@@ -50,8 +50,8 @@ export default function EventsClient({ events }: { events: Event[] }) {
 
   return (
     <>
-      <div className="font-chillax flex w-full flex-col items-center text-foreground">
-      <div className="mt-15 mb-30 text-center">
+      <div className="font-chillax flex w-full flex-col items-center text-foreground mt-15 mb-30 text-center">
+      
         <h1 className="text-foreground mt-10 text-4xl font-medium sm:text-6xl lg:text-7xl">
           Events
         </h1>
@@ -145,9 +145,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
             )}
           </TabsContent>
         </Tabs>
-      </div>
-
-      {/* ✅ ONE sheet here */}
+            {/* ✅ ONE sheet here */}
       {selectedEventId && (
         <PublicEventDetailsSheet
           eventId={selectedEventId}
