@@ -1,5 +1,6 @@
 import UserProfile from "../components/UserProfile";
 import { createClient, getUser } from "@/app/utils/server";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default async function UserDashboardPage() {
   const supabase = await createClient();
@@ -34,10 +35,7 @@ export default async function UserDashboardPage() {
   const eventIds = requests?.map((r) => r.event_id) ?? [];
 
   const { data: events } = eventIds.length
-    ? await supabase
-        .from("events")
-        .select("id, date")
-        .in("id", eventIds)
+    ? await supabase.from("events").select("id, date").in("id", eventIds)
     : { data: [] };
 
   // -----------------------------
@@ -46,39 +44,50 @@ export default async function UserDashboardPage() {
   const now = new Date();
 
   const joinedCount = requests?.length ?? 0;
-  const pastCount =
-    events?.filter((e) => new Date(e.date) < now).length ?? 0;
+  const pastCount = events?.filter((e) => new Date(e.date) < now).length ?? 0;
   const upcomingCount =
     events?.filter((e) => new Date(e.date) >= now).length ?? 0;
-  const roleCount = new Set(
-    requests?.map((r) => r.role_id)
-  ).size;
+  const roleCount = new Set(requests?.map((r) => r.role_id)).size;
 
   // -----------------------------
   // Achievements logic
   // -----------------------------
   const achievements = [
     {
-      title: "First Event Joined",
+      title: "First Event",
+      description: "Join your first event",
       unlocked: joinedCount >= 1,
-      hint: "Unlocked after joining your first event",
+      current: joinedCount,
+      target: 1,
     },
     {
       title: "Getting Involved",
+      description: "Join 3 events",
       unlocked: joinedCount >= 3,
-      hint: "Unlocked after joining 3 events",
+      current: Math.min(joinedCount, 3),
+      target: 3,
     },
     {
       title: "Active Volunteer",
+      description: "Join 5 events",
       unlocked: joinedCount >= 5,
-      hint: "Unlocked after joining 5 events",
+      current: Math.min(joinedCount, 5),
+      target: 5,
     },
     {
       title: "Role Explorer",
+      description: "Try 2 different roles",
       unlocked: roleCount >= 2,
-      hint: "Unlocked after volunteering in different roles",
+      current: Math.min(roleCount, 2),
+      target: 2,
     },
-    
+    {
+      title: "Profile Complete",
+      description: "Complete your profile",
+      unlocked: formCompleted,
+      current: formCompleted ? 1 : 0,
+      target: 1,
+    },
   ];
 
   return (
@@ -99,78 +108,108 @@ export default async function UserDashboardPage() {
 
       {/* Participation Overview */}
       <section className="mt-8">
-        <h2 className="text-lg font-semibold mb-4">
-          Participation Overview
-        </h2>
+        <h2 className="mb-4 text-lg font-semibold">Participation Overview</h2>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <div className="rounded-lg border p-4">
-            <p className="text-sm text-muted-foreground">
-              Events joined
-            </p>
-            <p className="text-2xl font-semibold">{joinedCount}</p>
-          </div>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-4">
+          <Card className="bg-muted border-accent-foreground">
+            <CardContent className="p-3 md:p-4">
+              <p className="text-xl font-bold md:text-2xl">{joinedCount}</p>
+              <p className="text-muted-foreground text-xs md:text-sm">
+                Events Joined
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="rounded-lg border p-4">
-            <p className="text-sm text-muted-foreground">
-              Upcoming events
-            </p>
-            <p className="text-2xl font-semibold">{upcomingCount}</p>
-          </div>
+          <Card className="bg-muted border-accent-foreground">
+            <CardContent className="p-3 md:p-4">
+              <p className="text-xl font-bold md:text-2xl">{upcomingCount}</p>
+              <p className="text-muted-foreground text-xs md:text-sm">
+                Upcoming Events
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="rounded-lg border p-4">
-            <p className="text-sm text-muted-foreground">
-              Past events
-            </p>
-            <p className="text-2xl font-semibold">{pastCount}</p>
-          </div>
+          <Card className="bg-muted border-accent-foreground">
+            <CardContent className="p-3 md:p-4">
+              <p className="text-xl font-bold md:text-2xl">{pastCount}</p>
+              <p className="text-muted-foreground text-xs md:text-sm">
+                Past Events
+              </p>
+            </CardContent>
+          </Card>
 
-          <div className="rounded-lg border p-4">
-            <p className="text-sm text-muted-foreground">
-              Roles participated
-            </p>
-            <p className="text-2xl font-semibold">{roleCount}</p>
-          </div>
+          <Card className="bg-muted border-accent-foreground">
+            <CardContent className="p-3 md:p-4">
+              <p className="text-xl font-bold md:text-2xl">{roleCount}</p>
+              <p className="text-muted-foreground text-xs md:text-sm">
+                Roles Participated
+              </p>
+            </CardContent>
+          </Card>
         </div>
 
-        <p className="text-xs text-muted-foreground mt-2">
+        <p className="text-muted-foreground mt-2 text-xs">
           Statistics are based on events you have chosen to join.
         </p>
       </section>
 
       {/* Achievements */}
       <section className="mt-10">
-        <h2 className="text-lg font-semibold mb-4">
-          Achievements
-        </h2>
+        <h2 className="mb-4 text-lg font-semibold">Achievements</h2>
 
-        <ul className="space-y-3">
-          {achievements.map((a) => (
-            <li key={a.title} className="flex items-center gap-2">
-              <span className="text-lg">
-                {a.unlocked ? "✔" : "⬜"}
-              </span>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:gap-4 lg:grid-cols-5">
+          {achievements.map((achievement) => {
+            const progress = (achievement.current / achievement.target) * 100;
 
-              <span
-                className={
-                  a.unlocked ? "" : "text-muted-foreground"
-                }
+            return (
+              <Card
+                key={achievement.title}
+                className={`border-accent-foreground transition-all ${
+                  achievement.unlocked
+                    ? "bg-primary/10 border-primary"
+                    : "bg-muted opacity-75"
+                }`}
               >
-                {a.title}
-              </span>
+                <CardContent className="p-3 md:p-4">
+                  <div className="mb-1 flex items-center justify-between">
+                    <p
+                      className={`text-sm font-semibold ${
+                        achievement.unlocked
+                          ? "text-foreground"
+                          : "text-muted-foreground"
+                      }`}
+                    >
+                      {achievement.title}
+                    </p>
+                    {achievement.unlocked && (
+                      <span className="text-primary text-xs font-medium">
+                        Unlocked
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-muted-foreground mb-3 text-xs">
+                    {achievement.description}
+                  </p>
 
-              <span className="relative group ml-1">
-                <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border text-xs font-medium text-muted-foreground cursor-help">
-                  ?
-                </span>
-
-                <span className="absolute left-full top-1/2 ml-2 -translate-y-1/2 whitespace-nowrap rounded-md border bg-background px-2 py-1 text-xs text-foreground shadow-sm opacity-0 transition-opacity group-hover:opacity-100">
-                  {a.hint}
-                </span>
-              </span>
-            </li>
-          ))}
-        </ul>
+                  {/* Progress bar */}
+                  <div className="bg-muted-foreground/20 h-1.5 overflow-hidden rounded-full">
+                    <div
+                      className={`h-full rounded-full transition-all ${
+                        achievement.unlocked
+                          ? "bg-primary"
+                          : "bg-muted-foreground/50"
+                      }`}
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  <p className="text-muted-foreground mt-1 text-right text-xs">
+                    {achievement.current}/{achievement.target}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
       </section>
     </div>
   );

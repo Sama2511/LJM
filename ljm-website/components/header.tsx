@@ -59,9 +59,11 @@ export default function Header() {
           <SearchBar />
 
           <div className="animate-rotate-border from-accent to-accent via-accent-foreground cursor-pointer rounded-lg bg-conic-[from_var(--border-angle)] from-80% via-90% to-100% p-0.5">
-            <Button className="border-primary bg-primary text-accent-foreground rounded-lg border px-4 text-center text-[18px] font-semibold @[600]:px-6 @[600]:text-[14px]">
-              Donate
-            </Button>
+            <Link href="/donation">
+              <Button className="border-primary bg-primary text-accent-foreground rounded-lg border px-4 text-center text-[18px] font-semibold @[600]:px-6 @[600]:text-[14px]">
+                Donate
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile menu toggle */}

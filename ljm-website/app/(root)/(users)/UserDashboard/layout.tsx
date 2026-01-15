@@ -15,7 +15,7 @@ export default function UserDashboardLayout({
       <Header />
       <SidebarProvider>
         <UserSidebar />
-        <SidebarTrigger />
+        <SidebarTrigger className="mt-13" />
         {children}
         <Toaster />
       </SidebarProvider>
