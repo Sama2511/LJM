@@ -29,10 +29,16 @@ import { useTransition } from "react";
 
 const data = {
   navMain: [
+    
     {
       title: "Dashboard",
       url: "/UserDashboard",
       icon: LayoutDashboard,
+    },
+     {
+      title: "My Profile",
+      url: "/UserDashboard/profile",
+      icon: User,
     },
     {
       title: "Browse Events",
@@ -44,11 +50,7 @@ const data = {
       url: "/UserDashboard/volunteering",
       icon: HeartHandshake,
     },
-    {
-      title: "My Profile",
-      url: "/UserDashboard/profile",
-      icon: User,
-    },
+   
   ],
 };
 
