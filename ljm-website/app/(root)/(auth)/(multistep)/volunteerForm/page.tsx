@@ -20,6 +20,7 @@ import { volunteerSubmit } from "@/actions/users";
 import { Loader2 } from "lucide-react";
 import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "sonner";
+import z from "zod";
 
 export default function page() {
   const activityOptions = [
@@ -50,39 +51,43 @@ export default function page() {
 
   // Wrapper function for invisible reCAPTCHA + volunteerSubmit
   async function handleVolunteerSubmit(data: z.infer<typeof volunteerForm>) {
-  try {
-    const token = await recaptchaRef.current?.executeAsync();
-    if (!token) {
-      toast.error("reCAPTCHA verification failed.");
-      return;
-    }
+    try {
+      const token = await recaptchaRef.current?.executeAsync();
+      if (!token) {
+        toast.error("reCAPTCHA verification failed.");
+        return;
+      }
 
-    const result = await volunteerSubmit(data);
+      const result = await volunteerSubmit(data);
 
-    if (result.success) {
-      toast.success("Thank you! Your volunteer application has been submitted.");
-      Form.reset();
-      recaptchaRef.current?.reset();
-      window.location.href = "/confirmation"; // <-- redirect on success
-    } else {
-      // Frontend redirect to error page
-      console.error("Volunteer form submission failed:", result.error);
+      if (result.success) {
+        toast.success(
+          "Thank you! Your volunteer application has been submitted.",
+        );
+        Form.reset();
+        recaptchaRef.current?.reset();
+        window.location.href = "/confirmation"; // <-- redirect on success
+      } else {
+        // Frontend redirect to error page
+        console.error("Volunteer form submission failed:", result.error);
+        window.location.href = "/error"; // <-- redirect on error
+      }
+    } catch (error: any) {
+      toast.error(`Submission failed: ${error.message || error}`);
+      console.error("Volunteer form submission failed:", error);
       window.location.href = "/error"; // <-- redirect on error
     }
-  } catch (error: any) {
-    toast.error(`Submission failed: ${error.message || error}`);
-    console.error("Volunteer form submission failed:", error);
-    window.location.href = "/error"; // <-- redirect on error
   }
-}
-
 
   return (
     <div className="mt-5 flex w-full justify-center p-6 md:p-10">
       <div className="mb-10 w-full max-w-xl">
-        <Card>
+        <Card className="bg-muted">
           <CardContent>
-            <form id="volunteer-form" onSubmit={Form.handleSubmit(handleVolunteerSubmit)}>
+            <form
+              id="volunteer-form"
+              onSubmit={Form.handleSubmit(handleVolunteerSubmit)}
+            >
               <FieldGroup>
                 {/* Activities */}
                 <Controller
@@ -102,7 +107,9 @@ export default function page() {
                               if (checked) {
                                 field.onChange([...field.value, activity]);
                               } else {
-                                field.onChange(field.value.filter((v) => v !== activity));
+                                field.onChange(
+                                  field.value.filter((v) => v !== activity),
+                                );
                               }
                             }}
                           />
@@ -111,7 +118,9 @@ export default function page() {
                           </FieldLabel>
                         </Field>
                       ))}
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </FieldSet>
                   )}
                 />
@@ -122,7 +131,10 @@ export default function page() {
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         Other Volunteer interests?
                       </FieldLabel>
                       <Textarea
@@ -131,7 +143,9 @@ export default function page() {
                         aria-invalid={fieldState.invalid}
                         placeholder="Leave us a message..."
                       />
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </Field>
                   )}
                 />
@@ -142,8 +156,12 @@ export default function page() {
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
-                        Do you have any special skills or experience you’d like to share?
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
+                        Do you have any special skills or experience you’d like
+                        to share?
                       </FieldLabel>
                       <Textarea
                         {...field}
@@ -151,7 +169,9 @@ export default function page() {
                         aria-invalid={fieldState.invalid}
                         placeholder="This could be anything—past volunteer work, professional experience, or talents like cooking, organising, caregiving, etc. If not, no worries."
                       />
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </Field>
                   )}
                 />
@@ -162,7 +182,10 @@ export default function page() {
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         What inspires you to volunteer with us?*
                       </FieldLabel>
                       <Textarea
@@ -171,7 +194,9 @@ export default function page() {
                         aria-invalid={fieldState.invalid}
                         placeholder="We’d love to hear what brought you to LJM Memorial Hospice and what makes you want to help."
                       />
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </Field>
                   )}
                 />
@@ -182,7 +207,10 @@ export default function page() {
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         Your Story
                       </FieldLabel>
                       <Textarea
@@ -191,7 +219,9 @@ export default function page() {
                         aria-invalid={fieldState.invalid}
                         placeholder="If you’d like, do you have a personal story or a connection to end-of-life care that you want to share?"
                       />
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </Field>
                   )}
                 />
@@ -202,7 +232,10 @@ export default function page() {
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         What is your availability? *
                       </FieldLabel>
                       <Textarea
@@ -211,7 +244,9 @@ export default function page() {
                         aria-invalid={fieldState.invalid}
                         placeholder="Please let us know which days of the week and general time frames you’re available (for example: “Mondays and Thursdays”, “AM” or “PM”, “Flexible on weekends”)."
                       />
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </Field>
                   )}
                 />
@@ -230,24 +265,42 @@ export default function page() {
                           id="childrenCheck"
                           checked={field.value.includes("childrenCheck")}
                           onCheckedChange={(checked) => {
-                            if (checked) field.onChange([...field.value, "childrenCheck"]);
-                            else field.onChange(field.value.filter((v) => v !== "childrenCheck"));
+                            if (checked)
+                              field.onChange([...field.value, "childrenCheck"]);
+                            else
+                              field.onChange(
+                                field.value.filter(
+                                  (v) => v !== "childrenCheck",
+                                ),
+                              );
                           }}
                         />
-                        <FieldLabel htmlFor="childrenCheck">Working with Children Check</FieldLabel>
-                        {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                        <FieldLabel htmlFor="childrenCheck">
+                          Working with Children Check
+                        </FieldLabel>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
                       </Field>
                       <Field orientation="horizontal">
                         <Checkbox
                           id="clearance"
                           checked={field.value.includes("clearance")}
                           onCheckedChange={(checked) => {
-                            if (checked) field.onChange([...field.value, "clearance"]);
-                            else field.onChange(field.value.filter((v) => v !== "clearance"));
+                            if (checked)
+                              field.onChange([...field.value, "clearance"]);
+                            else
+                              field.onChange(
+                                field.value.filter((v) => v !== "clearance"),
+                              );
                           }}
                         />
-                        <FieldLabel htmlFor="clearance">Police Clearance</FieldLabel>
-                        {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                        <FieldLabel htmlFor="clearance">
+                          Police Clearance
+                        </FieldLabel>
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
                       </Field>
                     </FieldSet>
                   )}
@@ -259,7 +312,10 @@ export default function page() {
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         Phone Number*
                       </FieldLabel>
                       <Input
@@ -269,7 +325,9 @@ export default function page() {
                         aria-invalid={fieldState.invalid}
                         placeholder="Enter phone number"
                       />
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </Field>
                   )}
                 />
@@ -280,7 +338,10 @@ export default function page() {
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         Emergency Contact Number*
                       </FieldLabel>
                       <Input
@@ -290,7 +351,9 @@ export default function page() {
                         aria-invalid={fieldState.invalid}
                         placeholder="Enter emergency contact"
                       />
-                      {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                      {fieldState.invalid && (
+                        <FieldError errors={[fieldState.error]} />
+                      )}
                     </Field>
                   )}
                 />
@@ -307,7 +370,11 @@ export default function page() {
 
           <CardFooter className="flex justify-end">
             <Button type="submit" form="volunteer-form">
-              {Form.formState.isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
+              {Form.formState.isSubmitting ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </CardFooter>
         </Card>

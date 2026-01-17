@@ -2,23 +2,50 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Menu, X } from "lucide-react";
 import SearchBar from "./SearchBar";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { createClient } from "@/app/utils/client";
 
 export default function Header() {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const handleNav = () => setIsOpen(!isOpen);
+
+  const handleCrewClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+
+    const { data: userData } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (userData?.role === "admin") {
+      router.push("/dashboard");
+    } else {
+      router.push("/UserDashboard");
+    }
+  };
 
   const navLinks = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Services", href: "/services" },
     { name: "Events", href: "/events" },
-    { name: "Crew", href: "/crew" },
+    { name: "Crew", href: "#", onClick: handleCrewClick },
     { name: "Articles", href: "/articles" },
     { name: "Contact", href: "/contact" },
   ];
@@ -44,8 +71,9 @@ export default function Header() {
             const isActive = pathname === link.href;
             return (
               <Link
-                key={link.href}
+                key={link.name}
                 href={link.href}
+                onClick={link.onClick}
                 className={`px-4 py-2 text-[15px] font-medium transition ${isActive ? "text-primary border-primary border-b-2" : "text-foreground hover:text-primary"} `}
               >
                 {link.name}
@@ -93,9 +121,14 @@ export default function Header() {
             const isActive = pathname === link.href;
             return (
               <Link
-                key={link.href}
+                key={link.name}
                 href={link.href}
-                onClick={handleNav}
+                onClick={(e) => {
+                  if (link.onClick) {
+                    link.onClick(e);
+                  }
+                  handleNav();
+                }}
                 className={`px-4 py-2 text-sm font-medium transition ${isActive ? "text-primary border-primary border-b-2" : "text-foreground hover:text-primary"} `}
               >
                 {link.name}
