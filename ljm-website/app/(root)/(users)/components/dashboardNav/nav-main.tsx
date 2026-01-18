@@ -25,13 +25,15 @@ export function NavMain({
   return (
     <SidebarGroup className="mt-10">
       <SidebarMenu>
-        <SidebarGroupLabel>Menu</SidebarGroupLabel>
+        <SidebarGroupLabel className="text-accent-foreground">
+          Menu
+        </SidebarGroupLabel>
         {items.map((item, index) => {
           const isActive = pathname === item.url;
           return (
             <SidebarMenuItem
               key={index}
-              className={`rounded-lg transition duration-300 ease-in-out ${
+              className={`text-accent-foreground rounded-lg transition duration-300 ease-in-out ${
                 isActive
                   ? "bg-chart-2 pointer-events-none text-white"
                   : "hover:bg-accent hover:scale-[1.05]"

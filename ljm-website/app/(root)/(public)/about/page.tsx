@@ -13,8 +13,8 @@ export default function AboutUspage() {
     <div className="font-poppins">
       <section className="@container mt-10 flex justify-center p-5">
         <div className="gap- grid w-full max-w-[350px] gap-2 font-[700] @[700px]:max-w-[850px] @[700px]:grid-cols-2">
-          <div className="w-full space-y-3 rounded-3xl bg-accent/40 p-5 text-center @[700px]:col-span-2">
-            <h1 className="font-chillax text-3xl font-semibold text-primary">
+          <div className="bg-accent/40 w-full space-y-3 rounded-3xl p-5 text-center @[700px]:col-span-2">
+            <h1 className="font-chillax text-primary text-3xl font-semibold">
               Our origin story
             </h1>
             <div
@@ -39,7 +39,7 @@ export default function AboutUspage() {
             </div>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="mx-auto flex items-center gap-1 text-sm font-medium text-foreground transition-colors hover:text-primary @[700px]:hidden"
+              className="text-foreground hover:text-primary mx-auto flex items-center gap-1 text-sm font-medium transition-colors @[700px]:hidden"
               aria-expanded={isOpen}
               aria-label={isOpen ? "Show less" : "Show more"}
             >
@@ -64,8 +64,8 @@ export default function AboutUspage() {
             />
           </div>
 
-          <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-primary/20 p-5 text-center">
-            <h1 className="font-chillax text-3xl font-semibold text-primary">
+          <div className="bg-primary/20 flex w-full flex-col justify-center space-y-3 rounded-3xl p-5 text-center">
+            <h1 className="font-chillax text-primary text-3xl font-semibold">
               Our Vision
             </h1>
             <p className="font-light">
@@ -77,8 +77,8 @@ export default function AboutUspage() {
             </p>
           </div>
 
-          <div className="flex w-full flex-col justify-center space-y-3 rounded-3xl bg-secondary/40 p-5 text-center">
-            <h1 className="font-chillax text-3xl font-semibold text-primary">
+          <div className="bg-secondary/40 flex w-full flex-col justify-center space-y-3 rounded-3xl p-5 text-center">
+            <h1 className="font-chillax text-primary text-3xl font-semibold">
               Our mission
             </h1>
             <p className="font-light">
@@ -98,8 +98,8 @@ export default function AboutUspage() {
             />
           </div>
 
-          <div className="w-full space-y-3 rounded-3xl bg-ring/20 p-5 text-center @[700px]:col-span-2">
-            <h1 className="font-chillax text-3xl font-semibold text-primary">
+          <div className="bg-ring/20 w-full space-y-3 rounded-3xl p-5 text-center @[700px]:col-span-2">
+            <h1 className="font-chillax text-primary text-3xl font-semibold">
               About Us
             </h1>
             <p className="font-light">
@@ -113,13 +113,13 @@ export default function AboutUspage() {
       </section>
 
       <div
-        className="h-50 bg-gradient-to-b from-background via-background to-muted"
+        className="from-background via-background to-muted h-50 bg-gradient-to-b"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>
       </div>
       {/* gradient background */}
-      <section className="flex flex-col items-center gap-4 bg-muted">
+      <section className="bg-muted flex flex-col items-center gap-4">
         <h1 className="text-foreground font-chillax text-5xl font-medium sm:text-6xl lg:text-7xl">
           Our Values
         </h1>
@@ -129,8 +129,8 @@ export default function AboutUspage() {
         <section className="container mx-auto px-6 py-12">
           <div className="mx-auto grid max-w-5xl grid-cols-1 md:grid-cols-2">
             {/* Item 1 */}
-            <div className="border-b border-border p-6 md:border-r md:border-b">
-              <h3 className="font-chillax mb-3 text-2xl font-semibold text-primary">
+            <div className="border-border border-b p-6 md:border-r md:border-b">
+              <h3 className="font-chillax text-primary mb-3 text-2xl font-semibold">
                 Connection
               </h3>
               <p className="text-foreground font-light">
@@ -141,8 +141,8 @@ export default function AboutUspage() {
             </div>
 
             {/* Item 2 */}
-            <div className="border-b border-border p-6 md:border-b">
-              <h3 className="font-chillax mb-3 text-2xl font-semibold text-primary">
+            <div className="border-border border-b p-6 md:border-b">
+              <h3 className="font-chillax text-primary mb-3 text-2xl font-semibold">
                 Choice{" "}
               </h3>
               <p className="text-foreground font-light">
@@ -154,8 +154,8 @@ export default function AboutUspage() {
             </div>
 
             {/* Item 3 */}
-            <div className="border-b border-border p-6 md:border-r md:border-b-0">
-              <h3 className="font-chillax mb-3 text-2xl font-semibold text-primary">
+            <div className="border-border border-b p-6 md:border-r md:border-b-0">
+              <h3 className="font-chillax text-primary mb-3 text-2xl font-semibold">
                 Community
               </h3>
               <p className="text-foreground font-light">
@@ -167,7 +167,7 @@ export default function AboutUspage() {
 
             {/* Item 4 */}
             <div className="p-6">
-              <h3 className="font-chillax mb-3 text-2xl font-semibold text-primary">
+              <h3 className="font-chillax text-primary mb-3 text-2xl font-semibold">
                 Dignity{" "}
               </h3>
               <p className="text-foreground font-light">
@@ -181,13 +181,13 @@ export default function AboutUspage() {
       </section>
       {/* gradient background */}
       <div
-        className="h-50 bg-gradient-to-t from-background via-background to-muted"
+        className="from-background via-background to-muted h-50 bg-gradient-to-t"
         aria-hidden="true"
       >
         <div className="container mx-auto py-16"></div>
       </div>
       <section className="@container mx-auto max-w-[95%] px-4 py-12">
-      <h1 className="text-foreground font-chillax text-5xl font-medium sm:text-6xl lg:text-7xl text-center mb-8">
+        <h1 className="text-foreground font-chillax mb-8 text-center text-5xl font-medium sm:text-6xl lg:text-7xl">
           Meet Our Team
         </h1>
         <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-5">
@@ -196,35 +196,29 @@ export default function AboutUspage() {
             role="CEO"
             imageUrl="/kate.jpg"
           />
+          <ProfileCard member="Nicola Hodgson" role="Chair" imageUrl="" />
           <ProfileCard
             member="Nicola Hodgson"
-            role="Chair"
+            role="Vice"
             imageUrl="/nicola.jpeg"
           />
+          <ProfileCard member="Steven Windsor" role="Chair" imageUrl="" />
           <ProfileCard
             member="Steven Windsor"
             role="Vice"
             imageUrl="/steven.jpg"
           />
-          <ProfileCard
-            member="Sheena Spedding"
-            role="Treasurer"
-            imageUrl="/Sheena.jpeg"
-          />
+          <ProfileCard member="Sheena Spedding" role="Treasurer" imageUrl="" />
           <ProfileCard
             member="Caroline Yates"
             role="Board Member"
             imageUrl="/caroline.jpg"
           />
-          <ProfileCard
-            member="Iain Reid"
-            role="Board Member"
-            imageUrl="/IainReid.jpeg"
-          />
+          <ProfileCard member="Iain Reid" role="Board Member" imageUrl="" />
         </div>
       </section>
       <section className="py-10">
-      <h1 className="text-foreground font-chillax text-5xl font-medium sm:text-6xl lg:text-5xl text-center mb-8">
+        <h1 className="text-foreground font-chillax mb-8 text-center text-5xl font-medium sm:text-6xl lg:text-5xl">
           Annual Report & Financial Statements
         </h1>
         <DocumentsSection />

@@ -20,7 +20,7 @@ function Footer() {
               <div className="mb-2 flex items-center gap-3">
                 <Link href="/">
                   <Image
-                    src="/kindlewood_logo.png"
+                    src="/KindlewoodNewLogo.png"
                     alt=""
                     height={300}
                     width={300}
@@ -43,7 +43,7 @@ function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit our Facebook page"
-                  className="transition-colors hover:text-sidebar-accent"
+                  className="hover:text-sidebar-accent transition-colors"
                 >
                   <Facebook className="h-6 w-6" />
                 </a>
@@ -52,7 +52,7 @@ function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit our Instagram page"
-                  className="transition-colors hover:text-sidebar-accent"
+                  className="hover:text-sidebar-accent transition-colors"
                 >
                   <Instagram className="h-6 w-6" />
                 </a>
@@ -61,7 +61,7 @@ function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit our Twitter page"
-                  className="transition-colors hover:text-sidebar-accent"
+                  className="hover:text-sidebar-accent transition-colors"
                 >
                   <Twitter className="h-6 w-6" />
                 </a>
@@ -72,7 +72,7 @@ function Footer() {
               onClick={scrollToTop}
               variant="outline"
               size="sm"
-              className="flex items-center gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2"
               aria-label="Scroll to top"
             >
               Back to Top
@@ -81,36 +81,54 @@ function Footer() {
           </div>
 
           <div className="w-fit">
-            <h3 className="mb-4 text-xl text-sidebar-accent">Site Map</h3>
+            <h3 className="text-sidebar-accent mb-4 text-xl">Site Map</h3>
             <nav aria-label="Footer navigation">
               <ul className="flex-col space-y-2">
                 <li>
-                  <Link href="/" className="transition-colors hover:text-sidebar-accent">
+                  <Link
+                    href="/"
+                    className="hover:text-sidebar-accent transition-colors"
+                  >
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="transition-colors hover:text-sidebar-accent">
+                  <Link
+                    href="/about"
+                    className="hover:text-sidebar-accent transition-colors"
+                  >
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="/services" className="transition-colors hover:text-sidebar-accent">
+                  <Link
+                    href="/services"
+                    className="hover:text-sidebar-accent transition-colors"
+                  >
                     Our Services
                   </Link>
                 </li>
                 <li>
-                  <Link href="/events" className="transition-colors hover:text-sidebar-accent">
+                  <Link
+                    href="/events"
+                    className="hover:text-sidebar-accent transition-colors"
+                  >
                     Events
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact" className="transition-colors hover:text-sidebar-accent">
+                  <Link
+                    href="/contact"
+                    className="hover:text-sidebar-accent transition-colors"
+                  >
                     Contact
                   </Link>
                 </li>
                 <li>
-                  <Link href="/donate" className="transition-colors hover:text-sidebar-accent">
+                  <Link
+                    href="/donate"
+                    className="hover:text-sidebar-accent transition-colors"
+                  >
                     Donate
                   </Link>
                 </li>
@@ -119,10 +137,9 @@ function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 border-t border-sidebar-border pt-6 text-center text-sm text-sidebar-foreground/70">
+        <div className="border-sidebar-border text-sidebar-foreground/70 mt-8 border-t pt-6 text-center text-sm">
           <p>
-            &copy; {new Date().getFullYear()} Kindlewood. All rights
-            reserved.
+            &copy; {new Date().getFullYear()} Kindlewood. All rights reserved.
           </p>
         </div>
       </div>

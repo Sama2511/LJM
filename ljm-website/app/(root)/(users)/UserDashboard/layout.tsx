@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -15,7 +15,7 @@ export default function UserDashboardLayout({
       <Header />
       <SidebarProvider>
         <UserSidebar />
-        <SidebarTrigger />
+        <SidebarTrigger className="mt-13" />
         {children}
         <Toaster />
       </SidebarProvider>

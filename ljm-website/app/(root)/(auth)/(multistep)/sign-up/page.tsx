@@ -18,6 +18,7 @@ import React, { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import ReCAPTCHA from "react-google-recaptcha";
+import { toast } from "sonner";
 
 export default function page() {
   const recaptchaRef = useRef<ReCAPTCHA>(null);
@@ -37,30 +38,26 @@ export default function page() {
   async function handleSignupWithCaptcha(data: z.infer<typeof signUpSchema>) {
     try {
       const token = await recaptchaRef.current?.executeAsync();
-
       if (!token) {
-        console.error("reCAPTCHA verification failed.");
+        toast.error("reCAPTCHA verification failed.");
         return;
       }
 
-      //verify captcha server-side
-      const res = await fetch("/api/verify-captcha", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ captchaToken: token }),
-      });
+      // Call server-side signup
+      const result = await signup(data);
 
-      if (!res.ok) {
-        console.error("Captcha verification failed");
-        return;
+      if (result.success) {
+        toast.success("Signup successful! Please check your email.");
+        // redirect client-side
+        window.location.href = "/check-email";
+      } else {
+        toast.error(`Signup failed: ${result.error}`);
+        console.error("Signup error:", result.error);
       }
 
-      //call original signup
-      await signup(data);
-
-      // reset reCAPTCHA after submission
       recaptchaRef.current?.reset();
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(`Signup failed: ${error.message || error}`);
       console.error("Signup failed:", error);
     }
   }
@@ -68,7 +65,7 @@ export default function page() {
   return (
     <div className="mt-5 flex min-h-svh w-full justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
-        <Card className="mx-w-[300px] bg-card">
+        <Card className="mx-w-[300px] bg-muted">
           <CardContent>
             <form
               id="signupForm"
@@ -80,7 +77,10 @@ export default function page() {
                   control={signupForm.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         First Name
                       </FieldLabel>
                       <Input
@@ -101,7 +101,10 @@ export default function page() {
                   control={signupForm.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         Last Name
                       </FieldLabel>
                       <Input
@@ -123,10 +126,13 @@ export default function page() {
                   control={signupForm.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         Email
                       </FieldLabel>
-                       <Input
+                      <Input
                         {...field}
                         id="email"
                         aria-invalid={fieldState.invalid}
@@ -144,7 +150,10 @@ export default function page() {
                   control={signupForm.control}
                   render={({ field, fieldState }) => (
                     <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="font-semibold" htmlFor={field.name}>
+                      <FieldLabel
+                        className="font-semibold"
+                        htmlFor={field.name}
+                      >
                         Password
                       </FieldLabel>
                       <Input
@@ -196,24 +205,24 @@ export default function page() {
           </CardContent>
 
           <CardFooter>
-             <Field
+            <Field
               orientation="responsive"
               className="flex flex-col items-center justify-between"
             >
-            <Button type="submit" form="signupForm">
-              {signupForm.formState.isSubmitting ? (
-                <Loader2 className="animate-spin" />
-              ) : (
-                "Sign Up"
-              )}
-            </Button>
+              <Button type="submit" form="signupForm">
+                {signupForm.formState.isSubmitting ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "Sign Up"
+                )}
+              </Button>
 
-            <div className="text-center text-sm">
-              Already have an account?{" "}
-              <Link href="/login" className="underline underline-offset-4">
-                Login
-              </Link>
-            </div>
+              <div className="text-center text-sm">
+                Already have an account?{" "}
+                <Link href="/login" className="underline underline-offset-4">
+                  Login
+                </Link>
+              </div>
             </Field>
           </CardFooter>
         </Card>
