@@ -23,10 +23,10 @@ export default async function page() {
   return (
     <div className="mt-5 flex min-h-svh w-full justify-center p-6 md:p-10">
       <div className="w-full max-w-3xl">
-        <Card>
+        <Card className="bg-muted">
           <CardHeader className="text-center">
             <CardTitle
-              className="text-4xl text-[#157A4E]"
+              className="text-foreground text-4xl"
               style={{ fontSize: "clamp(1.75rem, 0.5rem + 3vw, 3rem)" }}
             >
               your application has been submitted
@@ -37,14 +37,14 @@ export default async function page() {
             </p>
           </CardHeader>
           <CardContent className="flex justify-center">
-            <p className="rounded-full bg-[#483F2C] px-3 py-2 text-[#FFD659]">
+            <p className="bg-foreground text-accent rounded-full px-3 py-2">
               Pending review
             </p>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
-            <Link href="/events">
+            {/* <Link href="/events">
               <Button className="max-w-[200px]">Browse upcoming events</Button>
-            </Link>
+            </Link> */}
             <Link href="/">
               <Button variant="outline" className="w-[200px] max-w-[200px]">
                 Return home

@@ -1,8 +1,5 @@
 "use client";
-import { getUser } from "@/app/utils/server";
-import { redirect } from "next/navigation";
-import React from "react";
-import { check, file, z } from "zod";
+import React, { useRef } from "react";
 import { volunteerForm } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -21,6 +18,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { volunteerSubmit } from "@/actions/users";
 import { Loader2 } from "lucide-react";
+import ReCAPTCHA from "react-google-recaptcha";
+import { toast } from "sonner";
+import z from "zod";
 
 export default function page() {
   const activityOptions = [
@@ -31,6 +31,7 @@ export default function page() {
     "kitchen-help",
     "administration",
   ] as const;
+
   const Form = useForm<z.infer<typeof volunteerForm>>({
     resolver: zodResolver(volunteerForm),
     defaultValues: {
@@ -46,16 +47,49 @@ export default function page() {
     },
   });
 
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
+  // Wrapper function for invisible reCAPTCHA + volunteerSubmit
+  async function handleVolunteerSubmit(data: z.infer<typeof volunteerForm>) {
+    try {
+      const token = await recaptchaRef.current?.executeAsync();
+      if (!token) {
+        toast.error("reCAPTCHA verification failed.");
+        return;
+      }
+
+      const result = await volunteerSubmit(data);
+
+      if (result.success) {
+        toast.success(
+          "Thank you! Your volunteer application has been submitted.",
+        );
+        Form.reset();
+        recaptchaRef.current?.reset();
+        window.location.href = "/confirmation"; // <-- redirect on success
+      } else {
+        // Frontend redirect to error page
+        console.error("Volunteer form submission failed:", result.error);
+        window.location.href = "/error"; // <-- redirect on error
+      }
+    } catch (error: any) {
+      toast.error(`Submission failed: ${error.message || error}`);
+      console.error("Volunteer form submission failed:", error);
+      window.location.href = "/error"; // <-- redirect on error
+    }
+  }
+
   return (
     <div className="mt-5 flex w-full justify-center p-6 md:p-10">
       <div className="mb-10 w-full max-w-xl">
-        <Card className="">
+        <Card className="bg-muted">
           <CardContent>
             <form
               id="volunteer-form"
-              onSubmit={Form.handleSubmit(volunteerSubmit)}
+              onSubmit={Form.handleSubmit(handleVolunteerSubmit)}
             >
               <FieldGroup>
+                {/* Activities */}
                 <Controller
                   name="activities"
                   control={Form.control}
@@ -90,6 +124,8 @@ export default function page() {
                     </FieldSet>
                   )}
                 />
+
+                {/* Volunteer Interests */}
                 <Controller
                   name="interests"
                   control={Form.control}
@@ -113,6 +149,8 @@ export default function page() {
                     </Field>
                   )}
                 />
+
+                {/* Skills */}
                 <Controller
                   name="skills"
                   control={Form.control}
@@ -129,8 +167,7 @@ export default function page() {
                         {...field}
                         id="skills"
                         aria-invalid={fieldState.invalid}
-                        placeholder="This could be anything—past volunteer work, professional experience, or talents like cooking, organising, caregiving, etc. If not, no worries.
-"
+                        placeholder="This could be anything—past volunteer work, professional experience, or talents like cooking, organising, caregiving, etc. If not, no worries."
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -138,6 +175,8 @@ export default function page() {
                     </Field>
                   )}
                 />
+
+                {/* Inspiration */}
                 <Controller
                   name="inspiration"
                   control={Form.control}
@@ -153,8 +192,7 @@ export default function page() {
                         {...field}
                         id="inspiration"
                         aria-invalid={fieldState.invalid}
-                        placeholder="We’d love to hear what brought you to LJM Memorial Hospice and what makes you want to help.
-"
+                        placeholder="We’d love to hear what brought you to LJM Memorial Hospice and what makes you want to help."
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
@@ -162,6 +200,8 @@ export default function page() {
                     </Field>
                   )}
                 />
+
+                {/* Story */}
                 <Controller
                   name="story"
                   control={Form.control}
@@ -185,6 +225,8 @@ export default function page() {
                     </Field>
                   )}
                 />
+
+                {/* Availability */}
                 <Controller
                   name="availability"
                   control={Form.control}
@@ -208,56 +250,49 @@ export default function page() {
                     </Field>
                   )}
                 />
+
+                {/* Certificates */}
                 <Controller
                   name="certificate"
                   control={Form.control}
                   render={({ field, fieldState }) => (
                     <FieldSet className="flex gap-3">
                       <FieldLegend className="font-semibold">
-                        Do you have or can obtain the following ?
+                        Do you have or can obtain the following?
                       </FieldLegend>
-                      <Field
-                        data-invalid={fieldState.invalid}
-                        orientation="horizontal"
-                      >
+                      <Field orientation="horizontal">
                         <Checkbox
                           id="childrenCheck"
                           checked={field.value.includes("childrenCheck")}
                           onCheckedChange={(checked) => {
-                            if (checked) {
+                            if (checked)
                               field.onChange([...field.value, "childrenCheck"]);
-                            } else {
+                            else
                               field.onChange(
                                 field.value.filter(
                                   (v) => v !== "childrenCheck",
                                 ),
                               );
-                            }
                           }}
                         />
                         <FieldLabel htmlFor="childrenCheck">
                           Working with Children Check
                         </FieldLabel>
-
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
                         )}
                       </Field>
-                      <Field
-                        data-invalid={fieldState.invalid}
-                        orientation="horizontal"
-                      >
+                      <Field orientation="horizontal">
                         <Checkbox
                           id="clearance"
                           checked={field.value.includes("clearance")}
                           onCheckedChange={(checked) => {
-                            if (checked) {
+                            if (checked)
                               field.onChange([...field.value, "clearance"]);
-                            } else {
+                            else
                               field.onChange(
                                 field.value.filter((v) => v !== "clearance"),
                               );
-                            }
                           }}
                         />
                         <FieldLabel htmlFor="clearance">
@@ -270,6 +305,8 @@ export default function page() {
                     </FieldSet>
                   )}
                 />
+
+                {/* Phone */}
                 <Controller
                   name="phone"
                   control={Form.control}
@@ -294,6 +331,8 @@ export default function page() {
                     </Field>
                   )}
                 />
+
+                {/* Emergency Contact */}
                 <Controller
                   name="emergencyContact"
                   control={Form.control}
@@ -318,15 +357,23 @@ export default function page() {
                     </Field>
                   )}
                 />
+
+                {/* Invisible reCAPTCHA */}
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                  size="invisible"
+                />
               </FieldGroup>
             </form>
           </CardContent>
+
           <CardFooter className="flex justify-end">
             <Button type="submit" form="volunteer-form">
               {Form.formState.isSubmitting ? (
                 <Loader2 className="animate-spin" />
               ) : (
-                "submit"
+                "Submit"
               )}
             </Button>
           </CardFooter>

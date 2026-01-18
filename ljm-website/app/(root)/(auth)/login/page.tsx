@@ -42,18 +42,25 @@ export default function page({
 
       const user = (await supabase.auth.getUser()).data.user?.id;
       console.log(user);
-      const { data: formProgress, error: formError } = await supabase
+      const { data: userData, error: userError } = await supabase
         .from("users")
-        .select("formcompleted")
+        .select("formcompleted, role")
         .eq("id", user)
         .single();
 
-      if (formError) {
+      if (userError) {
         router.push("/error");
         return;
       }
 
-      if (!formProgress?.formcompleted) {
+      // Admin users go directly to admin dashboard
+      if (userData?.role === "admin") {
+        router.replace("/dashboard");
+        return;
+      }
+
+      // Non-admin users need to complete the form first
+      if (!userData?.formcompleted) {
         router.replace("/volunteerForm");
         return;
       }
@@ -69,14 +76,14 @@ export default function page({
         return;
       }
 
-      if (status?.status === "pending") {
+      if (status?.status === "Pending") {
         router.replace("/confirmation");
-      } else if (status?.status === "approved") {
-        router.replace("/dashboard");
-      } else if (status?.status === "rejected") {
+      } else if (status?.status === "Approved") {
+        router.replace("/UserDashboard");
+      } else if (status?.status === "Rejected") {
         router.replace("/rejected");
       } else {
-        router.replace("/dashboard");
+        router.replace("/UserDashboard");
       }
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "An error occurred");

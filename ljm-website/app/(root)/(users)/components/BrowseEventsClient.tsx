@@ -2,12 +2,7 @@
 
 import { useMemo } from "react";
 import VolunteerEventCard from "@/app/(root)/(users)/components/VolunteerEventCard";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Props = {
   events: any[];
@@ -25,19 +20,17 @@ export default function BrowseEventsClient({
   const ongoing = useMemo(
     () =>
       events.filter(
-        (event) =>
-          new Date(`${event.date}T${event.ends_at}`) >= now
+        (event) => new Date(`${event.date}T${event.ends_at}`) >= now,
       ),
-    [events]
+    [events],
   );
 
   const past = useMemo(
     () =>
       events.filter(
-        (event) =>
-          new Date(`${event.date}T${event.ends_at}`) < now
+        (event) => new Date(`${event.date}T${event.ends_at}`) < now,
       ),
-    [events]
+    [events],
   );
 
   const formatDate = (dateString: string) =>
@@ -58,9 +51,7 @@ export default function BrowseEventsClient({
   const renderCards = (items: any[], isPast = false) => (
     <div className="flex flex-wrap gap-8">
       {items.length === 0 && (
-        <p className="text-sm text-muted-foreground">
-          No events to display.
-        </p>
+        <p className="text-muted-foreground text-sm">No events to display.</p>
       )}
 
       {items.map((event) => {
@@ -68,7 +59,7 @@ export default function BrowseEventsClient({
           capacities.find((c) => c.event_id === event.id)?.capacity ?? 0;
 
         const hasRequested = userRequests.some(
-          (req) => req.event_id === event.id
+          (req) => req.event_id === event.id,
         );
 
         return (
@@ -79,7 +70,7 @@ export default function BrowseEventsClient({
             description={event.description}
             date={formatDate(event.date)}
             time={`${formatTime(event.starts_at)} - ${formatTime(
-              event.ends_at
+              event.ends_at,
             )}`}
             location={event.location}
             image={`https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/event-pics/${event.image_url}`}
@@ -96,18 +87,14 @@ export default function BrowseEventsClient({
 
   return (
     <Tabs defaultValue="ongoing">
-      <TabsList>
+      <TabsList className="mb-4">
         <TabsTrigger value="ongoing">Ongoing</TabsTrigger>
         <TabsTrigger value="past">Past</TabsTrigger>
       </TabsList>
 
-      <TabsContent value="ongoing">
-        {renderCards(ongoing, false)}
-      </TabsContent>
+      <TabsContent value="ongoing">{renderCards(ongoing, false)}</TabsContent>
 
-      <TabsContent value="past">
-        {renderCards(past, true)}
-      </TabsContent>
+      <TabsContent value="past">{renderCards(past, true)}</TabsContent>
     </Tabs>
   );
 }

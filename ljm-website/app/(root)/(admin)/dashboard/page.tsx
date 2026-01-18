@@ -7,18 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import {
-  CalendarDays,
-  Users,
-  FileText,
-  Files,
-  Clock,
-  UserPlus,
-  CalendarPlus,
-  Newspaper,
-  ArrowUpRight,
-  TrendingUp,
-} from "lucide-react";
+import { Users, FileText, CalendarPlus } from "lucide-react";
 import {
   FetchDashboardStats,
   FetchRecentApplications,
@@ -73,13 +62,13 @@ export default function DashboardPage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "pending":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-accent/20 text-accent-foreground";
       case "approved":
-        return "bg-green-100 text-green-800";
+        return "bg-secondary/30 text-secondary-foreground";
       case "rejected":
-        return "bg-red-100 text-red-800";
+        return "bg-destructive/20 text-destructive";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-muted text-muted-foreground";
     }
   };
 
@@ -106,13 +95,9 @@ export default function DashboardPage() {
 
       {/* Stats Cards */}
       <div className="mt-4 grid grid-cols-2 gap-3 md:mt-6 md:grid-cols-3 md:gap-4 lg:grid-cols-6">
-        <Card className="bg-background">
+        <Card className="bg-muted border-accent-foreground">
           <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <CalendarDays className="h-5 w-5 text-[#3E5F44] md:h-6 md:w-6" />
-              <ArrowUpRight className="h-3 w-3 text-[#3E5F44] md:h-4 md:w-4" />
-            </div>
-            <p className="mt-2 text-xl font-bold md:text-2xl">
+            <p className="text-xl font-bold md:text-2xl">
               {stats?.totalEvents}
             </p>
             <p className="text-muted-foreground text-xs md:text-sm">
@@ -121,26 +106,20 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-muted border-accent-foreground">
           <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <Clock className="h-5 w-5 text-blue-500 md:h-6 md:w-6" />
-              <TrendingUp className="h-3 w-3 text-blue-500 md:h-4 md:w-4" />
-            </div>
-            <p className="mt-2 text-xl font-bold md:text-2xl">
+            <p className="text-xl font-bold md:text-2xl">
               {stats?.upcomingEvents}
             </p>
-            <p className="text-muted-foreground text-xs md:text-sm">Upcoming</p>
+            <p className="text-muted-foreground text-xs md:text-sm">
+              Upcoming Events
+            </p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-muted border-accent-foreground">
           <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <Users className="h-5 w-5 text-purple-500 md:h-6 md:w-6" />
-              <ArrowUpRight className="h-3 w-3 text-purple-500 md:h-4 md:w-4" />
-            </div>
-            <p className="mt-2 text-xl font-bold md:text-2xl">
+            <p className="text-xl font-bold md:text-2xl">
               {stats?.totalVolunteers}
             </p>
             <p className="text-muted-foreground text-xs md:text-sm">
@@ -149,41 +128,27 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-muted border-accent-foreground">
           <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <UserPlus className="h-5 w-5 text-yellow-500 md:h-6 md:w-6" />
-              {stats?.pendingApplications && stats.pendingApplications > 0 && (
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500 text-[10px] font-bold text-white">
-                  {stats.pendingApplications}
-                </span>
-              )}
-            </div>
-            <p className="mt-2 text-xl font-bold md:text-2xl">
+            <p className="text-xl font-bold md:text-2xl">
               {stats?.pendingApplications}
             </p>
             <p className="text-muted-foreground text-xs md:text-sm">Pending</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-muted border-accent-foreground">
           <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <Newspaper className="h-5 w-5 text-orange-500 md:h-6 md:w-6" />
-            </div>
-            <p className="mt-2 text-xl font-bold md:text-2xl">
+            <p className="text-xl font-bold md:text-2xl">
               {stats?.totalArticles}
             </p>
             <p className="text-muted-foreground text-xs md:text-sm">Articles</p>
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-muted border-accent-foreground">
           <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <Files className="h-5 w-5 text-teal-500 md:h-6 md:w-6" />
-            </div>
-            <p className="mt-2 text-xl font-bold md:text-2xl">
+            <p className="text-xl font-bold md:text-2xl">
               {stats?.totalDocuments}
             </p>
             <p className="text-muted-foreground text-xs md:text-sm">
@@ -196,10 +161,7 @@ export default function DashboardPage() {
       {/* Quick Actions */}
       <div className="mt-4 flex flex-wrap gap-2 md:mt-6 md:gap-3">
         <Link href="/dashboard/EventManagement">
-          <Button
-            size="sm"
-            className="bg-[#3E5F44] text-xs hover:bg-[#2d4432] md:text-sm"
-          >
+          <Button size="sm" variant="outline">
             <CalendarPlus className="mr-1 h-3 w-3 md:mr-2 md:h-4 md:w-4" />
             New Event
           </Button>
@@ -221,7 +183,7 @@ export default function DashboardPage() {
       {/* Main Content Grid */}
       <div className="mt-4 grid gap-4 md:mt-6 lg:grid-cols-3">
         {/* Upcoming Events */}
-        <Card className="lg:col-span-2">
+        <Card className="bg-muted border-accent-foreground lg:col-span-2">
           <CardHeader className="pb-2 md:pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base md:text-lg">
@@ -268,7 +230,7 @@ export default function DashboardPage() {
         </Card>
 
         {/* Recent Applications */}
-        <Card>
+        <Card className="bg-muted border-accent-foreground">
           <CardHeader className="pb-2 md:pb-3">
             <div className="flex items-center justify-between">
               <CardTitle className="text-base md:text-lg">

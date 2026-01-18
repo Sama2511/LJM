@@ -77,7 +77,6 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  // Site settings state
   const [siteSettings, setSiteSettings] =
     useState<SiteSettingsState>(defaultSiteSettings);
   const [savingSiteSettings, setSavingSiteSettings] = useState(false);
@@ -180,7 +179,7 @@ export default function ProfilePage() {
 
   const handleSiteSettingChange = (
     key: keyof SiteSettingsState,
-    value: string
+    value: string,
   ) => {
     setSiteSettings((prev) => ({ ...prev, [key]: value }));
   };
@@ -229,7 +228,7 @@ export default function ProfilePage() {
               ...prev,
               avatar_url: urlData.publicUrl,
             }
-          : null
+          : null,
       );
 
       toast.success("Avatar updated successfully!");
@@ -272,7 +271,7 @@ export default function ProfilePage() {
               ...prev,
               avatar_url: undefined,
             }
-          : null
+          : null,
       );
 
       toast.success("Avatar deleted successfully!");
@@ -331,7 +330,7 @@ export default function ProfilePage() {
                   src={userData.avatar_url}
                   alt={`${userData.firstname} ${userData.lastname}`}
                 />
-                <AvatarFallback className="bg-[#3E5F44] text-2xl text-white">
+                <AvatarFallback className="bg-foreground text-2xl text-background">
                   {getInitials(userData.firstname, userData.lastname)}
                 </AvatarFallback>
               </Avatar>
@@ -454,7 +453,9 @@ export default function ProfilePage() {
                 <Shield className="mb-1 inline h-4 w-4" /> Role
               </Label>
               <div className="bg-muted flex h-10 items-center rounded-md px-3">
-                <p className="text-sm font-medium capitalize">{userData.role}</p>
+                <p className="text-sm font-medium capitalize">
+                  {userData.role}
+                </p>
               </div>
             </div>
 
@@ -472,7 +473,7 @@ export default function ProfilePage() {
             <Button
               onClick={saveChanges}
               disabled={saving}
-              className="w-full bg-[#3E5F44] hover:bg-[#2d4432]"
+              className="w-full bg-foreground text-background hover:bg-foreground/90"
             >
               {saving ? (
                 <p className="flex items-center gap-1">
@@ -496,7 +497,10 @@ export default function ProfilePage() {
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="contact_phone" className="flex items-center gap-2">
+              <Label
+                htmlFor="contact_phone"
+                className="flex items-center gap-2"
+              >
                 <Phone className="h-4 w-4" /> Phone Number
               </Label>
               <Input
@@ -510,7 +514,10 @@ export default function ProfilePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="contact_email" className="flex items-center gap-2">
+              <Label
+                htmlFor="contact_email"
+                className="flex items-center gap-2"
+              >
                 <Mail className="h-4 w-4" /> Email Address
               </Label>
               <Input
@@ -542,7 +549,10 @@ export default function ProfilePage() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="contact_hours" className="flex items-center gap-2">
+              <Label
+                htmlFor="contact_hours"
+                className="flex items-center gap-2"
+              >
                 <Clock className="h-4 w-4" /> Business Hours
               </Label>
               <Input
@@ -557,7 +567,6 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        {/* Site Settings - Social Media Links */}
         <Card>
           <CardHeader>
             <CardTitle>Social Media Links</CardTitle>
@@ -640,7 +649,7 @@ export default function ProfilePage() {
             <Button
               onClick={saveSiteSettings}
               disabled={savingSiteSettings}
-              className="w-full bg-[#3E5F44] hover:bg-[#2d4432]"
+              className="w-full bg-foreground text-background hover:bg-foreground/90"
             >
               {savingSiteSettings ? (
                 <span className="flex items-center gap-2">

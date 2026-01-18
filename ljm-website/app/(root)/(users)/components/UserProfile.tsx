@@ -313,7 +313,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
               src={user.avatar_url}
               alt={`${user.firstname} ${user.lastname}`}
             />
-            <AvatarFallback className="bg-[#3E5F44] text-white">
+            <AvatarFallback className="bg-foreground text-background">
               {getInitials(user.firstname, user.lastname)}
             </AvatarFallback>
           </Avatar>

@@ -14,11 +14,15 @@ import { signUpSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
+import ReCAPTCHA from "react-google-recaptcha";
+import { toast } from "sonner";
 
 export default function page() {
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
+
   const signupForm = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -30,12 +34,43 @@ export default function page() {
     },
   });
 
+  //Wrapper to handle reCAPTCHA + signup
+  async function handleSignupWithCaptcha(data: z.infer<typeof signUpSchema>) {
+    try {
+      const token = await recaptchaRef.current?.executeAsync();
+      if (!token) {
+        toast.error("reCAPTCHA verification failed.");
+        return;
+      }
+
+      // Call server-side signup
+      const result = await signup(data);
+
+      if (result.success) {
+        toast.success("Signup successful! Please check your email.");
+        // redirect client-side
+        window.location.href = "/check-email";
+      } else {
+        toast.error(`Signup failed: ${result.error}`);
+        console.error("Signup error:", result.error);
+      }
+
+      recaptchaRef.current?.reset();
+    } catch (error: any) {
+      toast.error(`Signup failed: ${error.message || error}`);
+      console.error("Signup failed:", error);
+    }
+  }
+
   return (
     <div className="mt-5 flex min-h-svh w-full justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
-        <Card className="mx-w-[300px] bg-card">
+        <Card className="mx-w-[300px] bg-muted">
           <CardContent>
-            <form id="signupForm" onSubmit={signupForm.handleSubmit(signup)}>
+            <form
+              id="signupForm"
+              onSubmit={signupForm.handleSubmit(handleSignupWithCaptcha)}
+            >
               <FieldGroup>
                 <Controller
                   name="firstname"
@@ -79,14 +114,13 @@ export default function page() {
                         placeholder="Last Name"
                         autoComplete="additional-name"
                       />
+
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />
                       )}
                     </Field>
                   )}
                 />
-
-                
                 <Controller
                   name="email"
                   control={signupForm.control}
@@ -144,7 +178,7 @@ export default function page() {
                         className="font-semibold"
                         htmlFor={field.name}
                       >
-                        Confirme Password
+                        Confirm Password
                       </FieldLabel>
                       <Input
                         {...field}
@@ -159,15 +193,22 @@ export default function page() {
                     </Field>
                   )}
                 />
+
+                {/* Invisible reCAPTCHA */}
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                  size="invisible"
+                />
               </FieldGroup>
             </form>
           </CardContent>
+
           <CardFooter>
             <Field
               orientation="responsive"
               className="flex flex-col items-center justify-between"
             >
-              {}
               <Button type="submit" form="signupForm">
                 {signupForm.formState.isSubmitting ? (
                   <Loader2 className="animate-spin" />
@@ -175,6 +216,7 @@ export default function page() {
                   "Sign Up"
                 )}
               </Button>
+
               <div className="text-center text-sm">
                 Already have an account?{" "}
                 <Link href="/login" className="underline underline-offset-4">

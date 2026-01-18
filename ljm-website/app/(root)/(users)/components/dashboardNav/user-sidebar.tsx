@@ -69,37 +69,17 @@ export function UserSidebar(props: React.ComponentProps<typeof Sidebar>) {
       {...props}
       className="sticky top-[120px] h-[calc(100vh-120px)]"
     >
-      {/* <SidebarHeader className="border-b-2 py-5">
-        <SidebarMenuItem>
-          <div className="flex">
-            <img
-              src="/image14.png"
-              width={50}
-              height={30}
-              className="rounded-md"
-            />
-            <div className="ml-[6px] grid text-left text-sm leading-tight">
-              <span className="truncate text-lg font-bold">
-                Volunteer Portal
-              </span>
-              <span className="truncate font-medium">User Dashboard</span>
-            </div>
-          </div>
-        </SidebarMenuItem>
-      </SidebarHeader> */}
-
-      <SidebarContent>
+      <SidebarContent className="bg-muted">
         <NavMain items={data.navMain} />
       </SidebarContent>
-
-      <SidebarFooter className="border-t">
+      <SidebarFooter className="bg-muted border-accent-foreground border-t">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={handleLogout}
               disabled={isPending}
               tooltip="Logout"
-              className="h-[50px]"
+              className="text-accent-foreground h-[50px]"
             >
               <LogOut style={{ width: 22, height: 22 }} />
               <span className="text-[17px] font-medium">

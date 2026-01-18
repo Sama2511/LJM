@@ -37,28 +37,33 @@ const data = {
       icon: LayoutDashboard,
     },
     {
-      title: "Events Management",
+      title: "Events ",
       url: "/dashboard/EventManagement",
       icon: ShipWheelIcon,
     },
     {
-      title: "Crew Application",
+      title: "Testimonial Review ",
+      url: "/dashboard/UserTestimonialsManagement",
+      icon: ShipWheelIcon,
+    },
+    {
+      title: "Crew Applications",
       url: "/dashboard/CrewApplication",
       icon: FileUser,
     },
 
     {
-      title: "User Management",
+      title: "Users ",
       url: "/dashboard/user-management",
       icon: UserCog,
     },
     {
-      title: "Article Management",
+      title: "Articles",
       url: "/dashboard/ArticleManagement",
       icon: Newspaper,
     },
     {
-      title: "Document Management",
+      title: "Documents",
       url: "/dashboard/DocumentManagement",
       icon: Files,
     },
@@ -85,17 +90,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       className="sticky top-[120px] h-[calc(100vh-120px)]"
       {...props}
     >
-      <SidebarContent>
+      <SidebarContent className="bg-muted">
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter className="border-t">
+      <SidebarFooter className="bg-muted border-accent-foreground border-t">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={handleLogout}
               disabled={isPending}
               tooltip="Logout"
-              className="h-[50px]"
+              className="text-accent-foreground h-[50px]"
             >
               <LogOut style={{ width: 22, height: 22 }} />
               <span className="text-[17px] font-medium">

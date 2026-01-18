@@ -247,7 +247,7 @@ export default function UserManagementClient({
                       <div className="flex items-center gap-3">
                         <Avatar>
                           <AvatarImage src={user.avatar_url} />
-                          <AvatarFallback className="bg-[#3E5F44] text-white">
+                          <AvatarFallback className="bg-accent-foreground text-background">
                             {getInitials(user.firstname, user.lastname)}
                           </AvatarFallback>
                         </Avatar>
@@ -414,7 +414,7 @@ export default function UserManagementClient({
                       <div className="flex items-center gap-3">
                         <Avatar>
                           <AvatarImage src={admin.avatar_url} />
-                          <AvatarFallback className="bg-[#3E5F44] text-white">
+                          <AvatarFallback className="bg-foreground text-background">
                             {getInitials(admin.firstname, admin.lastname)}
                           </AvatarFallback>
                         </Avatar>

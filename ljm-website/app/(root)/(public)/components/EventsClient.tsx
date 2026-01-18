@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { EventCard } from "@/components/EventCard";
 import PublicEventDetailsSheet from "@/app/(root)/(public)/components/PublicEventDetailsSheet";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,7 +19,27 @@ type Event = {
 };
 
 export default function EventsClient({ events }: { events: Event[] }) {
+  const searchParams = useSearchParams();
   const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("upcoming");
+
+  // Read the tab and eventId parameters from URL
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    const eventId = searchParams.get('eventId');
+    
+    if (tab === 'past' || tab === 'upcoming') {
+      setActiveTab(tab);
+    }
+    
+    // If eventId is in URL, open that event's details after a small delay
+    if (eventId) {
+      // Small delay to ensure tab switch completes first
+      setTimeout(() => {
+        setSelectedEventId(eventId);
+      }, 100);
+    }
+  }, [searchParams]);
 
   const formatDate = (dateString: string) =>
     new Date(dateString).toLocaleDateString("en-US", {
@@ -50,20 +71,20 @@ export default function EventsClient({ events }: { events: Event[] }) {
 
   return (
     <>
-      <div className="w-full px-6 md:px-10">
-        {/* ✅ HEADER (как на твоём “правильном” скрине) */}
-        <div className="mb-10 flex flex-col items-center">
-          <h1 className="text-foreground font-serif text-5xl font-bold sm:text-6xl lg:text-7xl">
-            Events
-          </h1>
+      <div className="font-chillax flex w-full flex-col items-center text-foreground mt-15 mb-30 text-center">
+      
+        <h1 className="text-foreground mt-10 text-4xl font-medium sm:text-6xl lg:text-7xl">
+          Events
+        </h1>
           <p className="text-muted-foreground mt-5 max-w-[90%] text-center text-xl">
             Join us in making a difference. Explore volunteer opportunities and
             celebrate the memories we've created together.
           </p>
         </div>
+       
 
-        {/* ✅ TABS */}
-        <Tabs defaultValue="upcoming" className="w-full">
+        {/* ✅ TABS with controlled value */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="mb-6">
             <TabsTrigger value="upcoming">
               Upcoming Events ({upcomingEvents.length})
@@ -88,7 +109,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
                 </p>
               </div>
             ) : (
-              <div className="flex gap-6 overflow-x-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
+              <div className="[&::-webkit-scrollbar-thumb]:bg-muted-foreground [&::-webkit-scrollbar-track]:bg-muted flex gap-6 overflow-x-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl">
                 {upcomingEvents.map((event) => (
                   <EventCard
                     key={event.id}
@@ -124,7 +145,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
                 </p>
               </div>
             ) : (
-              <div className="flex gap-6 overflow-x-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-thumb]:bg-[#62605d] [&::-webkit-scrollbar-track]:rounded-2xl [&::-webkit-scrollbar-track]:bg-[#e2dfda]">
+              <div className="[&::-webkit-scrollbar-thumb]:bg-muted-foreground [&::-webkit-scrollbar-track]:bg-muted flex gap-6 overflow-x-auto pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl">
                 {pastEvents.map((event) => (
                   <EventCard
                     key={event.id}
@@ -145,9 +166,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
             )}
           </TabsContent>
         </Tabs>
-      </div>
-
-      {/* ✅ ONE sheet here */}
+            {/* ✅ ONE sheet here */}
       {selectedEventId && (
         <PublicEventDetailsSheet
           eventId={selectedEventId}

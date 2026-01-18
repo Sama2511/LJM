@@ -15,7 +15,7 @@ export default function DashboardLayout({
       <Header />
       <SidebarProvider>
         <AppSidebar />
-        <SidebarTrigger />
+        <SidebarTrigger className="mt-13" />
         {children}
         <Toaster />
       </SidebarProvider>

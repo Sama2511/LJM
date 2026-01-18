@@ -18,6 +18,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useRouter, useSearchParams } from "next/navigation";
 import ViewVolunteerFormDialog from "./ViewVolunteerFormDialog";
 import AdminProfile from "./AdminProfile";
+import { ApproveApplication, RejectApplication } from "@/actions/volunteer";
+import { toast } from "sonner";
 
 const getInitials = (firstname: string, lastname: string) => {
   return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -73,6 +75,7 @@ export default function ApplicationManagementClient({
   const [searchInput, setSearchInput] = useState(searchParams.get("q") || "");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedFormData, setSelectedFormData] = useState<any>(null);
+  const [processingId, setProcessingId] = useState<string | null>(null);
 
   const handleSearch = (value: string) => {
     setSearchInput(value);
@@ -99,13 +102,37 @@ export default function ApplicationManagementClient({
     setDialogOpen(true);
   };
 
+  const handleApprove = async (applicationId: string) => {
+    setProcessingId(applicationId);
+    const result = await ApproveApplication(applicationId);
+    if (result.error) {
+      toast.error(result.error);
+    } else {
+      toast.success("Application approved successfully");
+      router.refresh();
+    }
+    setProcessingId(null);
+  };
+
+  const handleReject = async (applicationId: string) => {
+    setProcessingId(applicationId);
+    const result = await RejectApplication(applicationId);
+    if (result.error) {
+      toast.error(result.error);
+    } else {
+      toast.success("Application rejected");
+      router.refresh();
+    }
+    setProcessingId(null);
+  };
+
   const renderApplicationRow = (application: Application) => (
     <TableRow key={application.id}>
       <TableCell>
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src={application.users.avatar_url} />
-            <AvatarFallback className="bg-primary text-white">
+            <AvatarFallback className="bg-accent-foreground text-white">
               {getInitials(
                 application.users.firstname,
                 application.users.lastname,
@@ -130,26 +157,7 @@ export default function ApplicationManagementClient({
         <p className="text-sm">{formatDate(application.created_at)}</p>
       </TableCell>
 
-      <TableCell>
-        <Badge
-          variant={
-            application.status === "Approved"
-              ? "default"
-              : application.status === "Pending"
-                ? "secondary"
-                : "destructive"
-          }
-          className={
-            application.status === "Approved"
-              ? "bg-primary"
-              : application.status === "Pending"
-                ? "bg-yellow-500"
-                : "bg-destructive"
-          }
-        >
-          {application.status}
-        </Badge>
-      </TableCell>
+      <TableCell className="font-bold">{application.status}</TableCell>
 
       <TableCell className="text-right">
         <div className="flex justify-end gap-2">
@@ -164,13 +172,25 @@ export default function ApplicationManagementClient({
           </Button>
           {application.status === "Pending" && (
             <>
-              <Button size="sm" className="gap-2">
+              <Button
+                size="sm"
+                variant="secondary"
+                className="gap-2"
+                onClick={() => handleApprove(application.id)}
+                disabled={processingId !== null}
+              >
                 <CheckCircle className="h-4 w-4" />
-                Accept
+                {processingId === application.id ? "Processing..." : "Accept"}
               </Button>
-              <Button variant="destructive" size="sm" className="gap-2">
+              <Button
+                variant="destructive"
+                size="sm"
+                className="gap-2"
+                onClick={() => handleReject(application.id)}
+                disabled={processingId !== null}
+              >
                 <XCircle className="h-4 w-4" />
-                Reject
+                {processingId === application.id ? "Processing..." : "Reject"}
               </Button>
             </>
           )}

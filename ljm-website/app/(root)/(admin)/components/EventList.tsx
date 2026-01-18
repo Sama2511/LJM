@@ -37,10 +37,10 @@ export default async function EventList() {
       {eventsData.data?.length === 0 && (
         <div className="flex flex-col items-center justify-center px-5 py-20">
           <Calendar size={50} className="mb-5" />
-          <h2 className="font-chillax mb-2 text-2xl font-semibold text-gray-800">
+          <h2 className="font-chillax mb-2 text-2xl font-semibold text-foreground">
             No Events Created Yet
           </h2>
-          <p className="mb-6 max-w-md text-center text-gray-600">
+          <p className="mb-6 max-w-md text-center text-muted-foreground">
             Click the button above to add event details and share them with your
             community.
           </p>

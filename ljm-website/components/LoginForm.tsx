@@ -86,7 +86,7 @@ export default function page({
     <div className="md-1 mt-1 flex min-h-svh w-full justify-center p-6">
       <div className="w-full max-w-sm">
         <div className={cn("flex flex-col gap-6", className)} {...props}>
-          <Card className="mx-w-[300px] bg-[#e2dfda]">
+          <Card className="mx-w-[300px] bg-muted">
             <CardHeader>
               <CardTitle className="text-2xl">Login</CardTitle>
               <CardDescription>
