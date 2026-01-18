@@ -190,31 +190,18 @@ export default function AboutUspage() {
         <h1 className="text-foreground font-chillax mb-8 text-center text-5xl font-medium sm:text-6xl lg:text-7xl">
           Meet Our Team
         </h1>
-        <div className="mx-auto flex max-w-5xl flex-wrap justify-center gap-5">
-          <ProfileCard
-            member="Kathleen McLaughlin"
-            role="CEO"
-            imageUrl="/kate.jpg"
-          />
-          <ProfileCard member="Nicola Hodgson" role="Chair" imageUrl="" />
-          <ProfileCard
-            member="Nicola Hodgson"
-            role="Vice"
-            imageUrl="/nicola.jpeg"
-          />
-          <ProfileCard member="Steven Windsor" role="Chair" imageUrl="" />
-          <ProfileCard
-            member="Steven Windsor"
-            role="Vice"
-            imageUrl="/steven.jpg"
-          />
+
+       
+        <div className="mx-auto flex max-w-full justify-start gap-5 overflow-x-auto whitespace-nowrap py-4 scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted">
+
+
+          <ProfileCard member="Kathleen McLaughlin" role="CEO" imageUrl="/kate.jpg" />
+          <ProfileCard member="Nicola Hodgson" role="Chair" imageUrl="/nicola.jpeg" />
+          <ProfileCard member="Steven Windsor" role="Vice" imageUrl="/steven.jpg" />
           <ProfileCard member="Sheena Spedding" role="Treasurer" imageUrl="" />
-          <ProfileCard
-            member="Caroline Yates"
-            role="Board Member"
-            imageUrl="/caroline.jpg"
-          />
-          <ProfileCard member="Iain Reid" role="Board Member" imageUrl="" />
+          <ProfileCard member="Caroline Yates" role="Board Member" imageUrl="/caroline.jpg" />
+          <ProfileCard member="Iain Reid" role="Board Member" imageUrl="/IainReid.jpeg" />
+          <ProfileCard member="Stephanie Moore" role="Board Member" imageUrl="/Stephanie.jpeg" />
         </div>
       </section>
       <section className="py-10">
