@@ -42,6 +42,11 @@ const data = {
       icon: ShipWheelIcon,
     },
     {
+      title: "Testimonial Review ",
+      url: "/dashboard/UserTestimonialsManagement",
+      icon: ShipWheelIcon,
+    },
+    {
       title: "Crew Applications",
       url: "/dashboard/CrewApplication",
       icon: FileUser,

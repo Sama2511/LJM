@@ -23,6 +23,8 @@ type Props = {
 export default function EventDetails({ eventId, open, onOpenChange }: Props) {
   const [eventData, setEventData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const isPastEvent = eventData && new Date(eventData.date) < new Date();
+
 
   async function loadEvent() {
     setLoading(true);
@@ -127,7 +129,15 @@ export default function EventDetails({ eventId, open, onOpenChange }: Props) {
                 </div>
               )}
             </div>
-
+              
+              {isPastEvent && (
+                <a
+                  href={`/testimonials?eventId=${eventData.id}`}
+                  className="w-full block text-center bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/90 transition"
+                >
+                  Leave Testimonial
+                </a>
+              )}
             {/* CLOSE BUTTON */}
             <SheetClose asChild>
               <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
