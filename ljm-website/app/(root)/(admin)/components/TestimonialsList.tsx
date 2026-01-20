@@ -1,72 +1,61 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import { createClient } from "@/app/utils/server"; // server-side Supabase client
 
 interface Testimonial {
   id: string;
   user_name: string;
+  event_title: string;
   comment: string;
   reply?: string;
-  status: "pending" | "approved" | "rejected";
   created_at: string;
 }
 
-export default function TestimonialsList() {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function TestimonialsList({ initialTestimonials }: { initialTestimonials: Testimonial[] }) {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(initialTestimonials);
   const [replyingId, setReplyingId] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
-
-  useEffect(() => {
-    async function fetchTestimonials() {
-      setLoading(true);
-
-      // MOCK DATA
-      const data: Testimonial[] = [
-        {
-          id: "1",
-          user_name: "Carlos Esma",
-          comment: "Had a great time!",
-          status: "approved",
-          created_at: new Date().toISOString(),
-        },
-      ];
-
-      setTestimonials(data);
-      setLoading(false);
-    }
-
-    fetchTestimonials();
-  }, []);
 
   const handleReplyClick = (id: string, currentReply?: string) => {
     setReplyingId(id);
     setReplyText(currentReply || "");
   };
 
-  const handleReplySubmit = (id: string) => {
-    setTestimonials((prev) =>
-      prev.map((t) =>
-        t.id === id
-          ? {
-              ...t,
-              reply: replyText,
-              status: "approved", // or leave status as-is
-            }
-          : t
-      )
-    );
-    setReplyingId(null);
-    setReplyText("");
+  const handleReplySubmit = async (id: string) => {
+    try {
+      const supabase = await createClient();
+
+      const { error } = await supabase
+        .from("testimonials")
+        .update({ reply: replyText })
+        .eq("id", id);
+
+      if (error) throw error;
+
+      setTestimonials((prev) =>
+        prev.map((t) =>
+          t.id === id
+            ? {
+                ...t,
+                reply: replyText,
+              }
+            : t
+        )
+      );
+
+      setReplyingId(null);
+      setReplyText("");
+    } catch (error) {
+      console.error("Failed to submit reply:", error);
+      alert("Failed to submit reply. Try again.");
+    }
   };
 
-  if (loading) return <Spinner />;
-
-  if (testimonials.length === 0)
+  if (!testimonials || testimonials.length === 0)
     return <p className="text-center text-muted-foreground mt-10">No testimonials submitted yet.</p>;
 
   return (
@@ -75,6 +64,7 @@ export default function TestimonialsList() {
         <Card key={t.id} className="p-4 shadow-md">
           <CardContent>
             <p className="font-semibold">{t.user_name}</p>
+            <p className="mt-1 text-sm text-muted-foreground">Event: {t.event_title}</p>
             <p className="mt-2">{t.comment}</p>
 
             {t.reply && replyingId !== t.id && (
@@ -88,17 +78,13 @@ export default function TestimonialsList() {
                 <Textarea
                   value={replyText}
                   onChange={(e) => setReplyText(e.target.value)}
-                  placeholder="Type your reply..."
+                  placeholder="Type your reply (optional)..."
                 />
                 <div className="mt-2 flex gap-2">
                   <Button size="sm" onClick={() => handleReplySubmit(t.id)}>
-                    Save
+                    Save Reply
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => setReplyingId(null)}
-                  >
+                  <Button size="sm" variant="outline" onClick={() => setReplyingId(null)}>
                     Cancel
                   </Button>
                 </div>
@@ -106,10 +92,7 @@ export default function TestimonialsList() {
             )}
 
             <p className="mt-2 text-xs text-muted-foreground">
-              Submitted: {new Date(t.created_at).toLocaleDateString()}
-            </p>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Status: {t.status}
+              Submitted: {new Date(t.created_at).toLocaleString()}
             </p>
           </CardContent>
           <CardFooter>

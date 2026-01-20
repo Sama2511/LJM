@@ -18,7 +18,8 @@ type TestimonialForm = z.infer<typeof testimonialSchema>;
 export default function NewTestimonialPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const eventId = searchParams.get("eventId") || "1";
+  const eventId = searchParams.get("eventId") || "";
+  const eventTitle = searchParams.get("eventTitle") || "Event";
 
   const form = useForm<TestimonialForm>({
     resolver: zodResolver(testimonialSchema),
@@ -29,12 +30,13 @@ export default function NewTestimonialPage() {
     try {
       await submitTestimonial({
         eventId,
+        eventTitle,
         comment: data.comment,
       });
 
       toast.success("Thank you for your testimonial!");
       form.reset();
-      router.push("/UserDashboard"); // go to dashboard
+      router.push("/UserDashboard"); // redirect to dashboard
     } catch (error) {
       console.error("Testimonial submission failed:", error);
       toast.error("Something went wrong. Please try again.");

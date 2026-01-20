@@ -1,31 +1,67 @@
 // actions/testimonials.ts
-"use client"; // this will be used only on the client
+"use client"; // we can call this from client components
+
+import { createClient } from "@/app/utils/server"; // server-side Supabase client
 
 export interface Testimonial {
-  eventId: string;
-  comment: string;
   id: string;
-  createdAt: string;
-  reply?: string;
-  status?: string;
+  user_id: string;
+  event_id: string;
+  event_title: string;
+  comment: string;
+  reply?: string | null;
+  created_at: string;
 }
 
-// Temporary in-memory store
-let mockTestimonials: Testimonial[] = [];
+// -----------------------------
+// Submit a new testimonial
+// -----------------------------
+export async function submitTestimonial(params: {
+  eventId: string;
+  eventTitle: string;
+  comment: string;
+}) {
+  const supabase = await createClient();
 
-export async function submitTestimonial(data: { eventId: string; comment: string }) {
-  const newTestimonial: Testimonial = {
-    ...data,
-    id: String(mockTestimonials.length + 1),
-    createdAt: new Date().toISOString(),
-    status: "pending",
-  };
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
 
-  mockTestimonials.unshift(newTestimonial); // add to start of array
-  return newTestimonial;
+  if (!user) throw new Error("User not authenticated");
+
+  const { data: insertedTestimonial, error } = await supabase
+    .from("testimonials")
+    .insert({
+      user_id: user.id,
+      event_id: params.eventId,
+      event_title: params.eventTitle,
+      comment: params.comment,
+    })
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return insertedTestimonial as Testimonial;
 }
 
-// Optional helper to fetch all testimonials for a user
-export function getUserTestimonials() {
-  return mockTestimonials;
+// -----------------------------
+// Fetch all testimonials for the logged-in user
+// -----------------------------
+export async function getUserTestimonials() {
+  const supabase = await createClient();
+
+  const { data: userData } = await supabase.auth.getUser();
+  const user = userData.user;
+
+  if (!user) return [];
+
+  const { data: testimonials, error } = await supabase
+    .from("testimonials")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+
+  return testimonials as Testimonial[];
 }
