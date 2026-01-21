@@ -1,7 +1,7 @@
 // actions/testimonials.ts
-"use client"; // we can call this from client components
+"use server";
 
-import { createClient } from "@/app/utils/server"; // server-side Supabase client
+import { createClient } from "@/app/utils/server";
 
 export interface Testimonial {
   id: string;
@@ -13,40 +13,36 @@ export interface Testimonial {
   created_at: string;
 }
 
-// -----------------------------
-// Submit a new testimonial
-// -----------------------------
-export async function submitTestimonial(params: {
-  eventId: string;
-  eventTitle: string;
-  comment: string;
-}) {
+// Submit testimonial (SERVER ACTION)
+export async function submitTestimonial(formData: FormData) {
   const supabase = await createClient();
+
+  const comment = formData.get("comment") as string;
+  const eventId = formData.get("eventId") as string;
+  const eventTitle = formData.get("eventTitle") as string;
+
+  if (!comment || comment.length < 10) {
+    throw new Error("Testimonial must be at least 10 characters");
+  }
 
   const { data: userData } = await supabase.auth.getUser();
   const user = userData.user;
 
   if (!user) throw new Error("User not authenticated");
 
-  const { data: insertedTestimonial, error } = await supabase
-    .from("testimonials")
-    .insert({
-      user_id: user.id,
-      event_id: params.eventId,
-      event_title: params.eventTitle,
-      comment: params.comment,
-    })
-    .select()
-    .single();
+  const { error } = await supabase.from("testimonials").insert({
+    user_id: user.id,
+    event_id: eventId,
+    event_title: eventTitle,
+    comment,
+  });
 
   if (error) throw error;
 
-  return insertedTestimonial as Testimonial;
+  
 }
 
-// -----------------------------
-// Fetch all testimonials for the logged-in user
-// -----------------------------
+// Fetch user testimonials (SERVER FUNCTION)
 export async function getUserTestimonials() {
   const supabase = await createClient();
 
@@ -55,7 +51,7 @@ export async function getUserTestimonials() {
 
   if (!user) return [];
 
-  const { data: testimonials, error } = await supabase
+  const { data, error } = await supabase
     .from("testimonials")
     .select("*")
     .eq("user_id", user.id)
@@ -63,5 +59,5 @@ export async function getUserTestimonials() {
 
   if (error) throw error;
 
-  return testimonials as Testimonial[];
+  return data as Testimonial[];
 }
