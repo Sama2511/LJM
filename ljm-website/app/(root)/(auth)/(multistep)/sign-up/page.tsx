@@ -136,7 +136,7 @@ export default function page() {
                         {...field}
                         id="email"
                         aria-invalid={fieldState.invalid}
-                        placeholder="email"
+                        placeholder="Email"
                         autoComplete="email"
                       />
                       {fieldState.invalid && (
