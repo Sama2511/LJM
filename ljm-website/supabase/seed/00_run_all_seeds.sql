@@ -1,0 +1,69 @@
+-- =============================================
+-- KINDLEWOOD SEED DATA - RUN ALL
+-- =============================================
+--
+-- IMPORTANT: Run each section one at a time in your Supabase SQL Editor
+-- The order matters due to foreign key constraints!
+--
+-- STEP 1: Run 01_users.sql
+-- STEP 2: Run 02_events.sql
+-- STEP 3: Run 03_event_roles.sql
+-- STEP 4: Run 04_volunteer_form.sql
+-- STEP 5: Run 05_volunteer_requests.sql
+-- STEP 6: Run 06_articles.sql
+-- STEP 7: Run 07_documents.sql
+-- STEP 8: Run 08_site_settings.sql
+-- STEP 9: Run 09_notifications.sql
+--
+-- =============================================
+-- DATA SUMMARY
+-- =============================================
+-- Users: 53 total
+--   - 3 admins
+--   - 5 Fire-keepers
+--   - 10 Flame
+--   - 15 Kindling
+--   - 20 Kindler (10 pending, 10 approved)
+--
+-- Events: 35 total
+--   - 15 past events
+--   - 5 current/recent events
+--   - 15 upcoming events
+--
+-- Event Roles: ~70 roles across all events
+--
+-- Volunteer Forms: 40 total
+--   - 30 Approved
+--   - 10 Pending
+--
+-- Volunteer Requests: 60 signups for events
+--
+-- Articles: 10 blog posts/news items
+--
+-- Documents: 12 downloadable documents
+--
+-- Site Settings: 10 configuration items
+--
+-- Notifications: 15 system notifications
+--
+-- =============================================
+-- CLEANUP SCRIPT (Run this first if you need to reset)
+-- =============================================
+-- WARNING: This will delete all data!
+--
+-- DELETE FROM public.notification_reads;
+-- DELETE FROM public.notifications;
+-- DELETE FROM public.volunteer_requests;
+-- DELETE FROM public.volunteer_form;
+-- DELETE FROM public.event_roles;
+-- DELETE FROM public.testimonials;
+-- DELETE FROM public.events;
+-- DELETE FROM public.articles;
+-- DELETE FROM public.documents;
+-- DELETE FROM public.site_settings;
+-- DELETE FROM public.users;
+--
+-- =============================================
+
+-- Confirm you're ready to run the individual seed files
+SELECT 'Ready to run seed files. Execute each file in order (01-09).' as message;
