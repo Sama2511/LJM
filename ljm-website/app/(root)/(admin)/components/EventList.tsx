@@ -1,12 +1,9 @@
 import { FetchEvent } from "@/actions/events";
 import { Calendar } from "lucide-react";
 import React from "react";
-import EventMngtCard from "./DashEventCard";
-import {
-  GetUserVolunteerRequests,
-  VolunteerCapacity,
-} from "@/actions/volunteer";
+import { VolunteerCapacity } from "@/actions/volunteer";
 import { createClient } from "@/app/utils/server";
+import PaginatedEventGrid from "./PaginatedEventGrid";
 
 export default async function EventList() {
   const supabase = await createClient();
@@ -32,9 +29,27 @@ export default async function EventList() {
     const hour12 = hour % 12 || 12;
     return `${hour12}:${minutes} ${period}`;
   };
+
+  const events =
+    eventsData.data?.map((event) => ({
+      id: event.id,
+      title: event.title,
+      description: event.description,
+      date: formatDate(event.date),
+      time: `${formatTime(event.starts_at)} - ${formatTime(event.ends_at)}`,
+      location: event.location,
+      image: `https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/event-pics/${event.image_url}`,
+      maxCapacity: event.capacity,
+      capacity:
+        capacityData.data?.find((ev) => ev.event_id === event.id)?.capacity ||
+        0,
+      roles:
+        rolesData?.filter((role) => role.event_id === event.id) || [],
+    })) || [];
+
   return (
     <div>
-      {eventsData.data?.length === 0 && (
+      {events.length === 0 && (
         <div className="flex flex-col items-center justify-center px-5 py-20">
           <Calendar size={50} className="mb-5" />
           <h2 className="font-chillax mb-2 text-2xl font-semibold text-foreground">
@@ -46,28 +61,7 @@ export default async function EventList() {
           </p>
         </div>
       )}
-      <div className="flex flex-wrap justify-center gap-10 py-10 pr-5 md:pl-5 @[830]:justify-start">
-        {eventsData.data?.map((event) => (
-          <EventMngtCard
-            key={event.id}
-            title={event.title}
-            description={event.description}
-            date={formatDate(event.date)}
-            time={`${formatTime(event.starts_at)} - ${formatTime(event.ends_at)}`}
-            location={event.location}
-            image={`https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/event-pics/${event.image_url}`}
-            maxCapacity={event.capacity}
-            capacity={
-              capacityData.data?.find((ev) => ev.event_id === event.id)
-                ?.capacity || 0
-            }
-            id={event.id}
-            roles={
-              rolesData?.filter((role) => role.event_id === event.id) || []
-            }
-          />
-        ))}
-      </div>
+      {events.length > 0 && <PaginatedEventGrid events={events} />}
     </div>
   );
 }

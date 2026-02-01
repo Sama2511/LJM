@@ -33,6 +33,7 @@ import {
 import UserProfile from "@/app/(root)/(users)/components/UserProfile";
 import { Spinner } from "@/components/ui/spinner";
 import { FetchSettings, UpdateSettings } from "@/actions/settings";
+import AdminProfile from "../../components/AdminProfile";
 
 interface UserData {
   id: string;
@@ -313,7 +314,7 @@ export default function ProfilePage() {
 
   return (
     <div className="w-full p-6">
-      <UserProfile pageName="Settings" />
+      <AdminProfile pageName="Settings" />
       <div className="mt-5 max-w-4xl space-y-6">
         {/* Profile Picture Card */}
         <Card>
@@ -330,7 +331,7 @@ export default function ProfilePage() {
                   src={userData.avatar_url}
                   alt={`${userData.firstname} ${userData.lastname}`}
                 />
-                <AvatarFallback className="bg-foreground text-2xl text-background">
+                <AvatarFallback className="bg-foreground text-background text-2xl">
                   {getInitials(userData.firstname, userData.lastname)}
                 </AvatarFallback>
               </Avatar>
@@ -473,7 +474,7 @@ export default function ProfilePage() {
             <Button
               onClick={saveChanges}
               disabled={saving}
-              className="w-full bg-foreground text-background hover:bg-foreground/90"
+              className="bg-foreground text-background hover:bg-foreground/90 w-full"
             >
               {saving ? (
                 <p className="flex items-center gap-1">
@@ -649,7 +650,7 @@ export default function ProfilePage() {
             <Button
               onClick={saveSiteSettings}
               disabled={savingSiteSettings}
-              className="w-full bg-foreground text-background hover:bg-foreground/90"
+              className="bg-foreground text-background hover:bg-foreground/90 w-full"
             >
               {savingSiteSettings ? (
                 <span className="flex items-center gap-2">

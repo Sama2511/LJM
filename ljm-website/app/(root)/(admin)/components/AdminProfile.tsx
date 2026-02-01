@@ -211,26 +211,27 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
   }
 
   return (
-    <div className="mt-15 mb-10 flex justify-between">
-      <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
+    <div className="mt-15 mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <h1 className="font-chillax text-xl font-semibold sm:text-2xl md:text-3xl">
         {pageName}
       </h1>
-      <div className="bg-muted flex items-center gap-6 rounded-3xl border-2 px-5">
+
+      <div className="bg-muted flex w-full flex-wrap items-center justify-between gap-3 rounded-3xl border-2 px-4 py-2 md:w-auto md:flex-nowrap md:gap-6 md:px-5">
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger asChild>
             <Link href="/dashboard/settings">
               <Settings className="cursor-pointer transition-opacity hover:opacity-70" />
             </Link>
           </TooltipTrigger>
           <TooltipContent>Settings</TooltipContent>
         </Tooltip>
+
         <Tooltip>
           <Popover open={notificationOpen} onOpenChange={setNotificationOpen}>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <PopoverTrigger asChild>
                 <div className="relative">
                   <Bell className="cursor-pointer transition-opacity hover:opacity-70" />
-                  {/* Unread badge */}
                   {unreadCount > 0 && (
                     <span className="bg-destructive absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold text-white">
                       {unreadCount}
@@ -238,85 +239,82 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
                   )}
                 </div>
               </PopoverTrigger>
-              <PopoverContent className="w-80 p-0" align="end">
-                <div className="border-b px-4 py-3">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-semibold">Notifications</h3>
-                    {unreadCount > 0 && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-primary h-auto p-0 text-xs"
-                        onClick={markAllAsRead}
-                      >
-                        Mark all as read
-                      </Button>
-                    )}
-                  </div>
-                </div>
+            </TooltipTrigger>
 
-                <div className="max-h-[400px] overflow-y-auto">
-                  {notifications.length === 0 ? (
-                    <div className="px-4 py-8 text-center">
-                      <p className="text-muted-foreground text-sm">
-                        No notifications yet
-                      </p>
-                    </div>
-                  ) : (
-                    notifications.map((notification) => (
-                      <div
-                        key={notification.id}
-                        className={`border-b px-4 py-3 transition-colors ${
-                          notification.is_read
-                            ? "hover:bg-muted/30 opacity-60"
-                            : "bg-muted/50 hover:bg-muted"
-                        }`}
-                      >
-                        <div className="flex gap-3">
-                          <div
-                            className={`mt-1 h-2 w-2 flex-shrink-0 rounded-full ${
-                              notification.is_read ? "" : "bg-primary"
-                            }`}
-                          ></div>
-                          <div className="flex-1">
-                            <p
-                              className={`text-sm ${
-                                notification.is_read ? "" : "font-medium"
-                              }`}
-                            >
-                              {notification.title}
-                            </p>
-                            <p className="text-muted-foreground mt-1 text-xs">
-                              {notification.message}
-                            </p>
-                            <p className="text-muted-foreground mt-1 text-xs">
-                              {formatTimeAgo(notification.created_at)}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))
+            <PopoverContent className="w-80 p-0" align="end">
+              <div className="border-b px-4 py-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-semibold">Notifications</h3>
+                  {unreadCount > 0 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-primary h-auto p-0 text-xs"
+                      onClick={markAllAsRead}
+                    >
+                      Mark all as read
+                    </Button>
                   )}
                 </div>
+              </div>
 
-                {/* Footer */}
-                <div className="border-t px-4 py-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-auto w-full p-2 text-xs"
-                  >
-                    View all notifications
-                  </Button>
-                </div>
-              </PopoverContent>
-            </TooltipTrigger>
+              <div className="max-h-[400px] overflow-y-auto">
+                {notifications.length === 0 ? (
+                  <div className="px-4 py-8 text-center">
+                    <p className="text-muted-foreground text-sm">
+                      No notifications yet
+                    </p>
+                  </div>
+                ) : (
+                  notifications.map((notification) => (
+                    <div
+                      key={notification.id}
+                      className={`border-b px-4 py-3 transition-colors ${
+                        notification.is_read
+                          ? "hover:bg-muted/30 opacity-60"
+                          : "bg-muted/50 hover:bg-muted"
+                      }`}
+                    >
+                      <div className="flex gap-3">
+                        <div
+                          className={`mt-1 h-2 w-2 flex-shrink-0 rounded-full ${
+                            notification.is_read ? "" : "bg-primary"
+                          }`}
+                        ></div>
+                        <div className="flex-1">
+                          <p
+                            className={`text-sm ${notification.is_read ? "" : "font-medium"}`}
+                          >
+                            {notification.title}
+                          </p>
+                          <p className="text-muted-foreground mt-1 text-xs">
+                            {notification.message}
+                          </p>
+                          <p className="text-muted-foreground mt-1 text-xs">
+                            {formatTimeAgo(notification.created_at)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="border-t px-4 py-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-auto w-full p-2 text-xs"
+                >
+                  View all notifications
+                </Button>
+              </div>
+            </PopoverContent>
           </Popover>
-
           <TooltipContent>Notifications</TooltipContent>
         </Tooltip>
 
-        <div className="flex h-fit items-center gap-3 py-2">
+        <div className="flex items-center gap-3 py-1">
           <Avatar>
             <AvatarImage
               src={user.avatar_url}
@@ -326,7 +324,10 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
               {getInitials(user.firstname, user.lastname)}
             </AvatarFallback>
           </Avatar>
-          <div className="flex flex-col">
+          <div className="md:hidden">{user.role}</div>
+
+          {/* Hidden on mobile, shown on md+ */}
+          <div className="hidden flex-col md:flex">
             <span className="font-medium">
               {user.firstname} {user.lastname}
             </span>

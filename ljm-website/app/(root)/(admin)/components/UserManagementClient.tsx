@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   Table,
   TableBody,
@@ -60,6 +60,15 @@ import { toast } from "sonner";
 import ViewVolunteerFormDialog from "./ViewVolunteerFormDialog";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
 import AdminProfile from "./AdminProfile";
 
 const getInitials = (firstname: string, lastname: string) => {
@@ -111,6 +120,9 @@ export default function UserManagementClient({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedFormData, setSelectedFormData] = useState<any>(null);
   const [searchInput, setSearchInput] = useState(searchParams.get("q") || "");
+  const [crewPage, setCrewPage] = useState(1);
+  const [adminPage, setAdminPage] = useState(1);
+  const ROWS_PER_PAGE = 10;
 
   const handleSearch = (value: string) => {
     setSearchInput(value);
@@ -192,6 +204,89 @@ export default function UserManagementClient({
     }
   };
 
+  const crewTotalPages = Math.ceil(Crew.length / ROWS_PER_PAGE);
+  const paginatedCrew = Crew.slice(
+    (crewPage - 1) * ROWS_PER_PAGE,
+    crewPage * ROWS_PER_PAGE,
+  );
+
+  const adminTotalPages = Math.ceil(Admins.length / ROWS_PER_PAGE);
+  const paginatedAdmins = Admins.slice(
+    (adminPage - 1) * ROWS_PER_PAGE,
+    adminPage * ROWS_PER_PAGE,
+  );
+
+  const getPageNumbers = (currentPage: number, totalPages: number) => {
+    const pages: (number | "ellipsis")[] = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push("ellipsis");
+      for (
+        let i = Math.max(2, currentPage - 1);
+        i <= Math.min(totalPages - 1, currentPage + 1);
+        i++
+      ) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) pages.push("ellipsis");
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+
+  const renderPagination = (
+    currentPage: number,
+    totalPages: number,
+    setPage: (page: number) => void,
+  ) => {
+    if (totalPages <= 1) return null;
+    return (
+      <Pagination className="py-4">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() => setPage(Math.max(1, currentPage - 1))}
+              className={
+                currentPage === 1
+                  ? "pointer-events-none opacity-50"
+                  : "cursor-pointer"
+              }
+            />
+          </PaginationItem>
+          {getPageNumbers(currentPage, totalPages).map((page, i) =>
+            page === "ellipsis" ? (
+              <PaginationItem key={`ellipsis-${i}`}>
+                <PaginationEllipsis />
+              </PaginationItem>
+            ) : (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  isActive={currentPage === page}
+                  onClick={() => setPage(page)}
+                  className="cursor-pointer"
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ),
+          )}
+          <PaginationItem>
+            <PaginationNext
+              onClick={() => setPage(Math.min(totalPages, currentPage + 1))}
+              className={
+                currentPage === totalPages
+                  ? "pointer-events-none opacity-50"
+                  : "cursor-pointer"
+              }
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    );
+  };
+
   return (
     <div className="w-full p-6">
       <AdminProfile pageName="User management" />
@@ -241,7 +336,7 @@ export default function UserManagementClient({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {Crew.map((user) => (
+                {paginatedCrew.map((user) => (
                   <TableRow key={user.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
@@ -395,6 +490,7 @@ export default function UserManagementClient({
               </TableBody>
             </Table>
           </div>
+          {renderPagination(crewPage, crewTotalPages, setCrewPage)}
         </TabsContent>
         <TabsContent value="admin">
           <div className="bg-card rounded-lg border shadow-sm">
@@ -408,7 +504,7 @@ export default function UserManagementClient({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {Admins.map((admin) => (
+                {paginatedAdmins.map((admin) => (
                   <TableRow key={admin.id}>
                     <TableCell>
                       <div className="flex items-center gap-3">
@@ -492,6 +588,7 @@ export default function UserManagementClient({
               </TableBody>
             </Table>
           </div>
+          {renderPagination(adminPage, adminTotalPages, setAdminPage)}
         </TabsContent>
       </Tabs>
 

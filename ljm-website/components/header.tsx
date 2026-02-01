@@ -53,15 +53,23 @@ export default function Header() {
   return (
     <header className="sticky top-4 z-50 px-4">
       {/* Container card */}
-      <div className="border-muted bg-background mx-auto flex max-w-[1100px] items-center justify-between gap-4 rounded-2xl border px-6 py-3 shadow-md">
+      <div className="border-muted bg-background @container mx-auto flex max-w-[1100px] items-center justify-between gap-4 rounded-2xl border px-6 py-3 shadow-md">
         {/* Logo */}
-        <Link href="/" className="flex-shrink-0">
+        <Link href="/" className="hidden flex-shrink-0 @[700]:flex">
           <Image
             src="/KindlewoodNewLogo.png"
             alt="Kindlewood Logo"
             width={350}
             height={55}
             className="w-[220px] @[600]:w-[250px] @[900]:w-[280px] @[1200]:w-[320px]"
+          />
+        </Link>
+        <Link href="/" className="@[700]:hidden">
+          <Image
+            src="/logoMobile.png"
+            alt="Kindlewood Logo"
+            width={50}
+            height={55}
           />
         </Link>
 

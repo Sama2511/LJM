@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   Table,
   TableBody,
@@ -20,6 +20,15 @@ import ViewVolunteerFormDialog from "./ViewVolunteerFormDialog";
 import AdminProfile from "./AdminProfile";
 import { ApproveApplication, RejectApplication } from "@/actions/volunteer";
 import { toast } from "sonner";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  PaginationEllipsis,
+} from "@/components/ui/pagination";
 
 const getInitials = (firstname: string, lastname: string) => {
   return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -76,6 +85,10 @@ export default function ApplicationManagementClient({
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedFormData, setSelectedFormData] = useState<any>(null);
   const [processingId, setProcessingId] = useState<string | null>(null);
+  const [pendingPage, setPendingPage] = useState(1);
+  const [acceptedPage, setAcceptedPage] = useState(1);
+  const [rejectedPage, setRejectedPage] = useState(1);
+  const ROWS_PER_PAGE = 10;
 
   const handleSearch = (value: string) => {
     setSearchInput(value);
@@ -124,6 +137,95 @@ export default function ApplicationManagementClient({
       router.refresh();
     }
     setProcessingId(null);
+  };
+
+  const pendingTotalPages = Math.ceil(Pending.length / ROWS_PER_PAGE);
+  const paginatedPending = Pending.slice(
+    (pendingPage - 1) * ROWS_PER_PAGE,
+    pendingPage * ROWS_PER_PAGE,
+  );
+
+  const acceptedTotalPages = Math.ceil(Accepted.length / ROWS_PER_PAGE);
+  const paginatedAccepted = Accepted.slice(
+    (acceptedPage - 1) * ROWS_PER_PAGE,
+    acceptedPage * ROWS_PER_PAGE,
+  );
+
+  const rejectedTotalPages = Math.ceil(Rejected.length / ROWS_PER_PAGE);
+  const paginatedRejected = Rejected.slice(
+    (rejectedPage - 1) * ROWS_PER_PAGE,
+    rejectedPage * ROWS_PER_PAGE,
+  );
+
+  const getPageNumbers = (currentPage: number, totalPages: number) => {
+    const pages: (number | "ellipsis")[] = [];
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+      if (currentPage > 3) pages.push("ellipsis");
+      for (
+        let i = Math.max(2, currentPage - 1);
+        i <= Math.min(totalPages - 1, currentPage + 1);
+        i++
+      ) {
+        pages.push(i);
+      }
+      if (currentPage < totalPages - 2) pages.push("ellipsis");
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+
+  const renderPagination = (
+    currentPage: number,
+    totalPages: number,
+    setPage: (page: number) => void,
+  ) => {
+    if (totalPages <= 1) return null;
+    return (
+      <Pagination className="py-4">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() => setPage(Math.max(1, currentPage - 1))}
+              className={
+                currentPage === 1
+                  ? "pointer-events-none opacity-50"
+                  : "cursor-pointer"
+              }
+            />
+          </PaginationItem>
+          {getPageNumbers(currentPage, totalPages).map((page, i) =>
+            page === "ellipsis" ? (
+              <PaginationItem key={`ellipsis-${i}`}>
+                <PaginationEllipsis />
+              </PaginationItem>
+            ) : (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  isActive={currentPage === page}
+                  onClick={() => setPage(page)}
+                  className="cursor-pointer"
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ),
+          )}
+          <PaginationItem>
+            <PaginationNext
+              onClick={() => setPage(Math.min(totalPages, currentPage + 1))}
+              className={
+                currentPage === totalPages
+                  ? "pointer-events-none opacity-50"
+                  : "cursor-pointer"
+              }
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    );
   };
 
   const renderApplicationRow = (application: Application) => (
@@ -253,7 +355,7 @@ export default function ApplicationManagementClient({
               </TableHeader>
               <TableBody>
                 {Pending.length > 0 ? (
-                  Pending.map((application) =>
+                  paginatedPending.map((application) =>
                     renderApplicationRow(application),
                   )
                 ) : (
@@ -269,6 +371,7 @@ export default function ApplicationManagementClient({
               </TableBody>
             </Table>
           </div>
+          {renderPagination(pendingPage, pendingTotalPages, setPendingPage)}
         </TabsContent>
 
         <TabsContent value="accepted">
@@ -285,7 +388,7 @@ export default function ApplicationManagementClient({
               </TableHeader>
               <TableBody>
                 {Accepted.length > 0 ? (
-                  Accepted.map((application) =>
+                  paginatedAccepted.map((application) =>
                     renderApplicationRow(application),
                   )
                 ) : (
@@ -301,6 +404,7 @@ export default function ApplicationManagementClient({
               </TableBody>
             </Table>
           </div>
+          {renderPagination(acceptedPage, acceptedTotalPages, setAcceptedPage)}
         </TabsContent>
 
         <TabsContent value="rejected">
@@ -317,7 +421,7 @@ export default function ApplicationManagementClient({
               </TableHeader>
               <TableBody>
                 {Rejected.length > 0 ? (
-                  Rejected.map((application) =>
+                  paginatedRejected.map((application) =>
                     renderApplicationRow(application),
                   )
                 ) : (
@@ -333,6 +437,7 @@ export default function ApplicationManagementClient({
               </TableBody>
             </Table>
           </div>
+          {renderPagination(rejectedPage, rejectedTotalPages, setRejectedPage)}
         </TabsContent>
       </Tabs>
 
