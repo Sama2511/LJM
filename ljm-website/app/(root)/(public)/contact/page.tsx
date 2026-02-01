@@ -39,16 +39,16 @@ export default async function page() {
   const settings = await getSettings();
 
   return (
-    <div className="font-chillax m-auto h-screen max-w-[90%] py-10">
-      <h1 className="text-foreground mt-10 text-center text-5xl font-medium sm:text-6xl lg:text-7xl">
+    <div className="font-chillax m-auto h-full h-screen max-w-[90%] py-10">
+      <h1 className="text-foreground mt-5 text-center text-5xl font-medium sm:text-6xl lg:text-7xl">
         Get in touch
       </h1>
 
       <section className="m-auto max-w-[900px] gap-20 md:flex md:gap-5 lg:gap-30">
         <ContactForm />
         <Card className="bg-muted m-auto my-10 mt-30 h-fit w-fit border-1 p-10">
-          <h2 className="text-xl font-semibold text-primary">Chat with us</h2>
-          <ul className="mb-10 space-y-3 text-foreground">
+          <h2 className="text-primary text-xl font-semibold">Chat with us</h2>
+          <ul className="text-foreground mb-10 space-y-3">
             <li className="flex gap-3">
               <Phone />
               {settings.contact_phone || "+91 0000 0000"}
@@ -67,7 +67,7 @@ export default async function page() {
               {settings.contact_hours || "Mon – Fri: 9:00 am – 5:00 pm"}
             </li>
           </ul>
-          <h2 className="text-xl font-semibold text-primary">
+          <h2 className="text-primary text-xl font-semibold">
             Connect with Kindlewood
           </h2>
           <div className="flex justify-center gap-5">

@@ -38,8 +38,6 @@ export async function submitTestimonial(formData: FormData) {
   });
 
   if (error) throw error;
-
-  
 }
 
 // Fetch user testimonials (SERVER FUNCTION)

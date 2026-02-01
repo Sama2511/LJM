@@ -203,7 +203,7 @@ export default function UserProfile({ pageName }: UserProfileProps) {
   }
 
   return (
-    <div className="mt-5 mb-10 flex justify-between">
+    <div className="mt-10 mb-10 flex justify-between">
       <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
         {pageName}
       </h1>

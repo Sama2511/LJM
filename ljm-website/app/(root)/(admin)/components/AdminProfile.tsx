@@ -94,7 +94,7 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
       .eq("user_id", userId);
 
     const readNotificationIds = new Set(
-      readsData?.map((r) => r.notification_id) || []
+      readsData?.map((r) => r.notification_id) || [],
     );
 
     // Mark notifications as read if they appear in notification_reads
@@ -105,7 +105,7 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
 
     setNotifications(notificationsWithReadStatus);
     setUnreadCount(
-      notificationsWithReadStatus.filter((n) => !n.is_read).length
+      notificationsWithReadStatus.filter((n) => !n.is_read).length,
     );
   };
 
@@ -211,7 +211,7 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
   }
 
   return (
-    <div className="mt-5 mb-10 flex justify-between">
+    <div className="mt-15 mb-10 flex justify-between">
       <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
         {pageName}
       </h1>

@@ -126,7 +126,7 @@ function Footer() {
                 </li>
                 <li>
                   <Link
-                    href="/donate"
+                    href="/donation"
                     className="hover:text-sidebar-accent transition-colors"
                   >
                     Donate
