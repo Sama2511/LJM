@@ -23,6 +23,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { logout } from "@/actions/users";
 import { useTransition } from "react";
@@ -56,8 +57,10 @@ const data = {
 
 export function UserSidebar(props: React.ComponentProps<typeof Sidebar>) {
   const [isPending, startTransition] = useTransition();
+  const { setOpenMobile } = useSidebar();
 
   const handleLogout = () => {
+    setOpenMobile(false);
     startTransition(async () => {
       await logout();
     });
