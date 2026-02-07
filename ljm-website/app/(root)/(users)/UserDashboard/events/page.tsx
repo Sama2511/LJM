@@ -15,9 +15,8 @@ export default async function BrowseEventsPage() {
 
   return (
     <div className="w-full">
-      <div className="max-w-8xl mx-auto w-full px-6 py-8">
+      <div className="max-w-8xl mx-auto w-full py-10 pr-6">
         <UserProfile pageName="Browse Events" />
-
         <div className="mt-8">
           <BrowseEventsClient
             events={eventsData.data ?? []}

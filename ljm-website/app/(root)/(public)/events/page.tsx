@@ -6,7 +6,7 @@ export default async function page() {
   const events = await FetchEvent();
 
   return (
-    <section className="my-10 flex h-screen w-full flex-col items-center">
+    <section className="mb-20 flex h-screen flex-col items-center">
       <EventsClient events={events.data || []} />
     </section>
   );

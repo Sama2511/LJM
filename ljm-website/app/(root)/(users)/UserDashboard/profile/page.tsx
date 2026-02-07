@@ -46,99 +46,99 @@ export default function ProfilePage() {
     return `${firstname?.charAt(0)}${lastname?.charAt(0)}`.toUpperCase();
   };
 
- async function loadUser() {
-  try {
-    const { data: authData, error: authError } =
-      await supabase.auth.getUser();
+  async function loadUser() {
+    try {
+      const { data: authData, error: authError } =
+        await supabase.auth.getUser();
 
-    if (authError || !authData.user) {
-      toast.error("Failed to get user");
+      if (authError || !authData.user) {
+        toast.error("Failed to get user");
+        setLoading(false);
+        return;
+      }
+
+      const userId = authData.user.id;
+
+      // 1. users
+      const { data: user, error: userError } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", userId)
+        .single();
+
+      if (userError) {
+        toast.error("Failed to load user data");
+        setLoading(false);
+        return;
+      }
+
+      // 2. volunteer_form (phone)
+      const { data: form } = await supabase
+        .from("volunteer_form")
+        .select("phone, emergency_contact, availability")
+        .eq("user_id", userId)
+        .single();
+
+      setUserData({
+        ...user,
+        phonenumber: form?.phone ?? "",
+        emergency_contact: form?.emergency_contact ?? "",
+        availability: form?.availability ?? "",
+      });
+
       setLoading(false);
-      return;
-    }
-
-    const userId = authData.user.id;
-
-    // 1. users
-    const { data: user, error: userError } = await supabase
-      .from("users")
-      .select("*")
-      .eq("id", userId)
-      .single();
-
-    if (userError) {
-      toast.error("Failed to load user data");
+    } catch (error) {
+      console.error(error);
+      toast.error("Unexpected error");
       setLoading(false);
-      return;
     }
-
-    // 2. volunteer_form (phone)
-   const { data: form } = await supabase
-  .from("volunteer_form")
-  .select("phone, emergency_contact, availability")
-  .eq("user_id", userId)
-  .single();
-
-setUserData({
-  ...user,
-  phonenumber: form?.phone ?? "",
-  emergency_contact: form?.emergency_contact ?? "",
-  availability: form?.availability ?? "",
-});
-
-    setLoading(false);
-  } catch (error) {
-    console.error(error);
-    toast.error("Unexpected error");
-    setLoading(false);
   }
-}
 
   async function saveChanges() {
-  if (!userData) return;
+    if (!userData) return;
 
-  setSaving(true);
+    setSaving(true);
 
-  try {
-    const { data: authData } = await supabase.auth.getUser();
-    const userId = authData.user?.id;
+    try {
+      const { data: authData } = await supabase.auth.getUser();
+      const userId = authData.user?.id;
 
-    if (!userId) {
-      toast.error("User not found");
-      return;
+      if (!userId) {
+        toast.error("User not found");
+        return;
+      }
+
+      // 1. Обновляем users
+      const { error: userError } = await supabase
+        .from("users")
+        .update({
+          firstname: userData.firstname,
+          lastname: userData.lastname,
+        })
+        .eq("id", userId);
+
+      if (userError) throw userError;
+
+      // 2. Обновляем phone в volunteer_form
+      const { error: formError } = await supabase
+        .from("volunteer_form")
+        .update({
+          phone: userData.phonenumber,
+          emergency_contact: userData.emergency_contact,
+          availability: userData.availability,
+        })
+        .eq("user_id", userId);
+
+      if (formError) throw formError;
+
+      toast.success("Profile updated successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to update profile");
+    } finally {
+      setSaving(false);
     }
-
-    // 1. Обновляем users
-    const { error: userError } = await supabase
-      .from("users")
-      .update({
-        firstname: userData.firstname,
-        lastname: userData.lastname,
-      })
-      .eq("id", userId);
-
-    if (userError) throw userError;
-
-    // 2. Обновляем phone в volunteer_form
-   const { error: formError } = await supabase
-  .from("volunteer_form")
-  .update({
-    phone: userData.phonenumber,
-    emergency_contact: userData.emergency_contact,
-    availability: userData.availability,
-  })
-  .eq("user_id", userId);
-
-    if (formError) throw formError;
-
-    toast.success("Profile updated successfully!");
-  } catch (error) {
-    console.error(error);
-    toast.error("Failed to update profile");
-  } finally {
-    setSaving(false);
   }
-}
 
   async function uploadAvatar(event: React.ChangeEvent<HTMLInputElement>) {
     try {
@@ -267,9 +267,9 @@ setUserData({
   }
 
   return (
-    <div className="w-full p-6">
+    <div className="w-full pt-5 pr-7">
       <UserProfile pageName="Profile" />
-      <div className="mt-5 max-w-2xl space-y-6">
+      <div className="mt-5 mb-10 max-w-2xl space-y-6">
         <Card>
           <CardHeader>
             <CardTitle>Profile Picture</CardTitle>
@@ -284,7 +284,7 @@ setUserData({
                   src={userData.avatar_url}
                   alt={`${userData.firstname} ${userData.lastname}`}
                 />
-                <AvatarFallback className="bg-foreground text-2xl text-background">
+                <AvatarFallback className="bg-foreground text-background text-2xl">
                   {getInitials(userData.firstname, userData.lastname)}
                 </AvatarFallback>
               </Avatar>
@@ -387,59 +387,62 @@ setUserData({
               </p>
             </div>
             <div className="mt-1">
-  <Link
-    href="/forgot-password"
-    className="text-sm text-blue-600 hover:underline"
-  >
-    Change password
-  </Link>
-</div>
+              <Link
+                href="/forgot-password"
+                className="text-sm text-blue-600 hover:underline"
+              >
+                Change password
+              </Link>
+            </div>
 
             <div className="grid gap-4 md:grid-cols-2">
-  {/* Phone */}
-  <div className="space-y-2">
-    <Label htmlFor="phone">
-      <Phone className="mb-1 inline h-4 w-4" /> Phone Number
-    </Label>
-    <Input
-      id="phone"
-      type="tel"
-      value={userData.phonenumber || ""}
-      onChange={(e) =>
-        setUserData({ ...userData, phonenumber: e.target.value })
-      }
-      placeholder="Enter phone number"
-    />
-  </div>
+              {/* Phone */}
+              <div className="space-y-2">
+                <Label htmlFor="phone">
+                  <Phone className="mb-1 inline h-4 w-4" /> Phone Number
+                </Label>
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={userData.phonenumber || ""}
+                  onChange={(e) =>
+                    setUserData({ ...userData, phonenumber: e.target.value })
+                  }
+                  placeholder="Enter phone number"
+                />
+              </div>
 
-  {/* Emergency Contact */}
-  <div className="space-y-2">
-    <Label htmlFor="emergency">
-      <Phone className="mb-1 inline h-4 w-4" /> Emergency Contact
-    </Label>
-    <Input
-      id="emergency"
-      type="tel"
-      value={userData.emergency_contact || ""}
-      onChange={(e) =>
-        setUserData({ ...userData, emergency_contact: e.target.value })
-      }
-      placeholder="Emergency contact number"
-    />
-  </div>
-</div>
-<div className="space-y-2">
-  <Label htmlFor="availability">Availability</Label>
-  <Input
-    id="availability"
-    type="text"
-    value={userData.availability || ""}
-    onChange={(e) =>
-      setUserData({ ...userData, availability: e.target.value })
-    }
-    placeholder="e.g. Weekends, evenings"
-  />
-</div>
+              {/* Emergency Contact */}
+              <div className="space-y-2">
+                <Label htmlFor="emergency">
+                  <Phone className="mb-1 inline h-4 w-4" /> Emergency Contact
+                </Label>
+                <Input
+                  id="emergency"
+                  type="tel"
+                  value={userData.emergency_contact || ""}
+                  onChange={(e) =>
+                    setUserData({
+                      ...userData,
+                      emergency_contact: e.target.value,
+                    })
+                  }
+                  placeholder="Emergency contact number"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="availability">Availability</Label>
+              <Input
+                id="availability"
+                type="text"
+                value={userData.availability || ""}
+                onChange={(e) =>
+                  setUserData({ ...userData, availability: e.target.value })
+                }
+                placeholder="e.g. Weekends, evenings"
+              />
+            </div>
 
             <div className="space-y-2">
               <Label>
@@ -461,13 +464,12 @@ setUserData({
                   </p>
                 </div>
               </div>
-              
             )}
 
             <Button
               onClick={saveChanges}
               disabled={saving}
-              className="w-full bg-foreground text-background hover:bg-foreground/90"
+              className="bg-foreground text-background hover:bg-foreground/90 w-full"
             >
               {saving ? (
                 <p className="flex items-center gap-1">

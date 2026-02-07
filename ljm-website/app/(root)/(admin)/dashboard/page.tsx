@@ -90,7 +90,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="w-full p-4 md:p-6">
+    <div className="w-full pt-5 pr-5 pb-10">
       <AdminProfile pageName="Dashboard" />
 
       {/* Stats Cards */}

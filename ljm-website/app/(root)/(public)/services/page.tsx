@@ -38,7 +38,7 @@ export default function Page() {
 
         {/* SECTION 2 */}
         <div className="border-muted-foreground mb-12 flex w-10/12 flex-col items-center justify-between gap-10 lg:mb-0 lg:flex-row lg:gap-0 lg:border-b-4 lg:border-l-4 lg:pt-10 lg:pb-10">
-          <div className="lg:w-1/2 lg:pr-10 lg:pl-10">
+          <div className="order-2 lg:order-1 lg:w-1/2 lg:pr-10 lg:pl-10">
             <h3 className="mb-4 text-3xl font-bold text-primary">
               Compassionate Communities
             </h3>
@@ -54,7 +54,7 @@ export default function Page() {
           <img
             src="/compassionate.png"
             alt="Compassionate Communities"
-            className="h-[400px] w-full rounded-xl object-cover shadow-lg lg:w-1/2"
+            className="order-1 h-[400px] w-full rounded-xl object-cover shadow-lg lg:order-2 lg:w-1/2"
           />
         </div>
 

@@ -8,6 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { usePathname, useRouter } from "next/navigation";
 export function NavMain({
@@ -21,7 +22,7 @@ export function NavMain({
 }) {
   const route = useRouter();
   const pathname = usePathname();
-  console.log(pathname);
+  const { setOpenMobile } = useSidebar();
   return (
     <SidebarGroup className="mt-10">
       <SidebarMenu>
@@ -42,7 +43,10 @@ export function NavMain({
               <SidebarMenuButton
                 className="flex h-[50px] cursor-pointer"
                 tooltip={item.title}
-                onClick={() => route.push(item.url)}
+                onClick={() => {
+                  setOpenMobile(false);
+                  route.push(item.url);
+                }}
               >
                 {item.icon && <item.icon style={{ width: 22, height: 22 }} />}
                 <span className="text-[17px] font-medium">{item.title}</span>

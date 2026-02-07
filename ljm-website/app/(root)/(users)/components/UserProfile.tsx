@@ -203,11 +203,11 @@ export default function UserProfile({ pageName }: UserProfileProps) {
   }
 
   return (
-    <div className="mt-10 mb-10 flex justify-between">
-      <h1 className="font-chillax text-2xl font-semibold md:text-3xl">
+    <div className="mt-15 mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <h1 className="font-chillax mt-5 hidden text-3xl font-semibold sm:text-4xl md:block md:text-5xl">
         {pageName}
       </h1>
-      <div className="bg-muted flex items-center gap-6 rounded-3xl border-2 px-5">
+      <div className="bg-muted flex w-full flex-nowrap items-center justify-between gap-3 rounded-3xl border-2 px-4 py-2 md:w-auto md:gap-6 md:px-5">
         <Tooltip>
           <TooltipTrigger>
             <Link href="/UserDashboard/profile">
@@ -290,9 +290,8 @@ export default function UserProfile({ pageName }: UserProfileProps) {
                     ))
                   )}
                 </div>
-
                 {/* Footer */}
-                <div className="border-t px-4 py-2">
+                {/* <div className="border-t px-4 py-2">
                   <Button
                     variant="ghost"
                     size="sm"
@@ -300,15 +299,15 @@ export default function UserProfile({ pageName }: UserProfileProps) {
                   >
                     View all notifications
                   </Button>
-                </div>
+                </div> */}
               </PopoverContent>
             </TooltipTrigger>
           </Popover>
 
           <TooltipContent>Notifications</TooltipContent>
         </Tooltip>
-        <div className="flex h-fit items-center gap-3 py-2">
-          <Avatar>
+        <div className="flex items-center gap-3 py-1">
+          <Avatar className="">
             <AvatarImage
               src={user.avatar_url}
               alt={`${user.firstname} ${user.lastname}`}
@@ -317,8 +316,11 @@ export default function UserProfile({ pageName }: UserProfileProps) {
               {getInitials(user.firstname, user.lastname)}
             </AvatarFallback>
           </Avatar>
+          {/* <div className="md:hidden">{user.role}</div> */}
+
+          {/* Hidden on mobile, shown on md+ */}
           <div className="flex flex-col">
-            <span className="font-medium">
+            <span className="font-semibold">
               {user.firstname} {user.lastname}
             </span>
             <span className="text-muted-foreground text-sm capitalize">
@@ -327,6 +329,9 @@ export default function UserProfile({ pageName }: UserProfileProps) {
           </div>
         </div>
       </div>
+      <h1 className="font-chillax mt-5 text-3xl font-semibold sm:text-4xl md:hidden md:text-5xl">
+        {pageName}
+      </h1>
     </div>
   );
 }

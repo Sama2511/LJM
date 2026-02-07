@@ -39,14 +39,13 @@ export default async function page() {
   const settings = await getSettings();
 
   return (
-    <div className="font-chillax m-auto h-full h-screen max-w-[90%] py-10">
+    <div className="font-chillax m-auto h-full max-w-[90%] py-10">
       <h1 className="text-foreground mt-5 text-center text-5xl font-medium sm:text-6xl lg:text-7xl">
         Get in touch
       </h1>
-
       <section className="m-auto max-w-[900px] gap-20 md:flex md:gap-5 lg:gap-30">
         <ContactForm />
-        <Card className="bg-muted m-auto my-10 mt-30 h-fit w-fit border-1 p-10">
+        <Card className="bg-muted m-auto my-10 mt-20 h-fit border p-10 sm:max-w-md">
           <h2 className="text-primary text-xl font-semibold">Chat with us</h2>
           <ul className="text-foreground mb-10 space-y-3">
             <li className="flex gap-3">

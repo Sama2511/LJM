@@ -113,94 +113,168 @@ export default function MyVolunteeringClient({ data }: { data: any[] }) {
     }
 
     return (
-      <div className="bg-card rounded-lg border shadow-sm">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-muted">
-              <TableHead>Event</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Date</TableHead>
-              <TableHead>Time</TableHead>
-              <TableHead>Location</TableHead>
-              {showCapacity && <TableHead>Capacity</TableHead>}
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
+      <>
+        {/* Mobile card layout */}
+        <div className="flex flex-col gap-4 md:hidden">
+          {items.map((item) => {
+            const joined = item.events.volunteer_requests?.[0]?.count ?? 0;
+            const max = item.events.capacity ?? 0;
+            const percent = max > 0 ? Math.min((joined / max) * 100, 100) : 0;
 
-          <TableBody>
-            {items.map((item) => {
-              const joined = item.events.volunteer_requests?.[0]?.count ?? 0;
-              const max = item.events.capacity ?? 0;
-              const percent = max > 0 ? Math.min((joined / max) * 100, 100) : 0;
+            return (
+              <div
+                key={item.id}
+                className="bg-card rounded-lg border p-4 shadow-sm"
+              >
+                <div className="mb-2 flex items-start justify-between">
+                  <h3 className="font-medium">{item.events.title}</h3>
+                  <span className="bg-muted text-muted-foreground rounded px-2 py-0.5 text-xs">
+                    {item.event_roles?.role_name || "—"}
+                  </span>
+                </div>
 
-              return (
-                <TableRow key={item.id}>
-                  <TableCell>
-                    <span className="font-medium">{item.events.title}</span>
-                  </TableCell>
+                <div className="text-muted-foreground mb-3 space-y-1 text-sm">
+                  <p>{item.events.date}</p>
+                  <p>
+                    {item.events.starts_at} – {item.events.ends_at}
+                  </p>
+                  <p>{item.events.location}</p>
+                </div>
 
-                  <TableCell>
-                    <span className="text-muted-foreground">
-                      {item.event_roles?.role_name || "—"}
-                    </span>
-                  </TableCell>
+                {showCapacity && (
+                  <div className="mb-3">
+                    <div className="text-muted-foreground mb-1 text-xs">
+                      {joined}/{max} volunteers
+                    </div>
+                    <div className="bg-muted h-2 rounded-full">
+                      <div
+                        className="bg-primary h-2 rounded-full"
+                        style={{ width: `${percent}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
 
-                  <TableCell>
-                    <span className="text-sm">{item.events.date}</span>
-                  </TableCell>
-
-                  <TableCell>
-                    <span className="text-sm">
-                      {item.events.starts_at} – {item.events.ends_at}
-                    </span>
-                  </TableCell>
-
-                  <TableCell>
-                    <span className="text-sm">{item.events.location}</span>
-                  </TableCell>
-
-                  {showCapacity && (
-                    <TableCell>
-                      <div className="mb-1 text-xs text-muted-foreground">
-                        {joined}/{max}
-                      </div>
-                      <div className="h-2 max-w-[120px] rounded-full bg-muted">
-                        <div
-                          className="bg-primary h-2 rounded-full"
-                          style={{ width: `${percent}%` }}
-                        />
-                      </div>
-                    </TableCell>
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => setSelectedEvent(item.events)}
+                  >
+                    Details
+                  </Button>
+                  {showCancel && (
+                    <Button
+                      size="sm"
+                      variant="destructive"
+                      className="flex-1"
+                      disabled={loadingId === item.id}
+                      onClick={() => openCancelDialog(item.id)}
+                    >
+                      {loadingId === item.id ? "Cancelling..." : "Cancel"}
+                    </Button>
                   )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
 
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => setSelectedEvent(item.events)}
-                      >
-                        Details
-                      </Button>
+        {/* Desktop table layout */}
+        <div className="bg-card hidden rounded-lg border shadow-sm md:block">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-muted">
+                <TableHead>Event</TableHead>
+                <TableHead>Role</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead>Time</TableHead>
+                <TableHead>Location</TableHead>
+                {showCapacity && <TableHead>Capacity</TableHead>}
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
 
-                      {showCancel && (
+            <TableBody>
+              {items.map((item) => {
+                const joined =
+                  item.events.volunteer_requests?.[0]?.count ?? 0;
+                const max = item.events.capacity ?? 0;
+                const percent =
+                  max > 0 ? Math.min((joined / max) * 100, 100) : 0;
+
+                return (
+                  <TableRow key={item.id}>
+                    <TableCell>
+                      <span className="font-medium">{item.events.title}</span>
+                    </TableCell>
+
+                    <TableCell>
+                      <span className="text-muted-foreground">
+                        {item.event_roles?.role_name || "—"}
+                      </span>
+                    </TableCell>
+
+                    <TableCell>
+                      <span className="text-sm">{item.events.date}</span>
+                    </TableCell>
+
+                    <TableCell>
+                      <span className="text-sm">
+                        {item.events.starts_at} – {item.events.ends_at}
+                      </span>
+                    </TableCell>
+
+                    <TableCell>
+                      <span className="text-sm">{item.events.location}</span>
+                    </TableCell>
+
+                    {showCapacity && (
+                      <TableCell>
+                        <div className="text-muted-foreground mb-1 text-xs">
+                          {joined}/{max}
+                        </div>
+                        <div className="bg-muted h-2 max-w-[120px] rounded-full">
+                          <div
+                            className="bg-primary h-2 rounded-full"
+                            style={{ width: `${percent}%` }}
+                          />
+                        </div>
+                      </TableCell>
+                    )}
+
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
                         <Button
                           size="sm"
-                          variant="destructive"
-                          disabled={loadingId === item.id}
-                          onClick={() => openCancelDialog(item.id)}
+                          variant="outline"
+                          onClick={() => setSelectedEvent(item.events)}
                         >
-                          {loadingId === item.id ? "Cancelling..." : "Cancel"}
+                          Details
                         </Button>
-                      )}
-                    </div>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </div>
+
+                        {showCancel && (
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            disabled={loadingId === item.id}
+                            onClick={() => openCancelDialog(item.id)}
+                          >
+                            {loadingId === item.id
+                              ? "Cancelling..."
+                              : "Cancel"}
+                          </Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
+      </>
     );
   };
 

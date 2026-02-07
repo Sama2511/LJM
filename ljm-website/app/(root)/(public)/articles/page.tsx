@@ -11,9 +11,7 @@ export default async function ArticlesPage() {
           Articles
         </h1>
         <h2 className="mt-5 max-w-[85%] text-center text-lg">
-          Explore our collection of articles, guides, and resources to help you
-          navigate end-of-life care decisions and find support during difficult
-          times.
+          Explore our collection of articles, guides, and resources.
         </h2>
       </div>
 
@@ -23,7 +21,7 @@ export default async function ArticlesPage() {
         <p className="text-muted-foreground">No articles available yet.</p>
       )}
 
-      <section className="grid max-w-[90%] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4">
+      <section className="grid max-w-[90%] grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-10">
         {articles?.map((article) => (
           <ArticleCard
             key={article.id}

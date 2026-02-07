@@ -5,15 +5,11 @@ import { Search, Loader2, Calendar, MapPin } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
 );
 
 interface SearchResult {
@@ -80,7 +76,7 @@ export default function SearchBar() {
         .from("events")
         .select("id, title, description, date, location, image_url")
         .or(
-          `title.ilike.${searchPattern},description.ilike.${searchPattern},location.ilike.${searchPattern}`
+          `title.ilike.${searchPattern},description.ilike.${searchPattern},location.ilike.${searchPattern}`,
         )
         .order("date", { ascending: false })
         .limit(10);
@@ -88,21 +84,20 @@ export default function SearchBar() {
       const { data: rolesData } = await supabase
         .from("event_roles")
         .select(
-          "event_id, events(id, title, description, date, location, image_url)"
+          "event_id, events(id, title, description, date, location, image_url)",
         )
         .ilike("role_name", searchPattern);
 
-      const eventsFromRoles =
-        rolesData
-          ?.map((r) => r.events)
-          .filter(
-            (event): event is NonNullable<typeof event> =>
-              event !== null && !Array.isArray(event)
-          )
-          .filter(
-            (event, index, self) =>
-              index === self.findIndex((e) => e.id === event.id)
-          ) || [];
+      const eventsFromRoles = (
+        rolesData?.flatMap((r) => {
+          const e = r.events;
+          if (!e) return [];
+          return Array.isArray(e) ? e : [e];
+        }) || []
+      ).filter(
+        (event, index, self) =>
+          index === self.findIndex((e) => e.id === event.id),
+      );
 
       const { data: pagesData } = await supabase
         .from("pages")
@@ -117,13 +112,19 @@ export default function SearchBar() {
         .order("created_at", { ascending: false })
         .limit(10);
 
-      const eventResults: SearchResult[] = [
-        ...(eventsData || []),
-        ...eventsFromRoles,
-      ]
+      const allEvents = [...(eventsData || []), ...eventsFromRoles] as {
+        id: string;
+        title: string;
+        description: string;
+        date: string;
+        location: string;
+        image_url: string;
+      }[];
+
+      const eventResults: SearchResult[] = allEvents
         .filter(
           (event, index, self) =>
-            index === self.findIndex((e) => e.id === event.id)
+            index === self.findIndex((e) => e.id === event.id),
         )
         .map((event) => ({
           id: event.id,
@@ -150,7 +151,7 @@ export default function SearchBar() {
           type: "Article",
           image_url: article.image_url,
           created_at: article.created_at,
-        })
+        }),
       );
 
       const combined: SearchResult[] = [
@@ -268,7 +269,10 @@ export default function SearchBar() {
           {/* Search input */}
           <div className="border-b px-4 py-3">
             <div className="flex items-center gap-3">
-              <Search size={18} className="text-muted-foreground flex-shrink-0" />
+              <Search
+                size={18}
+                className="text-muted-foreground flex-shrink-0"
+              />
               <Input
                 ref={inputRef}
                 type="text"
@@ -282,7 +286,7 @@ export default function SearchBar() {
                 className="border-0 p-0 text-base shadow-none focus-visible:ring-0"
                 autoFocus
               />
-              <kbd className="bg-muted text-muted-foreground hidden rounded px-1.5 py-0.5 text-xs font-mono sm:inline-block">
+              <kbd className="bg-muted text-muted-foreground hidden rounded px-1.5 py-0.5 font-mono text-xs sm:inline-block">
                 ESC
               </kbd>
             </div>
@@ -382,7 +386,11 @@ export default function SearchBar() {
           {/* Footer hint */}
           {results.length > 0 && (
             <div className="text-muted-foreground border-t px-4 py-2 text-center text-xs">
-              Press <kbd className="bg-muted rounded px-1 py-0.5 font-mono text-[10px]">Enter</kbd> to go to first result
+              Press{" "}
+              <kbd className="bg-muted rounded px-1 py-0.5 font-mono text-[10px]">
+                Enter
+              </kbd>{" "}
+              to go to first result
             </div>
           )}
         </DialogContent>

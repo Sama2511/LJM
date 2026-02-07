@@ -301,26 +301,104 @@ export default function ApplicationManagementClient({
     </TableRow>
   );
 
+  const renderApplicationCard = (application: Application) => (
+    <div
+      key={application.id}
+      className="bg-card flex flex-col gap-3 rounded-lg border p-4 shadow-sm"
+    >
+      <div className="flex items-center gap-3">
+        <Avatar>
+          <AvatarImage src={application.users.avatar_url} />
+          <AvatarFallback className="bg-accent-foreground text-white">
+            {getInitials(
+              application.users.firstname,
+              application.users.lastname,
+            )}
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex-1">
+          <p className="font-medium">
+            {application.users.firstname} {application.users.lastname}
+          </p>
+          <p className="text-muted-foreground text-sm">
+            {application.users.email}
+          </p>
+        </div>
+        <Badge
+          variant={
+            application.status === "Pending"
+              ? "outline"
+              : application.status === "Accepted"
+                ? "default"
+                : "destructive"
+          }
+        >
+          {application.status}
+        </Badge>
+      </div>
+
+      <p className="text-muted-foreground text-sm">
+        Submitted: {formatDate(application.created_at)}
+      </p>
+
+      <div className="flex flex-wrap gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="gap-2"
+          onClick={() => handleViewForm(application)}
+        >
+          <FileText className="h-4 w-4" />
+          View
+        </Button>
+        {application.status === "Pending" && (
+          <>
+            <Button
+              size="sm"
+              variant="secondary"
+              className="gap-2"
+              onClick={() => handleApprove(application.id)}
+              disabled={processingId !== null}
+            >
+              <CheckCircle className="h-4 w-4" />
+              {processingId === application.id ? "..." : "Accept"}
+            </Button>
+            <Button
+              variant="destructive"
+              size="sm"
+              className="gap-2"
+              onClick={() => handleReject(application.id)}
+              disabled={processingId !== null}
+            >
+              <XCircle className="h-4 w-4" />
+              {processingId === application.id ? "..." : "Reject"}
+            </Button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+
   return (
-    <div className="w-full p-6">
+    <div className="w-full pt-10 pr-4 md:pr-12">
       <AdminProfile pageName="Crew Applications" />
 
       <Tabs defaultValue="pending" className="w-full">
-        <div className="flex gap-5">
+        <div className="flex flex-col gap-5">
           <TabsList>
             <TabsTrigger value="pending">Pending</TabsTrigger>
             <TabsTrigger value="accepted">Accepted</TabsTrigger>
             <TabsTrigger value="rejected">Rejected</TabsTrigger>
           </TabsList>
           <div className="mb-6 flex items-center gap-2">
-            <div className="bg-muted relative max-w-md flex-1">
+            <div className="bg-muted relative flex-1">
               <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 type="text"
-                placeholder="Search by name or email..."
+                placeholder="Search for users"
                 value={searchInput}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="pr-9 pl-9"
+                className="pl-9 pr-9"
               />
               {searchInput && (
                 <Button
@@ -342,7 +420,21 @@ export default function ApplicationManagementClient({
         </div>
 
         <TabsContent value="pending">
-          <div className="bg-card rounded-lg border shadow-sm">
+          {/* Mobile card layout */}
+          <div className="flex flex-col gap-4 md:hidden">
+            {Pending.length > 0 ? (
+              paginatedPending.map((application) =>
+                renderApplicationCard(application),
+              )
+            ) : (
+              <p className="text-muted-foreground py-8 text-center">
+                No pending applications
+              </p>
+            )}
+          </div>
+
+          {/* Desktop table layout */}
+          <div className="bg-card hidden rounded-lg border shadow-sm md:block">
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted">
@@ -375,7 +467,21 @@ export default function ApplicationManagementClient({
         </TabsContent>
 
         <TabsContent value="accepted">
-          <div className="bg-card rounded-lg border shadow-sm">
+          {/* Mobile card layout */}
+          <div className="flex flex-col gap-4 md:hidden">
+            {Accepted.length > 0 ? (
+              paginatedAccepted.map((application) =>
+                renderApplicationCard(application),
+              )
+            ) : (
+              <p className="text-muted-foreground py-8 text-center">
+                No accepted applications
+              </p>
+            )}
+          </div>
+
+          {/* Desktop table layout */}
+          <div className="bg-card hidden rounded-lg border shadow-sm md:block">
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted">
@@ -408,7 +514,21 @@ export default function ApplicationManagementClient({
         </TabsContent>
 
         <TabsContent value="rejected">
-          <div className="bg-card rounded-lg border shadow-sm">
+          {/* Mobile card layout */}
+          <div className="flex flex-col gap-4 md:hidden">
+            {Rejected.length > 0 ? (
+              paginatedRejected.map((application) =>
+                renderApplicationCard(application),
+              )
+            ) : (
+              <p className="text-muted-foreground py-8 text-center">
+                No rejected applications
+              </p>
+            )}
+          </div>
+
+          {/* Desktop table layout */}
+          <div className="bg-card hidden rounded-lg border shadow-sm md:block">
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted">

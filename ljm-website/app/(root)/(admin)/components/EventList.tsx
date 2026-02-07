@@ -43,8 +43,7 @@ export default async function EventList() {
       capacity:
         capacityData.data?.find((ev) => ev.event_id === event.id)?.capacity ||
         0,
-      roles:
-        rolesData?.filter((role) => role.event_id === event.id) || [],
+      roles: rolesData?.filter((role) => role.event_id === event.id) || [],
     })) || [];
 
   return (
@@ -52,10 +51,10 @@ export default async function EventList() {
       {events.length === 0 && (
         <div className="flex flex-col items-center justify-center px-5 py-20">
           <Calendar size={50} className="mb-5" />
-          <h2 className="font-chillax mb-2 text-2xl font-semibold text-foreground">
+          <h2 className="font-chillax text-foreground mb-2 text-2xl font-semibold">
             No Events Created Yet
           </h2>
-          <p className="mb-6 max-w-md text-center text-muted-foreground">
+          <p className="text-muted-foreground mb-6 max-w-md text-center">
             Click the button above to add event details and share them with your
             community.
           </p>

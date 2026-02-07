@@ -87,7 +87,7 @@ export default function VolunteerEventCard({
   };
 
   return (
-    <Card className="group bg-muted max-w-[335px] min-w-[335px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+    <Card className="group bg-muted max-w-75 min-w-75 overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
       {/* IMAGE */}
       <CardTitle>
         <div className="relative h-40 w-full overflow-hidden rounded-t-2xl">

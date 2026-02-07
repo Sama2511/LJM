@@ -70,6 +70,7 @@ import {
   PaginationEllipsis,
 } from "@/components/ui/pagination";
 import AdminProfile from "./AdminProfile";
+import { Badge } from "@/components/ui/badge";
 
 const getInitials = (firstname: string, lastname: string) => {
   return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -287,17 +288,230 @@ export default function UserManagementClient({
     );
   };
 
+  const renderCrewCard = (user: User) => (
+    <div
+      key={user.id}
+      className="bg-card flex flex-col gap-3 rounded-lg border p-4 shadow-sm"
+    >
+      <div className="flex items-center gap-3">
+        <Avatar>
+          <AvatarImage src={user.avatar_url} />
+          <AvatarFallback className="bg-accent-foreground text-background">
+            {getInitials(user.firstname, user.lastname)}
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex-1">
+          <p className="font-medium">
+            {user.firstname} {user.lastname}
+          </p>
+          <p className="text-muted-foreground text-sm">{user.email}</p>
+        </div>
+        <Badge variant="outline">{user.role}</Badge>
+      </div>
+
+      <div className="text-muted-foreground text-sm">
+        <p>Joined: {formatDate(user.created_at)}</p>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        {user.formcompleted ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => handleViewForm(user.id)}
+            className="gap-2"
+          >
+            <FileText className="h-4 w-4" />
+            View Form
+          </Button>
+        ) : (
+          <span className="text-muted-foreground text-sm">
+            Form not submitted
+          </span>
+        )}
+
+        <Select
+          value={user.role}
+          onValueChange={(value: string) => handleRoleChange(user.id, value)}
+        >
+          <SelectTrigger className="w-[130px]">
+            <SelectValue>{user.role}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Kindling">Kindling</SelectItem>
+            <SelectItem value="Kindler">Kindler</SelectItem>
+            <SelectItem value="Flame">Flame</SelectItem>
+            <SelectItem value="Fire-keepers">Fire Keepers</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <MoreVertical className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              onClick={() => handleMakeAdmin(user.id)}
+              className="gap-2"
+            >
+              <Shield className="h-4 w-4" />
+              Make Admin
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  className="gap-2"
+                >
+                  <Ban className="h-4 w-4" />
+                  Ban User
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Ban this user?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This user will be banned from accessing the platform. You
+                    can unban them later if needed.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => handleBanUser(user.id)}
+                    className="bg-destructive hover:bg-destructive/90"
+                  >
+                    Ban User
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  className="text-destructive gap-2"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Delete User
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    the user account and all associated data.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => handleDeleteUser(user.id)}
+                    className="bg-destructive hover:bg-destructive/90"
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
+  );
+
+  const renderAdminCard = (admin: admin) => (
+    <div
+      key={admin.id}
+      className="bg-card flex flex-col gap-3 rounded-lg border p-4 shadow-sm"
+    >
+      <div className="flex items-center gap-3">
+        <Avatar>
+          <AvatarImage src={admin.avatar_url} />
+          <AvatarFallback className="bg-foreground text-background">
+            {getInitials(admin.firstname, admin.lastname)}
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex-1">
+          <p className="font-medium">
+            {admin.firstname} {admin.lastname}
+          </p>
+          <p className="text-muted-foreground text-sm">{admin.email}</p>
+        </div>
+        <Badge>Admin</Badge>
+      </div>
+
+      <p className="text-muted-foreground text-sm">
+        Joined: {formatDate(admin.created_at)}
+      </p>
+
+      <div className="flex items-center gap-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="sm" className="gap-2">
+              <MoreVertical className="h-4 w-4" />
+              Actions
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem
+              onClick={() => handleRemoveAdmin(admin.id)}
+              className="gap-2"
+            >
+              <ShieldOff className="h-4 w-4" />
+              Remove Admin
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  className="text-destructive gap-2"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  Delete User
+                </DropdownMenuItem>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    the user account and all associated data.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => handleDeleteUser(admin.id)}
+                    className="bg-destructive hover:bg-destructive/90"
+                  >
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
+  );
+
   return (
-    <div className="w-full p-6">
+    <div className="w-full pt-5 pr-10">
       <AdminProfile pageName="User management" />
       <Tabs defaultValue="crew" className="w-full">
-        <div className="flex gap-5">
+        <div className="flex flex-col gap-5">
           <TabsList>
             <TabsTrigger value="crew">Crew</TabsTrigger>
             <TabsTrigger value="admin">Admin</TabsTrigger>
           </TabsList>
           <div className="mb-6 flex items-center gap-2">
-            <div className="bg-muted relative max-w-md flex-1">
+            <div className="bg-muted relative flex-1">
               <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 type="text"
@@ -320,14 +534,25 @@ export default function UserManagementClient({
             {isPending && <Spinner className="bg-background" />}
           </div>
         </div>
+
         <TabsContent value="crew">
-          <div className="bg-card rounded-lg border shadow-sm">
+          {/* Mobile card layout */}
+          <div className="flex flex-col gap-4 md:hidden">
+            {Crew.length > 0 ? (
+              paginatedCrew.map((user) => renderCrewCard(user))
+            ) : (
+              <p className="text-muted-foreground py-8 text-center">
+                No crew members found
+              </p>
+            )}
+          </div>
+
+          {/* Desktop table layout */}
+          <div className="bg-card hidden rounded-lg border shadow-sm md:block">
             <Table className="">
               <TableHeader>
                 <TableRow className="bg-muted">
-                  <TableHead onClick={() => console.log("clicked")}>
-                    Name
-                  </TableHead>
+                  <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
                   <TableHead>Joined</TableHead>
                   <TableHead>Crew Form</TableHead>
@@ -493,7 +718,19 @@ export default function UserManagementClient({
           {renderPagination(crewPage, crewTotalPages, setCrewPage)}
         </TabsContent>
         <TabsContent value="admin">
-          <div className="bg-card rounded-lg border shadow-sm">
+          {/* Mobile card layout */}
+          <div className="flex flex-col gap-4 md:hidden">
+            {Admins.length > 0 ? (
+              paginatedAdmins.map((admin) => renderAdminCard(admin))
+            ) : (
+              <p className="text-muted-foreground py-8 text-center">
+                No admins found
+              </p>
+            )}
+          </div>
+
+          {/* Desktop table layout */}
+          <div className="bg-card hidden rounded-lg border shadow-sm md:block">
             <Table>
               <TableHeader>
                 <TableRow className="bg-muted">

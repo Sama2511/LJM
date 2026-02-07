@@ -191,7 +191,7 @@ export default function AboutUspage() {
           Meet Our Team
         </h1>
 
-        <div className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted mx-auto flex max-w-full justify-center gap-5 overflow-x-auto py-4 whitespace-nowrap">
+        <div className="scrollbar-thin scrollbar-track-transparent scrollbar-thumb-muted mx-auto flex max-w-full gap-5 overflow-x-auto py-4 sm:flex-wrap sm:justify-center">
           <ProfileCard
             member="Kathleen McLaughlin"
             role="CEO"

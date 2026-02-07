@@ -49,7 +49,11 @@ export default function ContactForm() {
       const response = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, captchaToken: token, formType: "contact" }),
+        body: JSON.stringify({
+          ...data,
+          captchaToken: token,
+          formType: "contact",
+        }),
       });
 
       const result = await response.json();
@@ -88,7 +92,9 @@ export default function ContactForm() {
                     placeholder="First Name"
                     autoComplete="given-name"
                   />
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
                 </Field>
               )}
             />
@@ -107,7 +113,9 @@ export default function ContactForm() {
                     placeholder="Last Name"
                     autoComplete="family-name"
                   />
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
                 </Field>
               )}
             />
@@ -127,7 +135,9 @@ export default function ContactForm() {
                     placeholder="example@email.com"
                     autoComplete="email"
                   />
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
                 </Field>
               )}
             />
@@ -154,7 +164,9 @@ export default function ContactForm() {
                       </InputGroupText>
                     </InputGroupAddon>
                   </InputGroup>
-                  {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
                 </Field>
               )}
             />
@@ -170,13 +182,17 @@ export default function ContactForm() {
       </CardContent>
       <CardFooter>
         <Field orientation="responsive">
-        <Button
-          type="submit"
-          form="contact-form"
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting ? <Loader2 className="animate-spin" /> : "Send Message"}
-        </Button>
+          <Button
+            type="submit"
+            form="contact-form"
+            disabled={form.formState.isSubmitting}
+          >
+            {form.formState.isSubmitting ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              "Send Message"
+            )}
+          </Button>
         </Field>
       </CardFooter>
     </Card>

@@ -212,11 +212,10 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
 
   return (
     <div className="mt-15 mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <h1 className="font-chillax text-xl font-semibold sm:text-2xl md:text-3xl">
+      <h1 className="font-chillax mt-5 hidden text-3xl font-semibold sm:text-4xl md:block md:text-5xl">
         {pageName}
       </h1>
-
-      <div className="bg-muted flex w-full flex-wrap items-center justify-between gap-3 rounded-3xl border-2 px-4 py-2 md:w-auto md:flex-nowrap md:gap-6 md:px-5">
+      <div className="bg-muted flex w-full flex-nowrap items-center justify-between gap-3 rounded-3xl border-2 px-4 py-2 pr-8 md:w-auto md:gap-6 md:px-5">
         <Tooltip>
           <TooltipTrigger asChild>
             <Link href="/dashboard/settings">
@@ -240,7 +239,6 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
                 </div>
               </PopoverTrigger>
             </TooltipTrigger>
-
             <PopoverContent className="w-80 p-0" align="end">
               <div className="border-b px-4 py-3">
                 <div className="flex items-center justify-between">
@@ -257,7 +255,6 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
                   )}
                 </div>
               </div>
-
               <div className="max-h-[400px] overflow-y-auto">
                 {notifications.length === 0 ? (
                   <div className="px-4 py-8 text-center">
@@ -324,11 +321,10 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
               {getInitials(user.firstname, user.lastname)}
             </AvatarFallback>
           </Avatar>
-          <div className="md:hidden">{user.role}</div>
 
           {/* Hidden on mobile, shown on md+ */}
-          <div className="hidden flex-col md:flex">
-            <span className="font-medium">
+          <div className="flex flex-col">
+            <span className="font-semibold">
               {user.firstname} {user.lastname}
             </span>
             <span className="text-muted-foreground text-sm capitalize">
@@ -337,6 +333,9 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
           </div>
         </div>
       </div>
+      <h1 className="font-chillax mt-5 text-3xl font-semibold sm:text-4xl md:hidden md:text-5xl">
+        {pageName}
+      </h1>
     </div>
   );
 }

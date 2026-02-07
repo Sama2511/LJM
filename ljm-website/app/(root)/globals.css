@@ -166,8 +166,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    overflow-y: scroll;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Prevent layout shift when dialogs/sheets open */
+  body[data-scroll-locked] {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
   }
 
   /* Search input focus style */

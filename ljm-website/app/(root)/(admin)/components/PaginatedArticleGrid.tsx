@@ -20,7 +20,7 @@ type ArticleItem = {
   created_at: string;
 };
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 6;
 
 export default function PaginatedArticleGrid({
   articles,

@@ -32,14 +32,10 @@ export function EventCard({
 }: Props) {
   return (
     <Card
-      className={`group relative max-w-[335px] min-w-[335px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300
-      ${
-        isPast
-          ? "bg-muted"
-          : "bg-muted hover:-translate-y-2 hover:shadow-xl"
+      className={`group relative max-w-82 min-w-82 overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 ${
+        isPast ? "bg-muted" : "bg-muted hover:-translate-y-2 hover:shadow-xl"
       }`}
     >
-      {/* overlay for past */}
       {isPast && (
         <div className="pointer-events-none absolute inset-0 z-10 rounded-xl bg-black/30" />
       )}
@@ -66,7 +62,7 @@ export function EventCard({
       </CardTitle>
 
       <CardContent className="grid grid-rows-[120px]">
-        <div className="mb-6 space-y-3 text-sm text-foreground">
+        <div className="text-foreground mb-6 space-y-3 text-sm">
           <div className="flex gap-4">
             <div className="flex items-center gap-2">
               <Calendar className="h-5 w-5" />
@@ -83,22 +79,19 @@ export function EventCard({
             <span className="font-medium">{location}</span>
           </div>
 
-          <p className="mt-4 line-clamp-3 text-base text-foreground/80">
+          <p className="text-foreground/80 mt-4 line-clamp-3 text-base">
             {description}
           </p>
         </div>
       </CardContent>
 
-      {/* 🔽 КНОПКИ */}
-      <CardFooter className="flex justify-between gap-3 px-6 pb-6">
-        {/* ✅ VOLUNTEER — ТОЛЬКО для upcoming */}
+      <CardFooter className="flex justify-between gap-3 px-6 py-6">
         {!isPast && (
           <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
             Volunteer
           </Button>
         )}
 
-        {/* ✅ DETAILS — как было */}
         <Button variant="outline" onClick={() => onDetails(eventId)}>
           Details
         </Button>

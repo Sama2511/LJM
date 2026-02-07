@@ -71,19 +71,23 @@ export default function EventsClient({ events }: { events: Event[] }) {
 
   return (
     <>
-      <div className="font-chillax text-foreground mb-10 flex w-full flex-col items-center text-center">
+      <div className="font-chillax text-foreground flex w-full flex-col items-center text-center">
         <h1 className="text-foreground mt-10 text-4xl font-medium sm:text-6xl lg:text-7xl">
           Events
         </h1>
-        <p className="text-muted-foreground mt-5 max-w-[90%] text-center text-xl">
+        {/* <p className="text-muted-foreground mt-5 max-w-[90%] text-center text-xl">
           Join us in making a difference. Explore volunteer opportunities and
           celebrate the memories we've created together.
-        </p>
+        </p> */}
       </div>
 
       {/* ✅ TABS with controlled value */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="mb-6">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="mr-10 w-full"
+      >
+        <TabsList className="mt-10 mb-6 ml-10">
           <TabsTrigger value="upcoming">
             Upcoming Events ({upcomingEvents.length})
           </TabsTrigger>
@@ -93,7 +97,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
         </TabsList>
 
         {/* UPCOMING */}
-        <TabsContent value="upcoming" className="mt-6">
+        <TabsContent value="upcoming" className="mt-6 ml-10">
           {upcomingEvents.length === 0 ? (
             <div className="bg-muted/30 flex flex-col items-center justify-center rounded-2xl px-5 py-20">
               <div className="bg-muted mb-4 rounded-full p-4">
@@ -129,7 +133,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
         </TabsContent>
 
         {/* PAST */}
-        <TabsContent value="past" className="mt-6">
+        <TabsContent value="past" className="mt-6 ml-10">
           {pastEvents.length === 0 ? (
             <div className="bg-muted/30 flex flex-col items-center justify-center rounded-2xl px-5 py-20">
               <div className="bg-muted mb-4 rounded-full p-4">
@@ -163,6 +167,7 @@ export default function EventsClient({ events }: { events: Event[] }) {
             </div>
           )}
         </TabsContent>
+        {/* <h1 className="flex justify-end text-5xl">→</h1> */}
       </Tabs>
       {/* ✅ ONE sheet here */}
       {selectedEventId && (

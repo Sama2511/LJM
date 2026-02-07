@@ -14,24 +14,22 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <section className="@container mt-6">
-        <div className="flex flex-col @[1000]:flex-row @[1000]:items-center gap-6">
-          
+        <div className="flex flex-col gap-6 @[1000]:flex-row @[1000]:items-center">
           {/* Left side - Text content */}
           <div className="flex w-full flex-col items-center text-center @[630]:items-start @[630]:pt-6 @[630]:pl-7 @[700]:pl-15 @[1000]:w-1/2 @[1000]:pl-20 @[1600]:pl-50">
-            
             {/* Mobile Image */}
             <div className="w-full @[1000]:hidden">
-            <Image
-              src="/newMobilePic2.jpg"
-              alt="Home page image"
-              width={450}
-              height={450}
-              className="w-full object-cover rounded-lg border-2 border-[#ff8200]"
-            />
-          </div>
+              <Image
+                src="/newMobilePic2.jpg"
+                alt="Home page image"
+                width={450}
+                height={450}
+                className="w-full rounded-lg border-2 border-[#ff8200] object-cover"
+              />
+            </div>
             {/* Hero Text */}
             <h1
-              className="sm:text-foreground font-chillax mt-4 max-w-[70%] text-left leading-tight font-semibold text-white drop-shadow-[2px_2px_4px_rgba(0,0,0,0.6)] @[550]:max-w-[80%] @[800]:mt-2 @[1000]:max-w-[100%] @[1000]:mt-6 @[1000]:drop-shadow-[0px] @[1200]:mt-10 @[1400]:mt-12"
+              className="font-chillax mt-4 max-w-[70%] text-center leading-tight font-semibold @[550]:max-w-[80%] @[600]:text-left @[800]:mt-2 @[1000]:mt-6 @[1000]:max-w-[100%] @[1000]:drop-shadow-[0px] @[1200]:mt-10 @[1400]:mt-12"
               style={{ fontSize: "clamp(1.375rem, 0.5rem + 3vw, 3.438rem)" }}
             >
               Support With Compassion at Life's Most Sacred Moments
@@ -48,15 +46,15 @@ export default function Home() {
               <Button asChild>
                 <Link
                   href="/donation"
-                  className="flex items-center justify-center border-2 border-accent py-5 text-[18px] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
+                  className="border-accent flex items-center justify-center border-2 py-5 text-[18px] @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
                 >
                   Donate Now
                 </Link>
               </Button>
               <Button asChild variant="outline">
                 <Link
-                  href="/"
-                  className="bg-background flex items-center justify-center border-2 py-[18px] text-[18px] font-bold text-black @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
+                  href="/Crew"
+                  className="bg-background flex items-center justify-center border-2 py-4.5 text-[18px] font-bold text-black @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
                 >
                   Join The Crew
                 </Link>
@@ -100,7 +98,7 @@ export default function Home() {
           <UpcomingEvents />
         </Suspense>
       </section>
-      <section className="mt-40 bg-muted p-10">
+      <section className="bg-muted mt-40 p-10">
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
           <h1 className="text-center font-serif text-3xl text-black">
             Subscribe to Our Newsletter
@@ -109,7 +107,7 @@ export default function Home() {
             <Input
               type="email"
               placeholder="Email"
-              className="w-70 bg-background"
+              className="bg-background w-70"
             />
             <Button type="submit" variant="outline" className="w-70 md:w-30">
               Subscribe
