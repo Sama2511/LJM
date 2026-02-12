@@ -1,5 +1,4 @@
 "use client";
-import { createClient } from "@/app/utils/client";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "../../../../components/ui/skeleton";
 import {
@@ -20,41 +19,16 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-interface User {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  avatar_url?: string;
-  role: string;
-  formcompleted: boolean;
-  created_at: string;
-}
-
-interface Notification {
-  id: string;
-  type: string;
-  title: string;
-  message: string;
-  reference_type: string | null;
-  reference_id: string | null;
-  user_id: string | null;
-  created_at: string;
-  is_read: boolean;
-}
+import { useUser } from "@/contexts/UserContext";
 
 interface UserProfileProps {
   pageName: string;
 }
 
 export default function UserProfile({ pageName }: UserProfileProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { user, loading, error, notifications, unreadCount, markAllAsRead } =
+    useUser();
   const [notificationOpen, setNotificationOpen] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [unreadCount, setUnreadCount] = useState(0);
 
   const getInitials = (firstname: string, lastname: string) => {
     return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -71,95 +45,6 @@ export default function UserProfile({ pageName }: UserProfileProps) {
     if (seconds < 604800) return `${Math.floor(seconds / 86400)} days ago`;
     return `${Math.floor(seconds / 604800)} weeks ago`;
   };
-
-  const loadNotifications = async (userId: string) => {
-    const supabase = createClient();
-
-    const { data: notificationsData } = await supabase
-      .from("notifications")
-      .select("*")
-      .or(`user_id.eq.${userId},user_id.is.null`)
-      .order("created_at", { ascending: false })
-      .limit(20);
-
-    if (!notificationsData) return;
-
-    const { data: readsData } = await supabase
-      .from("notification_reads")
-      .select("notification_id")
-      .eq("user_id", userId);
-
-    const readNotificationIds = new Set(
-      readsData?.map((r) => r.notification_id) || [],
-    );
-
-    const notificationsWithReadStatus = notificationsData.map((n) => ({
-      ...n,
-      is_read: readNotificationIds.has(n.id),
-    }));
-
-    setNotifications(notificationsWithReadStatus);
-    setUnreadCount(
-      notificationsWithReadStatus.filter((n) => !n.is_read).length,
-    );
-  };
-
-  const markAllAsRead = async () => {
-    if (!user) return;
-
-    const supabase = createClient();
-    const unreadNotifications = notifications.filter((n) => !n.is_read);
-
-    if (unreadNotifications.length === 0) return;
-
-    const readsToInsert = unreadNotifications.map((n) => ({
-      notification_id: n.id,
-      user_id: user.id,
-    }));
-
-    await supabase.from("notification_reads").insert(readsToInsert);
-
-    setNotifications(notifications.map((n) => ({ ...n, is_read: true })));
-    setUnreadCount(0);
-  };
-
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const supabase = createClient();
-        const { data: authData, error: authError } =
-          await supabase.auth.getUser();
-
-        if (authError || !authData.user) {
-          setError("Failed to get authenticated user");
-          setLoading(false);
-          return;
-        }
-
-        const { data, error: dbError } = await supabase
-          .from("users")
-          .select("*")
-          .eq("id", authData.user.id)
-          .single();
-
-        if (dbError) {
-          setError("Failed to load user data");
-          setLoading(false);
-          return;
-        }
-
-        setUser(data);
-        await loadNotifications(authData.user.id);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error loading user:", err);
-        setError("An unexpected error occurred");
-        setLoading(false);
-      }
-    };
-
-    loadUser();
-  }, []);
 
   useEffect(() => {
     const handleScroll = (e: Event) => {
@@ -222,7 +107,6 @@ export default function UserProfile({ pageName }: UserProfileProps) {
               <PopoverTrigger asChild>
                 <div className="relative">
                   <Bell className="cursor-pointer transition-opacity hover:opacity-70" />
-                  {/* Unread badge */}
                   {unreadCount > 0 && (
                     <span className="bg-destructive absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-semibold text-white">
                       {unreadCount}
@@ -290,16 +174,6 @@ export default function UserProfile({ pageName }: UserProfileProps) {
                     ))
                   )}
                 </div>
-                {/* Footer */}
-                {/* <div className="border-t px-4 py-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-auto w-full p-2 text-xs"
-                  >
-                    View all notifications
-                  </Button>
-                </div> */}
               </PopoverContent>
             </TooltipTrigger>
           </Popover>
@@ -316,7 +190,6 @@ export default function UserProfile({ pageName }: UserProfileProps) {
               {getInitials(user.firstname, user.lastname)}
             </AvatarFallback>
           </Avatar>
-          {/* <div className="md:hidden">{user.role}</div> */}
 
           {/* Hidden on mobile, shown on md+ */}
           <div className="flex flex-col">

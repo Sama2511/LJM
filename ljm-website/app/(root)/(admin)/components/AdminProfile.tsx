@@ -1,5 +1,4 @@
 "use client";
-import { createClient } from "@/app/utils/client";
 import React, { useEffect, useState } from "react";
 import { Skeleton } from "../../../../components/ui/skeleton";
 import {
@@ -20,43 +19,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-
-interface User {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  avatar_url?: string;
-  role: string;
-  formcompleted: boolean;
-  created_at: string;
-}
-
-interface Notification {
-  id: string;
-  type: string;
-  title: string;
-  message: string;
-  reference_type: string | null;
-  reference_id: string | null;
-  user_id: string | null;
-  created_at: string;
-  is_read: boolean;
-}
+import { useUser } from "@/contexts/UserContext";
 
 interface UserProfileProps {
   pageName: string;
 }
 
 export default function AdminProfile({ pageName }: UserProfileProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { user, loading, error, notifications, unreadCount, markAllAsRead } =
+    useUser();
   const [notificationOpen, setNotificationOpen] = useState(false);
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [unreadCount, setUnreadCount] = useState(0);
 
   const getInitials = (firstname: string, lastname: string) => {
     return `${firstname.charAt(0)}${lastname.charAt(0)}`.toUpperCase();
@@ -73,100 +45,6 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
     if (seconds < 604800) return `${Math.floor(seconds / 86400)} days ago`;
     return `${Math.floor(seconds / 604800)} weeks ago`;
   };
-
-  const loadNotifications = async (userId: string) => {
-    const supabase = createClient();
-
-    // Fetch notifications for the user or global notifications
-    const { data: notificationsData } = await supabase
-      .from("notifications")
-      .select("*")
-      .or(`user_id.eq.${userId},user_id.is.null`)
-      .order("created_at", { ascending: false })
-      .limit(20);
-
-    if (!notificationsData) return;
-
-    // Fetch notification reads for this user
-    const { data: readsData } = await supabase
-      .from("notification_reads")
-      .select("notification_id")
-      .eq("user_id", userId);
-
-    const readNotificationIds = new Set(
-      readsData?.map((r) => r.notification_id) || [],
-    );
-
-    // Mark notifications as read if they appear in notification_reads
-    const notificationsWithReadStatus = notificationsData.map((n) => ({
-      ...n,
-      is_read: readNotificationIds.has(n.id),
-    }));
-
-    setNotifications(notificationsWithReadStatus);
-    setUnreadCount(
-      notificationsWithReadStatus.filter((n) => !n.is_read).length,
-    );
-  };
-
-  const markAllAsRead = async () => {
-    if (!user) return;
-
-    const supabase = createClient();
-    const unreadNotifications = notifications.filter((n) => !n.is_read);
-
-    if (unreadNotifications.length === 0) return;
-
-    // Insert rows into notification_reads table
-    const readsToInsert = unreadNotifications.map((n) => ({
-      notification_id: n.id,
-      user_id: user.id,
-    }));
-
-    await supabase.from("notification_reads").insert(readsToInsert);
-
-    // Update local state
-    setNotifications(notifications.map((n) => ({ ...n, is_read: true })));
-    setUnreadCount(0);
-  };
-
-  useEffect(() => {
-    const loadUser = async () => {
-      try {
-        const supabase = createClient();
-        const { data: authData, error: authError } =
-          await supabase.auth.getUser();
-
-        if (authError || !authData.user) {
-          setError("Failed to get authenticated user");
-          setLoading(false);
-          return;
-        }
-
-        const { data, error: dbError } = await supabase
-          .from("users")
-          .select("*")
-          .eq("id", authData.user.id)
-          .single();
-
-        if (dbError) {
-          setError("Failed to load user data");
-          setLoading(false);
-          return;
-        }
-
-        setUser(data);
-        await loadNotifications(authData.user.id);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error loading user:", err);
-        setError("An unexpected error occurred");
-        setLoading(false);
-      }
-    };
-
-    loadUser();
-  }, []);
 
   useEffect(() => {
     const handleScroll = (e: Event) => {
@@ -295,16 +173,6 @@ export default function AdminProfile({ pageName }: UserProfileProps) {
                     </div>
                   ))
                 )}
-              </div>
-
-              <div className="border-t px-4 py-2">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-auto w-full p-2 text-xs"
-                >
-                  View all notifications
-                </Button>
               </div>
             </PopoverContent>
           </Popover>
