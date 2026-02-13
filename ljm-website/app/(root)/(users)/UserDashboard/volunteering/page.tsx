@@ -9,7 +9,7 @@ export default async function MyVolunteeringPage() {
     <div className="h-full w-full pt-5 pr-7">
       <UserProfile pageName="My Volunteering" />
 
-      <div className="mt-8 mb-10">
+      <div className="mt-10 mb-10">
         <MyVolunteeringClient data={data ?? []} />
       </div>
     </div>

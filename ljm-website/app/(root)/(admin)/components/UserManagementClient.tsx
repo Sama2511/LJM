@@ -502,7 +502,7 @@ export default function UserManagementClient({
   );
 
   return (
-    <div className="w-full pt-5 pr-10">
+    <div className="w-full pt-10 pr-10">
       <AdminProfile pageName="User management" />
       <Tabs defaultValue="crew" className="w-full">
         <div className="flex flex-col gap-5">

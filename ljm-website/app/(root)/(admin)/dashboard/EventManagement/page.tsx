@@ -6,7 +6,7 @@ import AdminProfile from "../../components/AdminProfile";
 
 export default async function page() {
   return (
-    <div className="w-full pt-7 pr-10 pb-10">
+    <div className="w-full pt-10 pr-10 pb-10">
       <AdminProfile pageName="Event Management" />
       <div className="flex justify-end">
         <EventForm />

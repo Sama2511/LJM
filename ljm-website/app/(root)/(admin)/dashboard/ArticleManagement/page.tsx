@@ -16,10 +16,10 @@ export default async function ArticleManagement() {
     })) || [];
 
   return (
-    <div className="@container w-full p-6">
+    <div className="@container w-full pt-10 pr-4 md:p-6">
       <AdminProfile pageName="Article Management" />
 
-      <div className="flex flex-col gap-6 p-6">
+      <div className="flex flex-col gap-6 pt-6">
         <div className="flex justify-end">
           <ArticleForm />
         </div>

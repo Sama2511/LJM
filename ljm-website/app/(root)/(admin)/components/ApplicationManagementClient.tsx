@@ -380,7 +380,7 @@ export default function ApplicationManagementClient({
   );
 
   return (
-    <div className="w-full pt-10 pr-4 md:pr-12">
+    <div className="w-full pt-10 pr-10 md:pr-12">
       <AdminProfile pageName="Crew Applications" />
 
       <Tabs defaultValue="pending" className="w-full">
@@ -398,7 +398,7 @@ export default function ApplicationManagementClient({
                 placeholder="Search for users"
                 value={searchInput}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="pl-9 pr-9"
+                className="pr-9 pl-9"
               />
               {searchInput && (
                 <Button

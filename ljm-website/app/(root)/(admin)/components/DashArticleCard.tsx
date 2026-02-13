@@ -51,7 +51,7 @@ export default function DashArticleCard({
     });
 
   return (
-    <Card className="group bg-muted max-w-[335px] min-w-[335px] overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+    <Card className="group bg-muted w-full overflow-hidden rounded-2xl p-0 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl md:max-w-[335px] md:min-w-[335px]">
       <CardTitle>
         <div className="relative h-40 w-full overflow-hidden">
           <Image

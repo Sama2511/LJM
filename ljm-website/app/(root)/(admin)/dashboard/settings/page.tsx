@@ -313,7 +313,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="w-full p-6">
+    <div className="mb-10 w-full pt-10 pr-4 md:p-6">
       <AdminProfile pageName="Settings" />
       <div className="mt-5 max-w-4xl space-y-6">
         {/* Profile Picture Card */}

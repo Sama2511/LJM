@@ -14,9 +14,11 @@ export default async function BrowseEventsPage() {
   const userRequests = user ? await GetUserVolunteerRequests(user.id) : null;
 
   return (
-    <div className="w-full">
-      <div className="max-w-8xl mx-auto w-full py-10 pr-6">
+    <div className="w-full pt-10 pr-10">
+      <div className="max-w-8xl mx-auto w-full">
+        {/* <div className="pr-4 md:pr-0"> */}
         <UserProfile pageName="Browse Events" />
+        {/* </div> */}
         <div className="mt-8">
           <BrowseEventsClient
             events={eventsData.data ?? []}

@@ -58,7 +58,7 @@ export default function PaginatedArticleGrid({
 
   return (
     <div>
-      <div className="flex flex-wrap gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {paginatedArticles.map((article) => (
           <DashArticleCard
             key={article.id}

@@ -267,7 +267,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="w-full pt-5 pr-7">
+    <div className="w-full pt-10 pr-7">
       <UserProfile pageName="Profile" />
       <div className="mt-5 mb-10 max-w-2xl space-y-6">
         <Card>
