@@ -24,7 +24,8 @@ export type UpcomingEvent = {
   id: string;
   title: string;
   date: string;
-  time: string;
+  starts_at: string;
+  ends_at: string;
   capacity: number;
   current_signups: number;
 };
@@ -64,11 +65,11 @@ export async function FetchDashboardStats(): Promise<DashboardStats> {
     supabase
       .from("users")
       .select("*", { count: "exact", head: true })
-      .eq("role", "crew"),
+      .in("role", ["Kindler", "Kindling", "Flame", "Fire-keepers"]),
     supabase
       .from("volunteer_form")
       .select("*", { count: "exact", head: true })
-      .eq("status", "pending"),
+      .eq("status", "Pending"),
     supabase.from("articles").select("*", { count: "exact", head: true }),
     supabase.from("documents").select("*", { count: "exact", head: true }),
   ]);
@@ -106,7 +107,7 @@ export async function FetchUpcomingEvents(): Promise<UpcomingEvent[]> {
 
   const { data: events, error } = await supabase
     .from("events")
-    .select("id, title, date, time, capacity")
+    .select("id, title, date, starts_at, ends_at, capacity")
     .gte("date", now)
     .order("date", { ascending: true })
     .limit(5);

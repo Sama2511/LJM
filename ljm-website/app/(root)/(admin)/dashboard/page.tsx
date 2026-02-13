@@ -61,11 +61,11 @@ export default function DashboardPage() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "pending":
+      case "Pending":
         return "bg-accent/20 text-accent-foreground";
-      case "approved":
+      case "Approved":
         return "bg-secondary/30 text-secondary-foreground";
-      case "rejected":
+      case "Rejected":
         return "bg-destructive/20 text-destructive";
       default:
         return "bg-muted text-muted-foreground";
@@ -90,7 +90,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="w-full pt-5 pr-5 pb-10">
+    <div className="w-full pt-10 pr-5 pb-10">
       <AdminProfile pageName="Dashboard" />
 
       {/* Stats Cards */}
@@ -213,7 +213,7 @@ export default function DashboardPage() {
                         {event.title}
                       </p>
                       <p className="text-muted-foreground text-xs md:text-sm">
-                        {formatDate(event.date)} • {event.time}
+                        {formatDate(event.date)} • {event.starts_at} - {event.ends_at}
                       </p>
                     </div>
                     <div className="ml-2 text-right">
