@@ -177,6 +177,7 @@ export default function BrowseEventsClient({
                 hasRequested={hasRequested}
                 hideCapacity={isPast}
                 hideJoinButton={isPast}
+                userRequests={userRequests} // PASS userRequests HERE
               />
             );
           })}

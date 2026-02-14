@@ -37,6 +37,7 @@ interface VolunteerEventCardProps {
   hasRequested?: boolean;
   hideCapacity?: boolean;
   hideJoinButton?: boolean;
+  userRequests?: any[]; // ADD THIS
 }
 
 export default function VolunteerEventCard({
@@ -52,6 +53,7 @@ export default function VolunteerEventCard({
   hasRequested,
   hideCapacity = false,
   hideJoinButton = false,
+  userRequests = [], // ADD THIS
 }: VolunteerEventCardProps) {
   const [isPending, startTransition] = useTransition();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -164,10 +166,12 @@ export default function VolunteerEventCard({
         </Button>
       </CardFooter>
 
+      {/* PASS userRequests TO EventDetailsSheet */}
       <EventDetailsSheet
         eventId={id}
         open={isDetailsOpen}
         onOpenChange={setIsDetailsOpen}
+        userRequests={userRequests}
       />
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>

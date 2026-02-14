@@ -6,7 +6,7 @@ import { createClient } from "@/app/utils/server";
 export default async function page() {
   const supabase = await createClient();
 
-  // fetch testimonials and join with users table (select firstname and lastname)
+  // Fetch testimonials first
   const { data: testimonials, error } = await supabase
     .from("testimonials")
     .select(`
@@ -23,15 +23,32 @@ export default async function page() {
     console.error("Error fetching testimonials:", error);
   }
 
-  const formattedTestimonials = testimonials?.map((t: any) => ({
-    id: t.id,
-    user_name: t.user_id, // temporarily just show the UUID
-    event_title: t.event_title,
-    comment: t.comment,
-    reply: t.reply,
-    created_at: t.created_at,
-  })) || [];
+  // Get unique user IDs
+  const userIds = testimonials?.map(t => t.user_id).filter(Boolean) || [];
+  
+  // Fetch user details separately
+  const { data: users } = await supabase
+    .from("users")
+    .select("id, firstname, lastname")
+    .in("id", userIds);
 
+  // Create a map for quick lookup
+  const userMap = new Map(users?.map(u => [u.id, u]));
+
+  // Format testimonials with user names
+  const formattedTestimonials = testimonials?.map((t: any) => {
+    const user = userMap.get(t.user_id);
+    return {
+      id: t.id,
+      user_name: user 
+        ? `${user.firstname} ${user.lastname}` 
+        : "Unknown User",
+      event_title: t.event_title,
+      comment: t.comment,
+      reply: t.reply,
+      created_at: t.created_at,
+    };
+  }) || [];
 
   return (
     <div className="@container w-full p-6">

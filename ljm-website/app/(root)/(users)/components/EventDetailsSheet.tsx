@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import {
   Sheet,
@@ -18,13 +16,18 @@ type Props = {
   eventId: string;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  userRequests?: any[]; // Array of user's volunteer requests
 };
 
-export default function EventDetails({ eventId, open, onOpenChange }: Props) {
+export default function EventDetails({ eventId, open, onOpenChange, userRequests = [] }: Props) {
   const [eventData, setEventData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const isPastEvent = eventData && new Date(eventData.date) < new Date();
 
+  // Check if the current user has an approved volunteer request for this event
+  const hasVolunteered = userRequests.some(
+    (req) => req.event_id === eventId && req.status === "approved"
+  );
 
   async function loadEvent() {
     setLoading(true);
@@ -130,7 +133,8 @@ export default function EventDetails({ eventId, open, onOpenChange }: Props) {
               )}
             </div>
               
-              {isPastEvent && (
+              {/* Only show Leave Testimonial button if event is past AND user volunteered for it */}
+              {isPastEvent && hasVolunteered && (
                 <a href={`/testimonials?eventId=${eventData.id}&eventTitle=${encodeURIComponent(eventData.title)}`}
                   className="w-full block text-center bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/90 transition"
                 >
