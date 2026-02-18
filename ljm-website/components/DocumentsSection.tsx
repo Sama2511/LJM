@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import PdfViewer from "./PdfViewer";
+import dynamic from "next/dynamic";
 import { createClient } from "@/app/utils/client";
+
+const PdfViewer = dynamic(() => import("./PdfViewer"), { ssr: false });
 
 type Document = {
   id: string;
