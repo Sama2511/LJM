@@ -23,23 +23,6 @@ interface SearchResult {
   created_at?: string;
 }
 
-const staticPages = [
-  {
-    id: "services",
-    title: "Services",
-    description: "Explore our professional services and offerings",
-    type: "Page",
-    keywords: ["services", "professional", "offerings"],
-  },
-  {
-    id: "crew",
-    title: "Crew",
-    description: "Meet our talented team members",
-    type: "Page",
-    keywords: ["crew", "team", "members", "staff"],
-  },
-];
-
 export default function SearchBar() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -60,17 +43,6 @@ export default function SearchBar() {
 
     try {
       const searchPattern = `%${searchTerm}%`;
-
-      const filteredStatic = staticPages.filter((page) => {
-        const searchableText = [
-          page.title,
-          page.description,
-          ...(page.keywords || []),
-        ]
-          .join(" ")
-          .toLowerCase();
-        return searchableText.includes(searchTerm.toLowerCase());
-      });
 
       const { data: eventsData } = await supabase
         .from("events")
@@ -98,12 +70,6 @@ export default function SearchBar() {
         (event, index, self) =>
           index === self.findIndex((e) => e.id === event.id),
       );
-
-      const { data: pagesData } = await supabase
-        .from("pages")
-        .select("id, title, content")
-        .or(`title.ilike.${searchPattern},content.ilike.${searchPattern}`)
-        .limit(10);
 
       const { data: articlesData } = await supabase
         .from("articles")
@@ -136,13 +102,6 @@ export default function SearchBar() {
           image_url: event.image_url,
         }));
 
-      const pageResults: SearchResult[] = (pagesData || []).map((page) => ({
-        id: page.id,
-        title: page.title,
-        description: page.content || "",
-        type: "Page",
-      }));
-
       const articleResults: SearchResult[] = (articlesData || []).map(
         (article) => ({
           id: article.id,
@@ -155,9 +114,7 @@ export default function SearchBar() {
       );
 
       const combined: SearchResult[] = [
-        ...filteredStatic,
         ...eventResults,
-        ...pageResults,
         ...articleResults,
       ];
 
@@ -211,14 +168,6 @@ export default function SearchBar() {
       router.push(`/events?tab=${isPast ? "past" : "upcoming"}`);
     } else if (item.type === "Article") {
       router.push(`/articles`);
-    } else if (item.type === "Page") {
-      if (item.id === "services") {
-        router.push(`/services`);
-      } else if (item.id === "crew") {
-        router.push(`/crew`);
-      } else {
-        router.push(`/`);
-      }
     }
   };
 
@@ -243,8 +192,6 @@ export default function SearchBar() {
         return "bg-primary/10 text-primary";
       case "Article":
         return "bg-secondary/50 text-secondary-foreground";
-      case "Page":
-        return "bg-muted text-muted-foreground";
       default:
         return "bg-muted text-muted-foreground";
     }
@@ -282,7 +229,7 @@ export default function SearchBar() {
                   if (e.key === "Enter") handleEnterKey();
                   if (e.key === "Escape") handleClose();
                 }}
-                placeholder="Search events, articles, pages..."
+                placeholder="Search events and articles..."
                 className="border-0 p-0 text-base shadow-none focus-visible:ring-0"
                 autoFocus
               />
@@ -305,7 +252,7 @@ export default function SearchBar() {
                   Start typing to search...
                 </p>
                 <p className="text-muted-foreground mt-1 text-xs">
-                  Search for events, articles, and pages
+                  Search for events and articles
                 </p>
               </div>
             )}
