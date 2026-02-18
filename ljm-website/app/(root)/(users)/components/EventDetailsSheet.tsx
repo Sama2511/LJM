@@ -135,8 +135,8 @@ export default function EventDetails({ eventId, open, onOpenChange, userRequests
               
               {/* Only show Leave Testimonial button if event is past AND user volunteered for it */}
               {isPastEvent && hasVolunteered && (
-                <a href={`/testimonials?eventId=${eventData.id}&eventTitle=${encodeURIComponent(eventData.title)}`}
-                  className="w-full block text-center bg-primary text-white px-3 py-2 rounded-md hover:bg-primary/90 transition"
+                <a href={`/UserDashboard/testimonials?eventId=${eventData.id}&eventTitle=${encodeURIComponent(eventData.title)}`}
+                  className="bg-primary block w-full rounded-md px-3 py-2 text-center text-white transition hover:bg-primary/90"
                 >
                   Leave Testimonial
                 </a>

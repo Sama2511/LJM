@@ -5,6 +5,7 @@ import {
   CalendarCheck2,
   FileUser,
   LayoutDashboard,
+  MessageSquare,
   Settings,
   ShipWheelIcon,
   UserCog,
@@ -62,6 +63,11 @@ const data = {
       title: "Documents",
       url: "/dashboard/DocumentManagement",
       icon: Files,
+    },
+    {
+      title: "Testimonials",
+      url: "/dashboard/UserTestimonialsManagement",
+      icon: MessageSquare,
     },
     {
       title: "Settings",

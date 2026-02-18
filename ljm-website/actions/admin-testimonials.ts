@@ -21,8 +21,8 @@ export async function updateTestimonialReply(id: string, reply: string) {
     throw new Error(error.message);
   }
 
-  // Revalidate the testimonials page to show updated data
-  revalidatePath("/admin/UserTestimonialsManagement");
+  revalidatePath("/dashboard/UserTestimonialsManagement");
+  revalidatePath("/UserDashboard");
   
   return { success: true };
 }

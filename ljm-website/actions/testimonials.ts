@@ -1,7 +1,7 @@
-// actions/testimonials.ts
 "use server";
 
 import { createClient } from "@/app/utils/server";
+import { revalidatePath } from "next/cache";
 
 export interface Testimonial {
   id: string;
@@ -13,13 +13,16 @@ export interface Testimonial {
   created_at: string;
 }
 
-// Submit testimonial (SERVER ACTION)
-export async function submitTestimonial(formData: FormData) {
+export async function submitTestimonial({
+  eventId,
+  eventTitle,
+  comment,
+}: {
+  eventId: string;
+  eventTitle: string;
+  comment: string;
+}) {
   const supabase = await createClient();
-
-  const comment = formData.get("comment") as string;
-  const eventId = formData.get("eventId") as string;
-  const eventTitle = formData.get("eventTitle") as string;
 
   if (!comment || comment.length < 10) {
     throw new Error("Testimonial must be at least 10 characters");
@@ -38,9 +41,11 @@ export async function submitTestimonial(formData: FormData) {
   });
 
   if (error) throw error;
+
+  revalidatePath("/UserDashboard");
+  revalidatePath("/dashboard/UserTestimonialsManagement");
 }
 
-// Fetch user testimonials (SERVER FUNCTION)
 export async function getUserTestimonials() {
   const supabase = await createClient();
 
