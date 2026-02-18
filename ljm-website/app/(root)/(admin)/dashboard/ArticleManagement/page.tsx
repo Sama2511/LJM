@@ -11,7 +11,7 @@ export default async function ArticleManagement() {
       id: article.id,
       title: article.title,
       content: article.content,
-      image_url: `https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/article-pics/3e61ff3b-2e19-4c9c-a02a-413d85becbf4`,
+      image_url: `https://ogvimirljuiaxibowzul.supabase.co/storage/v1/object/public/article-pics/${article.image_url}`,
       created_at: article.created_at,
     })) || [];
 

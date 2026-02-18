@@ -153,7 +153,7 @@ export function EmailTemplate({
         }}
       >
         <p style={{ margin: "0" }}>
-          This email was sent from the LJM Memorial Hospice contact form
+          This email was sent from the Kindlewood contact form
         </p>
       </div>
     </div>

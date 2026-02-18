@@ -12,7 +12,6 @@ export default async function EventList() {
 
   const { data: rolesData } = await supabase.from("event_roles").select("*");
 
-  await new Promise((resolve) => setTimeout(resolve, 2000));
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
 

@@ -9,8 +9,6 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    console.log("Form submission received:", body);
-
     const { captchaToken, formType, ...formData } = body;
 
     if (!captchaToken) {
@@ -29,8 +27,6 @@ export async function POST(req: NextRequest) {
     );
 
     const verifyData = await verifyRes.json();
-    console.log("reCAPTCHA verification response:", verifyData);
-
     if (!verifyData.success) {
       return NextResponse.json({ success: false, error: "Captcha verification failed", captchaScore: verifyData.score }, { status: 400 });
     }
@@ -46,19 +42,17 @@ export async function POST(req: NextRequest) {
       case "signup":
         validatedData = signUpSchema.parse(formData);
         await signup(validatedData);
-        console.log("Signup form validated successfully:", validatedData);
         break;
 
       case "volunteer":
         validatedData = volunteerForm.parse(formData);
         await volunteerSubmit(validatedData);
-        console.log("Volunteer form validated successfully:", validatedData);
         break;
 
       case "contact":
         validatedData = formSchema.parse(formData);
         const { data, error } = await resend.emails.send({
-          from: "Acme <onboarding@resend.dev>",
+          from: "Kindlewood <onboarding@resend.dev>",
           to: [process.env.RESEND_TO_EMAIL!],
           replyTo: validatedData.email,
           subject: `New Contact Form Message from ${validatedData.firstname} ${validatedData.lastname}`,
@@ -75,7 +69,6 @@ export async function POST(req: NextRequest) {
           return NextResponse.json({ success: false, error }, { status: 500 });
         }
 
-        console.log("Contact form email sent successfully:", validatedData);
         break;
 
       default:

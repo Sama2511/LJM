@@ -23,14 +23,14 @@ export default function AboutUspage() {
               }`}
             >
               <p className="font-light">
-                LJM Memorial Hospice exists because of the way our community
+                Kindlewood exists because of the way our community
                 showed up when it mattered most. When my husband Liam was dying
                 of brain cancer, it was the people around us—friends,
                 neighbours, even strangers—who held us together. Their kindness,
                 meals, care for our kids, quiet support… it gave us strength.
                 But not everyone has that. And even with all that love, we still
                 didn't have a space that let us stay close as a family in those
-                final days. LJM Memorial Hospice is our way of giving that back.
+                final days. Kindlewood is our way of giving that back.
                 It's a place where care isn't limited in anyway, but woven
                 through connection, compassion, and community. Because no one
                 should face the end alone—and everyone deserves to be held with
@@ -82,7 +82,7 @@ export default function AboutUspage() {
               Our mission
             </h1>
             <p className="font-light">
-              LJM Memorial Hospice was established in 2018 by Kate McLaughlin.
+              Kindlewood was established in 2018 by Kate McLaughlin.
               Kate wanted to find a way to give back to the WA community after
               they had provided so much support to her husband Liam when he
               developed a brain tumor.
@@ -103,7 +103,7 @@ export default function AboutUspage() {
               About Us
             </h1>
             <p className="font-light">
-              LJM Memorial Hospice was established in 2018 by Kate McLaughlin.
+              Kindlewood was established in 2018 by Kate McLaughlin.
               Kate wanted to find a way to give back to the WA community after
               they had provided so much support to her husband Liam when he
               developed a brain tumor.

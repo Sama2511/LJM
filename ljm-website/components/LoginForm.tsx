@@ -41,7 +41,6 @@ export default function page({
       if (error) throw error;
 
       const user = (await supabase.auth.getUser()).data.user?.id;
-      console.log(user);
       const { data: formProgress, error: formError } = await supabase
         .from("users")
         .select("formcompleted")

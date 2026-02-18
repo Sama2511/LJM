@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /dashboard
+Disallow: /dashboard/*
+Disallow: /UserDashboard
+Disallow: /UserDashboard/*
+Disallow: /api/

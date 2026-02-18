@@ -50,11 +50,11 @@ export default async function page() {
           <ul className="text-foreground mb-10 space-y-3">
             <li className="flex gap-3">
               <Phone />
-              {settings.contact_phone || "+91 0000 0000"}
+              {settings.contact_phone || "+61 0000 0000"}
             </li>
             <li className="flex gap-3">
               <Mail />
-              {settings.contact_email || "info@LJMMemorialhospice.com"}
+              {settings.contact_email || "info@kindlewood.com"}
             </li>
 
             <li className="flex gap-3">
@@ -87,7 +87,7 @@ export default async function page() {
                 rel="noopener noreferrer"
                 className="transition-transform hover:scale-110"
               >
-                <FaFacebookSquare size={30} color="1877f2" />
+                <FaFacebookSquare size={30} color="#1877f2" />
               </a>
             )}
             {settings.social_instagram && (

@@ -192,7 +192,7 @@ export default function page() {
                         {...field}
                         id="inspiration"
                         aria-invalid={fieldState.invalid}
-                        placeholder="We’d love to hear what brought you to LJM Memorial Hospice and what makes you want to help."
+                        placeholder="We'd love to hear what brought you to Kindlewood and what makes you want to help."
                       />
                       {fieldState.invalid && (
                         <FieldError errors={[fieldState.error]} />

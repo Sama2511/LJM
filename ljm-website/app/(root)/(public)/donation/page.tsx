@@ -32,7 +32,6 @@ export default function DonatePage() {
       }
     };
 
-    // Try to initialize after a short delay to ensure script is loaded
     const timer = setTimeout(initResizer, 500);
     return () => clearTimeout(timer);
   }, []);

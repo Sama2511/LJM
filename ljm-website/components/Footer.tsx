@@ -21,7 +21,7 @@ function Footer() {
                 <Link href="/">
                   <Image
                     src="/KindlewoodNewLogo.png"
-                    alt=""
+                    alt="Kindlewood Logo"
                     height={300}
                     width={300}
                     className="w-[280px] @[600]:w-[300px] @[1100]:w-[350px]"

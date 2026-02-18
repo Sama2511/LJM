@@ -41,7 +41,6 @@ export default function page({
       if (error) throw error;
 
       const user = (await supabase.auth.getUser()).data.user?.id;
-      console.log(user);
       const { data: userData, error: userError } = await supabase
         .from("users")
         .select("formcompleted, role")
@@ -53,13 +52,11 @@ export default function page({
         return;
       }
 
-      // Admin users go directly to admin dashboard
       if (userData?.role === "admin") {
         router.replace("/dashboard");
         return;
       }
 
-      // Non-admin users need to complete the form first
       if (!userData?.formcompleted) {
         router.replace("/volunteerForm");
         return;

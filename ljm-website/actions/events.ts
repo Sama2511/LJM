@@ -63,7 +63,7 @@ export async function CreateEvent(formData: z.infer<typeof eventForm>) {
     console.log(notifError);
   }
 
-  revalidatePath("/eventManagement");
+  revalidatePath("/dashboard/EventManagement");
   return { success: true };
 }
 
@@ -130,7 +130,7 @@ export async function DeleteEvent(eventId: string) {
     return { success: false, error: error.message };
   }
 
-  revalidatePath("/eventManagement");
+  revalidatePath("/dashboard/EventManagement");
   return { success: true };
 }
 
@@ -274,6 +274,6 @@ export async function UpdateEvent(
     await supabase.from("notifications").insert(notifications);
   }
 
-  revalidatePath("/eventManagement");
+  revalidatePath("/dashboard/EventManagement");
   return { success: true };
 }

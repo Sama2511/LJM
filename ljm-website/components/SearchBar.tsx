@@ -201,6 +201,7 @@ export default function SearchBar() {
     <>
       <button
         onClick={() => setOpen(true)}
+        aria-label="Search"
         className="hover:bg-accent rounded-full p-2 transition"
       >
         <Search size={20} className="text-foreground" />

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -53,7 +52,7 @@ export default function Home() {
               </Button>
               <Button asChild variant="outline">
                 <Link
-                  href="/Crew"
+                  href="/crew"
                   className="bg-background flex items-center justify-center border-2 py-4.5 text-[18px] font-bold text-black @[800]:py-5 @[800]:text-[20px] @[1000]:px-8 @[1200]:py-6 @[1200]:text-[22px] @[1600]:py-6 @[1600]:text-[28px]"
                 >
                   Join The Crew
@@ -97,23 +96,6 @@ export default function Home() {
         <Suspense fallback={<EventLoading />}>
           <UpcomingEvents />
         </Suspense>
-      </section>
-      <section className="bg-muted mt-40 p-10">
-        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <h1 className="text-center font-serif text-3xl text-black">
-            Subscribe to Our Newsletter
-          </h1>
-          <div className="flex w-full max-w-sm flex-col items-center gap-2 md:flex-row">
-            <Input
-              type="email"
-              placeholder="Email"
-              className="bg-background w-70"
-            />
-            <Button type="submit" variant="outline" className="w-70 md:w-30">
-              Subscribe
-            </Button>
-          </div>
-        </div>
       </section>
     </>
   );

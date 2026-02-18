@@ -63,7 +63,7 @@ export async function UpdateSettings(
     }
   }
 
-  revalidatePath("/dashboard/SiteSettings");
+  revalidatePath("/dashboard/settings");
   revalidatePath("/contact");
   return { success: true };
 }

@@ -114,7 +114,7 @@ export default function ArticleForm() {
                 return;
               }
             } else {
-              data.image_url = "placeholderImage.png";
+              data.image_url = "dummy-image-square8.png";
             }
 
             const result = await CreateArticle(data);

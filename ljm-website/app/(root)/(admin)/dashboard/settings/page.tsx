@@ -30,7 +30,6 @@ import {
   Youtube,
   Save,
 } from "lucide-react";
-import UserProfile from "@/app/(root)/(users)/components/UserProfile";
 import { Spinner } from "@/components/ui/spinner";
 import { FetchSettings, UpdateSettings } from "@/actions/settings";
 import AdminProfile from "../../components/AdminProfile";
@@ -292,7 +291,7 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <div className="w-full p-6">
-        <UserProfile pageName="Settings" />
+        <AdminProfile pageName="Settings" />
         <div className="mt-6 space-y-4">
           <Skeleton className="h-48 w-full max-w-2xl" />
           <Skeleton className="h-96 w-full max-w-2xl" />
@@ -304,7 +303,7 @@ export default function ProfilePage() {
   if (!userData) {
     return (
       <div className="w-full p-6">
-        <UserProfile pageName="Settings" />
+        <AdminProfile pageName="Settings" />
         <p className="text-muted-foreground mt-6">
           Failed to load profile data
         </p>

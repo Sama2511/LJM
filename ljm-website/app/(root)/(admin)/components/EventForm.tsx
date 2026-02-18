@@ -124,11 +124,11 @@ export default function EventForm() {
                 return;
               }
             } else {
-              data.image_url = "placeholderImage.png";
+              data.image_url = "dummy-image-square8.png";
             }
             const result = await CreateEvent(data);
             if (result.success) {
-              toast.success("Great succes");
+              toast.success("Event created successfully");
               form.reset();
               setImageUrl([]);
               setOpen(false);
@@ -136,7 +136,7 @@ export default function EventForm() {
                 imageInputRef.current.value = "";
               }
             } else {
-              toast.error("Oh no");
+              toast.error("Failed to create event. Please try again.");
             }
           })}
         >
