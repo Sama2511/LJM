@@ -89,7 +89,7 @@ export default function Home() {
       >
         <div className="container mx-auto py-16"></div>
       </div>
-      <section className="flex w-full flex-col items-center gap-20">
+      <section className="mb-20 flex w-full flex-col items-center gap-20">
         <h1 className="text-foreground font-chillax max-w-[70%] text-center text-5xl leading-tight font-medium sm:text-6xl lg:text-7xl">
           Upcoming Events
         </h1>
