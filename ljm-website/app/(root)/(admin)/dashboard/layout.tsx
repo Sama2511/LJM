@@ -1,8 +1,11 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import { AppSidebar } from "@/app/(root)/(admin)/components/dashboardNav/dash-sidebar";
 import "@/app/(root)/globals.css";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+
 import { Toaster } from "@/components/ui/sonner";
 import { UserProvider } from "@/contexts/UserContext";
 
@@ -13,16 +16,16 @@ export default function DashboardLayout({
 }>) {
   return (
     <div>
-      <Header />
       <UserProvider>
         <SidebarProvider>
-          <AppSidebar />
-          <SidebarTrigger className="mt-13" />
-          {children}
+          <AppSidebar className="" />
+          <SidebarInset>
+            <SidebarTrigger className="m-2 md:hidden" />
+            {children}
+          </SidebarInset>
           <Toaster />
         </SidebarProvider>
       </UserProvider>
-      <Footer />
     </div>
   );
 }

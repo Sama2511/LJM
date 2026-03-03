@@ -30,7 +30,7 @@ type EventItem = {
   roles: Role[];
 };
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 8;
 
 export default function PaginatedEventGrid({
   events,

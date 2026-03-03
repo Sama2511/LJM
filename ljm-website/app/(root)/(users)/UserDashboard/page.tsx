@@ -92,7 +92,7 @@ export default async function UserDashboardPage() {
   ];
 
   return (
-    <div className="w-full pt-10 pr-7">
+    <div className="w-full px-6">
       <UserProfile pageName="Dashboard" />
 
       {/* Welcome */}

@@ -40,7 +40,7 @@ export default function HeroSlideshow() {
       <div className="relative group">
         <div className="relative overflow-hidden rounded-2xl shadow-2xl">
           <div className="bg-gradient-to-br from-primary via-primary to-accent rounded-2xl p-1">
-            <div className="bg-white rounded-2xl overflow-hidden">
+            <div className="bg-muted rounded-2xl overflow-hidden">
               <div className="relative w-full aspect-square">
                 {slides.map((slide, index) => (
                   <div
@@ -54,7 +54,7 @@ export default function HeroSlideshow() {
                       alt={`Slide ${index + 1}`}
                       fill
                       className="object-cover"
-                      priority={index === 0}
+                      priority={index <= 1}
                     />
                   </div>
                 ))}

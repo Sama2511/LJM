@@ -61,6 +61,7 @@ export default function AboutUspage() {
               alt="About us"
               className="rounded-3xl object-cover"
               fill
+              priority
             />
           </div>
 
@@ -95,6 +96,7 @@ export default function AboutUspage() {
               alt="About us"
               className="rounded-3xl object-cover"
               fill
+              priority
             />
           </div>
 

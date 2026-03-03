@@ -502,7 +502,7 @@ export default function UserManagementClient({
   );
 
   return (
-    <div className="w-full pt-10 pr-10">
+    <div className="w-full px-6">
       <AdminProfile pageName="User management" />
       <Tabs defaultValue="crew" className="w-full">
         <div className="flex flex-col gap-5">
@@ -549,15 +549,15 @@ export default function UserManagementClient({
 
           {/* Desktop table layout */}
           <div className="bg-card hidden rounded-lg border shadow-sm md:block">
-            <Table className="">
+            <Table className="table-fixed">
               <TableHeader>
                 <TableRow className="bg-muted">
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Joined</TableHead>
-                  <TableHead>Crew Form</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="w-[20%]">Name</TableHead>
+                  <TableHead className="w-[25%]">Email</TableHead>
+                  <TableHead className="w-[15%]">Joined</TableHead>
+                  <TableHead className="w-[15%]">Crew Form</TableHead>
+                  <TableHead className="w-[10%]">Status</TableHead>
+                  <TableHead className="w-[15%] text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -731,13 +731,13 @@ export default function UserManagementClient({
 
           {/* Desktop table layout */}
           <div className="bg-card hidden rounded-lg border shadow-sm md:block">
-            <Table>
+            <Table className="table-fixed">
               <TableHeader>
                 <TableRow className="bg-muted">
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Joined</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="w-[25%]">Name</TableHead>
+                  <TableHead className="w-[35%]">Email</TableHead>
+                  <TableHead className="w-[20%]">Joined</TableHead>
+                  <TableHead className="w-[20%] text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

@@ -61,6 +61,7 @@ export default function Header() {
             alt="Kindlewood Logo"
             width={350}
             height={55}
+            priority
             className="w-[220px] @[600]:w-[250px] @[900]:w-[280px] @[1200]:w-[320px]"
           />
         </Link>
@@ -70,6 +71,7 @@ export default function Header() {
             alt="Kindlewood Logo"
             width={50}
             height={55}
+            priority
           />
         </Link>
 

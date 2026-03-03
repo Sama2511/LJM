@@ -11,13 +11,16 @@ import {
   CalendarDays,
   HeartHandshake,
   LogOut,
+  ArrowLeft,
 } from "lucide-react";
+import Link from "next/link";
 
 import { NavMain } from "./nav-main";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarHeader,
   SidebarRail,
   SidebarFooter,
   SidebarMenu,
@@ -30,17 +33,12 @@ import { useTransition } from "react";
 
 const data = {
   navMain: [
-    
     {
       title: "Dashboard",
       url: "/UserDashboard",
       icon: LayoutDashboard,
     },
-     {
-      title: "My Profile",
-      url: "/UserDashboard/profile",
-      icon: User,
-    },
+
     {
       title: "Browse Events",
       url: "/UserDashboard/events",
@@ -51,7 +49,11 @@ const data = {
       url: "/UserDashboard/volunteering",
       icon: HeartHandshake,
     },
-   
+    {
+      title: "My Profile",
+      url: "/UserDashboard/profile",
+      icon: User,
+    },
   ],
 };
 
@@ -67,11 +69,23 @@ export function UserSidebar(props: React.ComponentProps<typeof Sidebar>) {
   };
 
   return (
-    <Sidebar
-      collapsible="icon"
-      {...props}
-      className="sticky top-[120px] h-[calc(100vh-120px)]"
-    >
+    <Sidebar collapsible="icon" {...props}>
+      <SidebarHeader className="bg-muted border-accent-foreground border-b">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              tooltip="Back to Website"
+              className="text-accent-foreground h-12.5"
+            >
+              <Link href="/">
+                <ArrowLeft style={{ width: 22, height: 22 }} />
+                <span className="text-[17px] font-medium">Back to Website</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
       <SidebarContent className="bg-muted">
         <NavMain items={data.navMain} />
       </SidebarContent>

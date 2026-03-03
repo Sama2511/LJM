@@ -25,7 +25,7 @@ export default function BrowseEventsClient({
   userRequests,
 }: Props) {
   const now = new Date();
-  const ITEMS_PER_PAGE = 6;
+  const ITEMS_PER_PAGE = 8;
   const [ongoingPage, setOngoingPage] = useState(1);
   const [pastPage, setPastPage] = useState(1);
 
@@ -145,7 +145,7 @@ export default function BrowseEventsClient({
 
     return (
       <div className="">
-        <div className="flex flex-wrap gap-8">
+        <div className="flex flex-wrap justify-center gap-10 py-10 @[830px]:justify-start">
           {items.length === 0 && (
             <p className="text-muted-foreground text-sm">
               No events to display.

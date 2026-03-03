@@ -6,7 +6,7 @@ export default async function MyVolunteeringPage() {
   const { data } = await GetMyVolunteering();
 
   return (
-    <div className="h-full w-full pt-5 pr-7">
+    <div className="h-full w-full px-6">
       <UserProfile pageName="My Volunteering" />
 
       <div className="mt-10 mb-10">

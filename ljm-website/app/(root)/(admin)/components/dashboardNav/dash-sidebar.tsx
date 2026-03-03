@@ -12,7 +12,9 @@ import {
   LogOut,
   Newspaper,
   Files,
+  ArrowLeft,
 } from "lucide-react";
+import Link from "next/link";
 
 import { NavMain } from "@/app/(root)/(admin)/components/dashboardNav/nav-main";
 import { NavUser } from "@/app/(root)/(admin)/components/dashboardNav/nav-user";
@@ -91,9 +93,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
       collapsible="icon"
-      className="sticky top-[120px] h-[calc(100vh-120px)]"
       {...props}
     >
+      <SidebarHeader className="bg-muted border-accent-foreground border-b">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Back to Website" className="text-accent-foreground h-12.5">
+              <Link href="/">
+                <ArrowLeft style={{ width: 22, height: 22 }} />
+                <span className="text-[17px] font-medium">Back to Website</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
       <SidebarContent className="bg-muted">
         <NavMain items={data.navMain} />
       </SidebarContent>

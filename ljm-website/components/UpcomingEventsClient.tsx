@@ -19,14 +19,7 @@ export function UpcomingEventsClient({ events }: { events: Event[] }) {
 
   return (
     <>
-      <div
-        className="grid max-w-[95%] grid-flow-col gap-4 overflow-auto pt-5 pb-8
-          [&::-webkit-scrollbar]:h-2
-          [&::-webkit-scrollbar-thumb]:rounded-2xl
-          [&::-webkit-scrollbar-thumb]:bg-primary
-          [&::-webkit-scrollbar-track]:rounded-2xl
-          [&::-webkit-scrollbar-track]:bg-accent/30"
-      >
+      <div className="[&::-webkit-scrollbar-thumb]:bg-muted-foreground [&::-webkit-scrollbar-track]:bg-muted grid max-w-[95%] grid-flow-col gap-4 overflow-auto pt-5 pb-8 [&::-webkit-scrollbar]:h-2 [&::-webkit-scrollbar-thumb]:rounded-2xl [&::-webkit-scrollbar-track]:rounded-2xl">
         {events.map((event) => (
           <EventCard
             key={event.id}

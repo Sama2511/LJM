@@ -7,7 +7,7 @@ export default async function DocumentManagement() {
   const { data: documents, error } = await FetchDocuments();
 
   return (
-    <div className="@container w-full pt-10 pr-4 md:p-6">
+    <div className="@container w-full px-6">
       <AdminProfile pageName="Document Management" />
 
       <div className="flex flex-col gap-6 p-6">

@@ -60,7 +60,7 @@ async function TestimonialsContent() {
 
 export default function Page() {
   return (
-    <div className="@container w-full pt-10 pr-4 pb-10">
+    <div className="@container w-full px-6">
       <AdminProfile pageName="Testimonials Management" />
       <Suspense fallback={<TestimonialsLoading />}>
         <TestimonialsContent />

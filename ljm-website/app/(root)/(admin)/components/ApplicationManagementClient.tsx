@@ -380,7 +380,7 @@ export default function ApplicationManagementClient({
   );
 
   return (
-    <div className="w-full pt-10 pr-10 md:pr-12">
+    <div className="w-full px-6">
       <AdminProfile pageName="Crew Applications" />
 
       <Tabs defaultValue="pending" className="w-full">
@@ -435,14 +435,14 @@ export default function ApplicationManagementClient({
 
           {/* Desktop table layout */}
           <div className="bg-card hidden rounded-lg border shadow-sm md:block">
-            <Table>
+            <Table className="table-fixed">
               <TableHeader>
                 <TableRow className="bg-muted">
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Submitted</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="w-[20%]">Name</TableHead>
+                  <TableHead className="w-[30%]">Email</TableHead>
+                  <TableHead className="w-[15%]">Submitted</TableHead>
+                  <TableHead className="w-[10%]">Status</TableHead>
+                  <TableHead className="w-[25%] text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -482,14 +482,14 @@ export default function ApplicationManagementClient({
 
           {/* Desktop table layout */}
           <div className="bg-card hidden rounded-lg border shadow-sm md:block">
-            <Table>
+            <Table className="table-fixed">
               <TableHeader>
                 <TableRow className="bg-muted">
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Submitted</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="w-[20%]">Name</TableHead>
+                  <TableHead className="w-[30%]">Email</TableHead>
+                  <TableHead className="w-[15%]">Submitted</TableHead>
+                  <TableHead className="w-[10%]">Status</TableHead>
+                  <TableHead className="w-[25%] text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -529,14 +529,14 @@ export default function ApplicationManagementClient({
 
           {/* Desktop table layout */}
           <div className="bg-card hidden rounded-lg border shadow-sm md:block">
-            <Table>
+            <Table className="table-fixed">
               <TableHeader>
                 <TableRow className="bg-muted">
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Submitted</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="w-[20%]">Name</TableHead>
+                  <TableHead className="w-[30%]">Email</TableHead>
+                  <TableHead className="w-[15%]">Submitted</TableHead>
+                  <TableHead className="w-[10%]">Status</TableHead>
+                  <TableHead className="w-[25%] text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

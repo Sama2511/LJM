@@ -312,11 +312,11 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="mb-10 w-full pt-10 pr-4 md:p-6">
+    <div className="w-full px-6 pb-10">
       <AdminProfile pageName="Settings" />
       <div className="mt-5 max-w-4xl space-y-6">
         {/* Profile Picture Card */}
-        <Card>
+        <Card className="bg-muted">
           <CardHeader>
             <CardTitle>Profile Picture</CardTitle>
             <CardDescription className="font-sans">
@@ -382,7 +382,7 @@ export default function ProfilePage() {
         </Card>
 
         {/* Personal Information Card */}
-        <Card>
+        <Card className="bg-muted">
           <CardHeader>
             <CardTitle>Personal Information</CardTitle>
             <CardDescription>Update your personal details</CardDescription>
@@ -488,7 +488,7 @@ export default function ProfilePage() {
         </Card>
 
         {/* Site Settings - Contact Information */}
-        <Card>
+        <Card className="bg-muted">
           <CardHeader>
             <CardTitle>Contact Information</CardTitle>
             <CardDescription>
@@ -567,7 +567,7 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="bg-muted">
           <CardHeader>
             <CardTitle>Social Media Links</CardTitle>
             <CardDescription>

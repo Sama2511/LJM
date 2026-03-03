@@ -90,7 +90,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="w-full pt-10 pr-5 pb-10">
+    <div className="w-full px-6">
       <AdminProfile pageName="Dashboard" />
 
       {/* Stats Cards */}
@@ -213,7 +213,8 @@ export default function DashboardPage() {
                         {event.title}
                       </p>
                       <p className="text-muted-foreground text-xs md:text-sm">
-                        {formatDate(event.date)} • {event.starts_at} - {event.ends_at}
+                        {formatDate(event.date)} • {event.starts_at} -{" "}
+                        {event.ends_at}
                       </p>
                     </div>
                     <div className="ml-2 text-right">

@@ -267,10 +267,10 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="w-full pt-10 pr-7">
+    <div className="w-full px-6">
       <UserProfile pageName="Profile" />
       <div className="mt-5 mb-10 max-w-2xl space-y-6">
-        <Card>
+        <Card className="bg-muted">
           <CardHeader>
             <CardTitle>Profile Picture</CardTitle>
             <CardDescription className="font-sans">
@@ -336,7 +336,7 @@ export default function ProfilePage() {
         </Card>
 
         {/* Personal Information Card */}
-        <Card>
+        <Card className="bg-muted">
           <CardHeader>
             <CardTitle>Personal Information</CardTitle>
             <CardDescription>Update your personal details</CardDescription>

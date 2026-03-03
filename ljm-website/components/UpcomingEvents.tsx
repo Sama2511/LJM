@@ -36,8 +36,8 @@ export async function UpcomingEvents() {
   if (!upcoming || upcoming.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center px-5 py-20">
-        <Calendar size={50} className="mb-5 text-primary" />
-        <h2 className="font-chillax mb-2 text-2xl font-semibold text-foreground">
+        <Calendar size={50} className="text-primary mb-5" />
+        <h2 className="font-chillax text-foreground mb-2 text-2xl font-semibold">
           No Upcoming Events
         </h2>
       </div>

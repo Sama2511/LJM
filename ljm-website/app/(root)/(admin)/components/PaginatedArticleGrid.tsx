@@ -20,7 +20,7 @@ type ArticleItem = {
   created_at: string;
 };
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 8;
 
 export default function PaginatedArticleGrid({
   articles,
@@ -58,7 +58,7 @@ export default function PaginatedArticleGrid({
 
   return (
     <div>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="flex flex-wrap gap-6">
         {paginatedArticles.map((article) => (
           <DashArticleCard
             key={article.id}
