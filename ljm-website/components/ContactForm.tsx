@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -22,11 +22,7 @@ import {
 } from "@/components/ui/input-group";
 import { Loader2 } from "lucide-react";
 import { formSchema } from "@/lib/schemas";
-import ReCAPTCHA from "react-google-recaptcha";
-
 export default function ContactForm() {
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -37,23 +33,12 @@ export default function ContactForm() {
     },
   });
 
-  // Handle form submission with invisible reCAPTCHA
   async function onSubmit(data: z.infer<typeof formSchema>) {
     try {
-      const token = await recaptchaRef.current?.executeAsync();
-      if (!token) {
-        toast.error("reCAPTCHA verification failed.");
-        return;
-      }
-
       const response = await fetch("/api/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...data,
-          captchaToken: token,
-          formType: "contact",
-        }),
+        body: JSON.stringify({ ...data, formType: "contact" }),
       });
 
       const result = await response.json();
@@ -65,7 +50,6 @@ export default function ContactForm() {
 
       toast.success("Your message has been sent!");
       form.reset();
-      recaptchaRef.current?.reset();
     } catch (error: any) {
       toast.error(`Submission failed: ${error.message || error}`);
       console.error("Contact form submission failed:", error);
@@ -171,12 +155,7 @@ export default function ContactForm() {
               )}
             />
 
-            {/* Invisible reCAPTCHA */}
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-              size="invisible"
-            />
+
           </FieldGroup>
         </form>
       </CardContent>

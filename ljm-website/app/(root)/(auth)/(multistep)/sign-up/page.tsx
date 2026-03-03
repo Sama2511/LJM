@@ -14,15 +14,12 @@ import { signUpSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import React, { useRef } from "react";
+import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "sonner";
 
 export default function page() {
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-
   const signupForm = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -34,28 +31,17 @@ export default function page() {
     },
   });
 
-  //Wrapper to handle reCAPTCHA + signup
   async function handleSignupWithCaptcha(data: z.infer<typeof signUpSchema>) {
     try {
-      const token = await recaptchaRef.current?.executeAsync();
-      if (!token) {
-        toast.error("reCAPTCHA verification failed.");
-        return;
-      }
-
-      // Call server-side signup
       const result = await signup(data);
 
       if (result.success) {
         toast.success("Signup successful! Please check your email.");
-        // redirect client-side
         window.location.href = "/check-email";
       } else {
         toast.error(`Signup failed: ${result.error}`);
         console.error("Signup error:", result.error);
       }
-
-      recaptchaRef.current?.reset();
     } catch (error: any) {
       toast.error(`Signup failed: ${error.message || error}`);
       console.error("Signup failed:", error);
@@ -194,12 +180,7 @@ export default function page() {
                   )}
                 />
 
-                {/* Invisible reCAPTCHA */}
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                  size="invisible"
-                />
+
               </FieldGroup>
             </form>
           </CardContent>

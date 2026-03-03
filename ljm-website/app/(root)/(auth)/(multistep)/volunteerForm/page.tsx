@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import { volunteerForm } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -18,7 +18,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { volunteerSubmit } from "@/actions/users";
 import { Loader2 } from "lucide-react";
-import ReCAPTCHA from "react-google-recaptcha";
 import { toast } from "sonner";
 import z from "zod";
 
@@ -47,17 +46,8 @@ export default function page() {
     },
   });
 
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-
-  // Wrapper function for invisible reCAPTCHA + volunteerSubmit
   async function handleVolunteerSubmit(data: z.infer<typeof volunteerForm>) {
     try {
-      const token = await recaptchaRef.current?.executeAsync();
-      if (!token) {
-        toast.error("reCAPTCHA verification failed.");
-        return;
-      }
-
       const result = await volunteerSubmit(data);
 
       if (result.success) {
@@ -65,17 +55,15 @@ export default function page() {
           "Thank you! Your volunteer application has been submitted.",
         );
         Form.reset();
-        recaptchaRef.current?.reset();
-        window.location.href = "/confirmation"; // <-- redirect on success
+        window.location.href = "/confirmation";
       } else {
-        // Frontend redirect to error page
         console.error("Volunteer form submission failed:", result.error);
-        window.location.href = "/error"; // <-- redirect on error
+        window.location.href = "/error";
       }
     } catch (error: any) {
       toast.error(`Submission failed: ${error.message || error}`);
       console.error("Volunteer form submission failed:", error);
-      window.location.href = "/error"; // <-- redirect on error
+      window.location.href = "/error";
     }
   }
 
@@ -358,12 +346,7 @@ export default function page() {
                   )}
                 />
 
-                {/* Invisible reCAPTCHA */}
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                  size="invisible"
-                />
+
               </FieldGroup>
             </form>
           </CardContent>
